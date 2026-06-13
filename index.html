@@ -1,303 +1,92 @@
-<!doctype html>
-<html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
-    <meta name="theme-color" content="#1a1a2e" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta
-      name="apple-mobile-web-app-status-bar-style"
-      content="black-translucent"
-    />
-    <meta name="description" content="VPN App — Безопасное подключение" />
-
-    <title>VPN App</title>
-
-    <!-- Styles -->
-    <link rel="stylesheet" href="/src/css/styles.css" />
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <!-- Splash Screen -->
-    <div id="splash" class="splash">
-      <div class="splash-content">
-        <div class="logo">
-          <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
-            <circle
-              cx="40"
-              cy="40"
-              r="38"
-              stroke="url(#gradient)"
-              stroke-width="4"
-            />
-            <path
-              d="M40 20L40 60M30 35L50 35M30 45L50 45"
-              stroke="url(#gradient)"
-              stroke-width="3"
-              stroke-linecap="round"
-            />
-            <defs>
-              <linearGradient id="gradient" x1="0" y1="0" x2="80" y2="80">
-                <stop offset="0%" stop-color="#00D9FF" />
-                <stop offset="100%" stop-color="#7B2FFF" />
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
-        <h1>VPN App</h1>
-        <div class="loader"><span></span><span></span><span></span></div>
-      </div>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VPN App Test</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: #0a0a14;
+            color: white;
+        }
+        .container { text-align: center; }
+        h1 { color: #00d9ff; }
+        .status { margin: 20px 0; padding: 20px; background: #12121f; border-radius: 10px; }
+        button {
+            background: linear-gradient(135deg, #00d9ff, #7b2fff);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .log {
+            margin-top: 20px;
+            text-align: left;
+            background: #000;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .log-item { margin: 2px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>VPN App Test</h1>
+        <div class="status" id="status">Loading...</div>
+        <button onclick="testApp()">Test App</button>
+        <button onclick="showAuth()">Show Auth</button>
+        <button onclick="showMain()">Show Main</button>
+        <div class="log" id="log"></div>
     </div>
-
-    <!-- Main App -->
-    <div id="app" class="app hidden">
-      <!-- Header -->
-      <header class="header">
-        <div class="header-left">
-          <div class="logo-small">
-            <svg width="32" height="32" viewBox="0 0 80 80" fill="none">
-              <circle
-                cx="40"
-                cy="40"
-                r="38"
-                stroke="url(#g)"
-                stroke-width="4"
-              />
-              <path
-                d="M40 20L40 60M30 35L50 35M30 45L50 45"
-                stroke="url(#g)"
-                stroke-width="3"
-                stroke-linecap="round"
-              />
-              <defs>
-                <linearGradient id="g" x1="0" y1="0" x2="80" y2="80">
-                  <stop offset="0%" stop-color="#00D9FF" />
-                  <stop offset="100%" stop-color="#7B2FFF" />
-                </linearGradient>
-              </defs>
-            </svg>
-          </div>
-          <span class="app-name">VPN App</span>
-        </div>
-        <div class="header-right">
-          <button id="profileBtn" class="icon-btn" aria-label="Профиль">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <circle cx="12" cy="8" r="4" />
-              <path d="M4 20c0-4 4-6 8-6s8 2 8 6" />
-            </svg>
-          </button>
-          <button id="settingsBtn" class="icon-btn" aria-label="Настройки">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <circle cx="12" cy="12" r="3" />
-              <path
-                d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"
-              />
-            </svg>
-          </button>
-        </div>
-      </header>
-
-      <!-- VPN Status Card -->
-      <main class="main">
-        <div class="status-card" id="statusCard">
-          <div class="status-indicator" id="statusIndicator">
-            <div class="status-ring"></div>
-            <div class="status-icon" id="statusIcon">
-              <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-                <circle cx="24" cy="24" r="20" stroke="#444" stroke-width="3" />
-                <path
-                  d="M24 14v10l6 4"
-                  stroke="#444"
-                  stroke-width="3"
-                  stroke-linecap="round"
-                />
-              </svg>
-            </div>
-          </div>
-          <h2 class="status-text" id="statusText">Отключено</h2>
-          <p class="status-subtext" id="statusSubtext">
-            Нажмите для подключения
-          </p>
-          <div class="connection-info hidden" id="connectionInfo">
-            <div class="info-row">
-              <span class="info-label">IP адрес</span>
-              <span class="info-value" id="ipAddress">—</span>
-            </div>
-            <div class="info-row">
-              <span class="info-label">Локация</span>
-              <span class="info-value" id="location">—</span>
-            </div>
-            <div class="info-row">
-              <span class="info-label">Подключено</span>
-              <span class="info-value" id="connectionTime">—</span>
-            </div>
-          </div>
-          <button class="connect-btn" id="connectBtn">
-            <span class="btn-text">Подключить</span>
-          </button>
-        </div>
-
-        <!-- Subscription Card -->
-        <div class="subscription-card" id="subscriptionCard">
-          <div class="card-header">
-            <span class="card-title">Подписка</span>
-            <span class="card-badge" id="subBadge">Активна</span>
-          </div>
-          <div class="card-content">
-            <div class="sub-info">
-              <div class="sub-plan" id="subPlan">Загрузка...</div>
-              <div class="sub-expiry" id="subExpiry">—</div>
-            </div>
-            <div class="sub-progress">
-              <div class="progress-bar" id="subProgress"></div>
-            </div>
-            <div class="sub-days" id="subDays">— дней осталось</div>
-          </div>
-        </div>
-
-        <!-- Quick Actions -->
-        <div class="actions-grid">
-          <button class="action-btn" id="changeServerBtn">
-            <div class="action-icon">🌐</div>
-            <span class="action-text">Сервер</span>
-          </button>
-          <button class="action-btn" id="downloadConfigBtn">
-            <div class="action-icon">📥</div>
-            <span class="action-text">Конфиг</span>
-          </button>
-          <button class="action-btn" id="helpBtn">
-            <div class="action-icon">❓</div>
-            <span class="action-text">Помощь</span>
-          </button>
-        </div>
-      </main>
-
-      <!-- Bottom Navigation -->
-      <nav class="bottom-nav">
-        <button class="nav-item active" data-tab="home">
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-          </svg>
-          <span>Главная</span>
-        </button>
-        <button class="nav-item" data-tab="servers">
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <rect x="2" y="2" width="20" height="8" rx="2" />
-            <rect x="2" y="14" width="20" height="8" rx="2" />
-            <circle cx="6" cy="6" r="1" fill="currentColor" />
-            <circle cx="6" cy="18" r="1" fill="currentColor" />
-          </svg>
-          <span>Серверы</span>
-        </button>
-        <button class="nav-item" data-tab="profile">
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-          >
-            <circle cx="12" cy="8" r="4" />
-            <path d="M4 20c0-4 4-6 8-6s8 2 8 6" />
-          </svg>
-          <span>Профиль</span>
-        </button>
-      </nav>
-    </div>
-
-    <!-- Auth Screen -->
-    <div id="auth" class="auth-screen hidden">
-      <div class="auth-content">
-        <div class="auth-logo">
-          <svg width="100" height="100" viewBox="0 0 80 80" fill="none">
-            <circle cx="40" cy="40" r="38" stroke="url(#ag)" stroke-width="4" />
-            <path
-              d="M40 20L40 60M30 35L50 35M30 45L50 45"
-              stroke="url(#ag)"
-              stroke-width="3"
-              stroke-linecap="round"
-            />
-            <defs>
-              <linearGradient id="ag" x1="0" y1="0" x2="80" y2="80">
-                <stop offset="0%" stop-color="#00D9FF" />
-                <stop offset="100%" stop-color="#7B2FFF" />
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
-        <h1>VPN App</h1>
-        <p class="auth-desc">
-          Безопасное и быстрое VPN-подключение в один клик
-        </p>
-
-        <button class="telegram-btn" id="telegramAuth">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"
-            />
-          </svg>
-          <span>Войти через Telegram</span>
-        </button>
-
-        <p class="auth-hint">
-          Нажмите кнопку выше, чтобы авторизоваться через Telegram и получить
-          доступ к VPN
-        </p>
-      </div>
-    </div>
-
-    <!-- Modal -->
-    <div id="modal" class="modal hidden">
-      <div class="modal-content">
-        <button class="modal-close" id="modalClose">&times;</button>
-        <div id="modalBody"></div>
-      </div>
-    </div>
-
-    <!-- Toast -->
-    <div id="toast" class="toast hidden">
-      <span id="toastText"></span>
-    </div>
-
-    <!-- Scripts -->
-    <script type="module" src="/src/main.js"></script>
-  </body>
+    
+    <script>
+        function log(msg) {
+            const logDiv = document.getElementById('log');
+            const item = document.createElement('div');
+            item.className = 'log-item';
+            item.textContent = new Date().toLocaleTimeString() + ': ' + msg;
+            logDiv.appendChild(item);
+            logDiv.scrollTop = logDiv.scrollHeight;
+            console.log(msg);
+        }
+        
+        function testApp() {
+            log('Test button clicked');
+            document.getElementById('status').textContent = 'App is working!';
+        }
+        
+        function showAuth() {
+            log('Showing auth screen');
+            document.getElementById('status').innerHTML = '<h2>Auth Screen</h2><button onclick="simulateLogin()">Login with Telegram</button>';
+        }
+        
+        function showMain() {
+            log('Showing main screen');
+            document.getElementById('status').innerHTML = '<h2>Main Screen</h2><p>VPN Status: Disconnected</p><button onclick="testApp()">Connect</button>';
+        }
+        
+        function simulateLogin() {
+            log('Simulating login');
+            showMain();
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            log('DOM loaded');
+            document.getElementById('status').textContent = 'Ready - Tap a button';
+        });
+        
+        log('Script loaded');
+    </script>
+</body>
 </html>
