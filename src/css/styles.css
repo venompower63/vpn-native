@@ -1,772 +1,1054 @@
-/* VPN App - Styles */
+/* Venom VPN - Lamborghini Sport Style */
 
 :root {
-	--primary: #8b008b;
-	--primary-light: #9932cc;
-	--accent: #ff00ff;
-	--bg-dark: #0a0a14;
-	--bg-card: #12121f;
-	--bg-card-hover: #1a1a2e;
-	--text-primary: #ffffff;
-	--text-secondary: #8a8a9a;
-	--text-muted: #5a5a6a;
-	--success: #00e676;
-	--warning: #ffb300;
-	--error: #ff5252;
-	--border: #2a2a3e;
-	--gradient: linear-gradient(135deg, var(--accent), var(--primary));
+    /* Lamborghini Color Palette */
+    --lambo-yellow: #ffd700;
+    --lambo-orange: #ff6b00;
+    --lambo-red: #ff0000;
+    --lambo-black: #0a0a0a;
+    --lambo-carbon: #1a1a1a;
+    --lambo-steel: #2d2d2d;
+    --lambo-silver: #c0c0c0;
+    --lambo-white: #ffffff;
+    
+    /* Gradients */
+    --gradient-flame: linear-gradient(135deg, #ff6b00, #ffd700, #ff0000);
+    --gradient-carbon: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+    --gradient-fire: linear-gradient(180deg, #ff6b00 0%, #ff0000 50%, #ffd700 100%);
+    
+    /* Core */
+    --bg-dark: var(--lambo-black);
+    --bg-card: var(--lambo-carbon);
+    --bg-card-hover: var(--lambo-steel);
+    --text-primary: var(--lambo-white);
+    --text-secondary: #aaa;
+    --text-muted: #666;
+    --border: #333;
+    --gradient: var(--gradient-flame);
 }
 
 * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-	font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
-	background: var(--bg-dark);
-	color: var(--text-primary);
-	min-height: 100vh;
-	overflow-x: hidden;
-	-webkit-tap-highlight-color: transparent;
+    font-family: 'Arial Black', 'Helvetica Neue', sans-serif;
+    background: var(--lambo-black);
+    color: var(--lambo-white);
+    min-height: 100vh;
+    overflow-x: hidden;
 }
 
-.hidden {
-	display: none !important;
-}
+/* ============================================
+   SPLASH SCREEN - Lamborghini Engine Start
+   ============================================ */
 
-/* Splash Screen */
 .splash {
-	position: fixed;
-	inset: 0;
-	background: var(--bg-dark);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	z-index: 9999;
-	transition: opacity 0.5s ease;
+    position: fixed;
+    inset: 0;
+    background: var(--lambo-black);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
 }
 
-.splash.fade-out {
-	opacity: 0;
-	pointer-events: none;
+.splash-logo {
+    width: 180px;
+    height: 180px;
+    position: relative;
+    margin-bottom: 2rem;
 }
 
-.splash-content {
-	text-align: center;
+.splash-logo .lamborghini-emblem {
+    width: 100%;
+    height: 100%;
+    background: var(--gradient-flame);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: pulse-glow 1.5s ease-in-out infinite;
 }
 
-.logo svg {
-	animation: pulse 2s ease-in-out infinite;
+.splash-logo .lamborghini-emblem::before {
+    content: '🐂';
+    font-size: 80px;
 }
 
-@keyframes pulse {
-	0%,
-	100% {
-		transform: scale(1);
-		opacity: 1;
-	}
-	50% {
-		transform: scale(1.05);
-		opacity: 0.8;
-	}
+@keyframes pulse-glow {
+    0%, 100% { 
+        box-shadow: 0 0 30px rgba(255, 107, 0, 0.5), 
+                    0 0 60px rgba(255, 215, 0, 0.3);
+        transform: scale(1);
+    }
+    50% { 
+        box-shadow: 0 0 50px rgba(255, 107, 0, 0.8), 
+                    0 0 100px rgba(255, 215, 0, 0.5);
+        transform: scale(1.05);
+    }
 }
 
-.splash h1 {
-	font-size: 2rem;
-	font-weight: 700;
-	margin-top: 1rem;
-	background: var(--gradient);
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-	background-clip: text;
+/* Engine Start Animation */
+.engine-start {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--gradient-flame);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    animation: engine-rev 2s ease-out forwards;
+    opacity: 0;
 }
 
-.loader {
-	display: flex;
-	justify-content: center;
-	gap: 8px;
-	margin-top: 2rem;
+@keyframes engine-rev {
+    0% { 
+        opacity: 0; 
+        transform: scale(0.5) rotate(0deg);
+    }
+    20% { 
+        opacity: 1; 
+        transform: scale(1) rotate(0deg);
+    }
+    40% { 
+        opacity: 1; 
+        transform: scale(1.1) rotate(-5deg);
+    }
+    60% { 
+        opacity: 1; 
+        transform: scale(1.15) rotate(5deg);
+    }
+    80% { 
+        opacity: 0.8; 
+        transform: scale(1.1) rotate(-2deg);
+    }
+    100% { 
+        opacity: 0; 
+        transform: scale(2) rotate(0deg);
+    }
 }
 
-.loader span {
-	width: 10px;
-	height: 10px;
-	border-radius: 50%;
-	background: var(--accent);
-	animation: bounce 1.4s ease-in-out infinite both;
+.splash-text {
+    font-size: 2.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 8px;
+    background: var(--gradient-flame);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: flicker 0.1s infinite;
 }
 
-.loader span:nth-child(1) {
-	animation-delay: -0.32s;
-}
-.loader span:nth-child(2) {
-	animation-delay: -0.16s;
-}
-.loader span:nth-child(3) {
-	animation-delay: 0s;
+@keyframes flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.95; }
 }
 
-@keyframes bounce {
-	0%,
-	80%,
-	100% {
-		transform: scale(0);
-	}
-	40% {
-		transform: scale(1);
-	}
+.splash-subtitle {
+    font-size: 1rem;
+    letter-spacing: 12px;
+    color: var(--lambo-orange);
+    margin-top: 0.5rem;
+    text-transform: uppercase;
 }
 
-/* App Layout */
+/* RPM Gauge */
+.rpm-gauge {
+    width: 200px;
+    height: 100px;
+    margin-top: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.rpm-gauge .gauge-bg {
+    width: 200px;
+    height: 100px;
+    border: 3px solid var(--lambo-orange);
+    border-bottom: none;
+    border-radius: 100px 100px 0 0;
+    position: relative;
+}
+
+.rpm-gauge .gauge-fill {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 0%;
+    background: var(--gradient-flame);
+    transition: height 0.3s ease;
+    border-radius: 100px 100px 0 0;
+}
+
+.rpm-gauge .needle {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 4px;
+    height: 80px;
+    background: var(--lambo-red);
+    transform-origin: bottom center;
+    transform: translateX(-50%) rotate(-90deg);
+    transition: transform 0.5s ease;
+    border-radius: 2px;
+}
+
+.rpm-gauge .needle::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 20px;
+    background: var(--lambo-white);
+    border-radius: 50%;
+}
+
+.rpm-label {
+    font-size: 0.8rem;
+    color: var(--lambo-orange);
+    letter-spacing: 4px;
+    margin-top: 0.5rem;
+}
+
+/* Engine status */
+.engine-status {
+    margin-top: 1.5rem;
+    padding: 0.75rem 2rem;
+    background: var(--lambo-carbon);
+    border: 2px solid var(--lambo-orange);
+    border-radius: 50px;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.engine-status::before {
+    content: '●';
+    color: var(--lambo-orange);
+    margin-right: 0.5rem;
+    animation: blink 0.5s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+/* Loading bar */
+.loading-bar {
+    width: 200px;
+    height: 4px;
+    background: var(--lambo-carbon);
+    border-radius: 2px;
+    margin-top: 1.5rem;
+    overflow: hidden;
+}
+
+.loading-bar-fill {
+    height: 100%;
+    background: var(--gradient-flame);
+    animation: loading 2s ease-out forwards;
+    border-radius: 2px;
+}
+
+@keyframes loading {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+
+/* ============================================
+   MAIN APP - Sport Design
+   ============================================ */
+
 .app {
-	display: flex;
-	flex-direction: column;
-	min-height: 100vh;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Header */
 .header {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding: 1rem 1.25rem;
-	background: var(--bg-card);
-	border-bottom: 1px solid var(--border);
-	position: sticky;
-	top: 0;
-	z-index: 100;
+    background: linear-gradient(180deg, var(--lambo-black) 0%, var(--lambo-carbon) 100%);
+    padding: 1rem 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--lambo-orange);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 .header-left {
-	display: flex;
-	align-items: center;
-	gap: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
 }
 
-.logo-small svg {
-	display: block;
+.lambo-emblem {
+    width: 40px;
+    height: 40px;
+    background: var(--gradient-flame);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .app-name {
-	font-size: 1.25rem;
-	font-weight: 600;
-}
-
-.header-right {
-	display: flex;
-	gap: 0.5rem;
+    font-size: 1.25rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: var(--gradient-flame);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .icon-btn {
-	width: 40px;
-	height: 40px;
-	border-radius: 12px;
-	background: var(--bg-card-hover);
-	border: 1px solid var(--border);
-	color: var(--text-secondary);
-	cursor: pointer;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	transition: all 0.2s;
+    width: 40px;
+    height: 40px;
+    background: var(--lambo-carbon);
+    border: 2px solid var(--lambo-orange);
+    border-radius: 50%;
+    color: var(--lambo-orange);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s;
 }
 
 .icon-btn:active {
-	transform: scale(0.95);
-	background: var(--primary);
-	color: white;
+    background: var(--lambo-orange);
+    color: var(--lambo-black);
+    transform: scale(0.95);
 }
 
 /* Main Content */
 .main {
-	flex: 1;
-	padding: 1.25rem;
-	padding-bottom: 100px;
+    flex: 1;
+    padding: 1.25rem;
+    padding-bottom: 100px;
 }
 
-/* Status Card */
+/* Status Card - Speedometer Style */
 .status-card {
-	background: var(--bg-card);
-	border-radius: 24px;
-	padding: 2rem;
-	text-align: center;
-	border: 1px solid var(--border);
-	margin-bottom: 1rem;
+    background: var(--lambo-carbon);
+    border: 2px solid var(--lambo-orange);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.status-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-flame);
 }
 
 .status-indicator {
-	position: relative;
-	width: 120px;
-	height: 120px;
-	margin: 0 auto 1.5rem;
-}
-
-.status-ring {
-	position: absolute;
-	inset: 0;
-	border-radius: 50%;
-	border: 3px solid var(--border);
+    text-align: center;
+    margin-bottom: 1rem;
 }
 
 .status-icon {
-	position: absolute;
-	inset: 15px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+    font-size: 4rem;
+    display: inline-block;
+    animation: none;
+}
+
+.status-connected .status-icon {
+    animation: heartbeat 1s infinite;
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.status-ring {
+    display: none;
 }
 
 .status-text {
-	font-size: 1.5rem;
-	font-weight: 600;
-	margin-bottom: 0.5rem;
+    font-size: 2rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 0.5rem;
 }
 
 .status-subtext {
-	color: var(--text-secondary);
-	font-size: 0.9rem;
-	margin-bottom: 1.5rem;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    letter-spacing: 1px;
 }
 
-/* Connection Info */
+/* Connection Info - Racing Stripes */
 .connection-info {
-	background: var(--bg-dark);
-	border-radius: 12px;
-	padding: 1rem;
-	margin-bottom: 1.5rem;
+    background: var(--lambo-black);
+    border-radius: 12px;
+    padding: 1rem;
+    margin: 1rem 0;
+    border: 1px solid var(--lambo-orange);
+    position: relative;
+    overflow: hidden;
+}
+
+.connection-info::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 10px,
+        rgba(255, 107, 0, 0.1) 10px,
+        rgba(255, 107, 0, 0.1) 20px
+    );
+    animation: stripes 2s linear infinite;
+}
+
+@keyframes stripes {
+    0% { left: -100%; }
+    100% { left: 100%; }
 }
 
 .info-row {
-	display: flex;
-	justify-content: space-between;
-	padding: 0.5rem 0;
-	border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border);
 }
 
 .info-row:last-child {
-	border-bottom: none;
+    border-bottom: none;
 }
 
 .info-label {
-	color: var(--text-secondary);
-	font-size: 0.9rem;
+    color: var(--lambo-orange);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .info-value {
-	font-weight: 500;
-	font-family: "SF Mono", monospace;
-	font-size: 0.9rem;
+    color: var(--lambo-white);
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
 }
 
-/* Connect Button */
+/* Connect Button - Racing Style */
 .connect-btn {
-	width: 100%;
-	padding: 1rem 2rem;
-	border-radius: 16px;
-	border: none;
-	background: var(--gradient);
-	color: white;
-	font-size: 1.1rem;
-	font-weight: 600;
-	cursor: pointer;
-	transition: all 0.3s;
-	position: relative;
-	overflow: hidden;
+    width: 100%;
+    padding: 1.25rem;
+    font-size: 1.25rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    border: none;
+    border-radius: 50px;
+    background: var(--gradient-flame);
+    color: var(--lambo-black);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
 }
 
 .connect-btn::before {
-	content: "";
-	position: absolute;
-	inset: 0;
-	background: linear-gradient(rgba(255, 255, 255, 0.2), transparent);
-	opacity: 0;
-	transition: opacity 0.3s;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transition: left 0.5s;
 }
 
 .connect-btn:active::before {
-	opacity: 1;
+    left: 100%;
 }
 
-.connect-btn.disconnected {
-	background: var(--gradient);
-}
-
-.connect-btn.connecting {
-	background: var(--warning);
-	animation: pulse-btn 1.5s infinite;
+.connect-btn:active {
+    transform: scale(0.98);
 }
 
 .connect-btn.connected {
-	background: var(--success);
+    background: #00ff00;
+    box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
 }
 
-.connect-btn:disabled {
-	opacity: 0.6;
-	cursor: not-allowed;
+.connect-btn.connecting {
+    background: var(--lambo-orange);
+    animation: pulse 1s infinite;
 }
 
-@keyframes pulse-btn {
-	0%,
-	100% {
-		opacity: 1;
-	}
-	50% {
-		opacity: 0.7;
-	}
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(255, 107, 0, 0.5); }
+    50% { box-shadow: 0 0 40px rgba(255, 107, 0, 0.8); }
+}
+
+/* Double VPN Toggle */
+.double-vpn-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1rem 0;
+    padding: 1rem;
+    background: var(--lambo-black);
+    border-radius: 50px;
+    border: 2px solid var(--lambo-yellow);
+}
+
+.double-vpn-toggle span {
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--lambo-yellow);
+}
+
+.toggle-switch {
+    position: relative;
+    width: 60px;
+    height: 30px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: var(--lambo-carbon);
+    border: 2px solid var(--lambo-orange);
+    border-radius: 30px;
+    transition: 0.3s;
+}
+
+.toggle-slider::before {
+    content: '';
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    left: 2px;
+    bottom: 2px;
+    background: var(--lambo-orange);
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+input:checked + .toggle-slider {
+    background: var(--lambo-yellow);
+    border-color: var(--lambo-yellow);
+}
+
+input:checked + .toggle-slider::before {
+    transform: translateX(30px);
+    background: var(--lambo-black);
 }
 
 /* Subscription Card */
 .subscription-card {
-	background: var(--bg-card);
-	border-radius: 20px;
-	padding: 1.25rem;
-	border: 1px solid var(--border);
-	margin-bottom: 1rem;
+    background: var(--lambo-carbon);
+    border: 2px solid var(--lambo-yellow);
+    border-radius: 20px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
 }
 
 .card-header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
 }
 
 .card-title {
-	font-weight: 600;
-	font-size: 1.1rem;
+    font-size: 1rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
 .card-badge {
-	padding: 0.25rem 0.75rem;
-	border-radius: 20px;
-	font-size: 0.8rem;
-	font-weight: 500;
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 .card-badge.active {
-	background: rgba(0, 230, 118, 0.15);
-	color: var(--success);
+    background: var(--lambo-yellow);
+    color: var(--lambo-black);
 }
 
 .card-badge.expired {
-	background: rgba(255, 82, 82, 0.15);
-	color: var(--error);
+    background: var(--lambo-red);
+    color: var(--lambo-white);
 }
 
 .sub-info {
-	display: flex;
-	justify-content: space-between;
-	margin-bottom: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
 }
 
 .sub-plan {
-	font-weight: 500;
+    font-weight: bold;
+    color: var(--lambo-orange);
 }
 
 .sub-expiry {
-	color: var(--text-secondary);
-	font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
 }
 
 .sub-progress {
-	height: 6px;
-	background: var(--bg-dark);
-	border-radius: 3px;
-	overflow: hidden;
-	margin-bottom: 0.5rem;
+    height: 6px;
+    background: var(--lambo-black);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
 }
 
 .progress-bar {
-	height: 100%;
-	background: var(--gradient);
-	border-radius: 3px;
-	transition: width 0.5s ease;
+    height: 100%;
+    background: var(--gradient-flame);
+    border-radius: 3px;
+    transition: width 0.5s;
 }
 
 .sub-days {
-	font-size: 0.85rem;
-	color: var(--text-secondary);
-	text-align: center;
+    text-align: center;
+    color: var(--lambo-yellow);
+    font-weight: bold;
+    font-size: 0.9rem;
 }
 
 /* Actions Grid */
 .actions-grid {
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	gap: 1rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 1rem;
 }
 
 .action-btn {
-	background: var(--bg-card);
-	border: 1px solid var(--border);
-	border-radius: 16px;
-	padding: 1rem;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 0.5rem;
-	cursor: pointer;
-	transition: all 0.2s;
+    background: var(--lambo-carbon);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s;
 }
 
 .action-btn:active {
-	transform: scale(0.95);
-	background: var(--bg-card-hover);
+    background: var(--lambo-steel);
+    border-color: var(--lambo-orange);
+    transform: scale(0.95);
 }
 
 .action-icon {
-	font-size: 1.5rem;
+    font-size: 1.5rem;
 }
 
 .action-text {
-	font-size: 0.85rem;
-	color: var(--text-secondary);
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Server List */
+.server-selection {
+    margin-bottom: 1rem;
+}
+
+.server-list {
+    list-style: none;
+}
+
+.server-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--lambo-carbon);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.server-item:active {
+    background: var(--lambo-steel);
+    border-color: var(--lambo-orange);
+}
+
+.server-item.selected {
+    border-color: var(--lambo-orange);
+    background: rgba(255, 107, 0, 0.1);
+}
+
+.server-flag {
+    font-size: 2rem;
+}
+
+.server-info {
+    flex: 1;
+}
+
+.server-name {
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+}
+
+.server-location {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+.server-ping {
+    font-weight: bold;
+    font-size: 0.85rem;
 }
 
 /* Bottom Navigation */
 .bottom-nav {
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	display: flex;
-	justify-content: space-around;
-	background: var(--bg-card);
-	border-top: 1px solid var(--border);
-	padding: 0.75rem 0;
-	padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--lambo-black);
+    border-top: 2px solid var(--lambo-orange);
+    padding: 0.75rem;
+    display: flex;
+    justify-content: space-around;
 }
 
 .nav-item {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 4px;
-	padding: 0.5rem 1rem;
-	background: none;
-	border: none;
-	color: var(--text-muted);
-	cursor: pointer;
-	transition: color 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 0.5rem 1rem;
+    color: var(--text-muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
 }
 
 .nav-item.active {
-	color: var(--accent);
+    color: var(--lambo-orange);
 }
 
 .nav-item span {
-	font-size: 0.75rem;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 /* Auth Screen */
 .auth-screen {
-	min-height: 100vh;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	padding: 2rem;
-	background: var(--bg-dark);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: radial-gradient(ellipse at center, var(--lambo-carbon) 0%, var(--lambo-black) 100%);
 }
 
 .auth-content {
-	text-align: center;
-	max-width: 320px;
+    text-align: center;
+    max-width: 320px;
 }
 
 .auth-logo {
-	margin-bottom: 1rem;
+    margin-bottom: 2rem;
 }
 
-.auth-logo svg {
-	animation: pulse 3s ease-in-out infinite;
+.auth-logo .hexagon {
+    width: 150px;
+    height: 150px;
+    background: var(--gradient-flame);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 60px;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
 }
 
 .auth-content h1 {
-	font-size: 2rem;
-	font-weight: 700;
-	margin-bottom: 0.5rem;
-	background: var(--gradient);
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-	background-clip: text;
+    font-size: 2.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    background: var(--gradient-flame);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
 }
 
 .auth-desc {
-	color: var(--text-secondary);
-	margin-bottom: 2rem;
-	line-height: 1.5;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    line-height: 1.6;
 }
 
 .telegram-btn {
-	width: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 0.75rem;
-	padding: 1rem 2rem;
-	border-radius: 14px;
-	border: none;
-	background: #0088cc;
-	color: white;
-	font-size: 1rem;
-	font-weight: 600;
-	cursor: pointer;
-	transition: all 0.2s;
-	margin-bottom: 1.5rem;
+    width: 100%;
+    padding: 1rem 2rem;
+    background: #0088cc;
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    transition: all 0.3s;
 }
 
 .telegram-btn:active {
-	transform: scale(0.98);
-	background: #0077b3;
-}
-
-.telegram-btn svg {
-	width: 24px;
-	height: 24px;
+    background: #006699;
+    transform: scale(0.98);
 }
 
 .auth-hint {
-	font-size: 0.85rem;
-	color: var(--text-muted);
-	line-height: 1.5;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: 1.5rem;
+    line-height: 1.5;
 }
 
 /* Modal */
 .modal {
-	position: fixed;
-	inset: 0;
-	background: rgba(0, 0, 0, 0.8);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	padding: 1rem;
-	z-index: 1000;
-	backdrop-filter: blur(4px);
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    z-index: 1000;
 }
 
 .modal-content {
-	background: var(--bg-card);
-	border-radius: 20px;
-	width: 100%;
-	max-width: 400px;
-	max-height: 80vh;
-	overflow-y: auto;
-	position: relative;
-	padding: 1.5rem;
+    background: var(--lambo-carbon);
+    border: 2px solid var(--lambo-orange);
+    border-radius: 20px;
+    width: 100%;
+    max-width: 400px;
+    max-height: 80vh;
+    padding: 1.5rem;
+    position: relative;
+    overflow-y: auto;
 }
 
 .modal-close {
-	position: absolute;
-	top: 1rem;
-	right: 1rem;
-	width: 32px;
-	height: 32px;
-	border-radius: 50%;
-	background: var(--bg-dark);
-	border: none;
-	color: var(--text-secondary);
-	font-size: 1.5rem;
-	cursor: pointer;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 32px;
+    height: 32px;
+    background: var(--lambo-black);
+    border: 2px solid var(--lambo-orange);
+    border-radius: 50%;
+    color: var(--lambo-orange);
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .modal-title {
-	font-size: 1.25rem;
-	font-weight: 600;
-	margin-bottom: 1rem;
+    font-size: 1.25rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+    color: var(--lambo-orange);
 }
 
 /* Toast */
 .toast {
-	position: fixed;
-	bottom: 100px;
-	left: 50%;
-	transform: translateX(-50%);
-	background: var(--bg-card);
-	border: 1px solid var(--border);
-	padding: 0.75rem 1.5rem;
-	border-radius: 12px;
-	font-size: 0.9rem;
-	z-index: 1001;
-	animation: toast-in 0.3s ease;
-	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--lambo-carbon);
+    border: 2px solid var(--lambo-orange);
+    border-radius: 50px;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    z-index: 1001;
+    animation: toast-in 0.3s ease;
 }
 
 .toast.success {
-	border-color: var(--success);
+    border-color: #00ff00;
+    color: #00ff00;
 }
 
 .toast.error {
-	border-color: var(--error);
+    border-color: var(--lambo-red);
+    color: var(--lambo-red);
 }
 
 @keyframes toast-in {
-	from {
-		opacity: 0;
-		transform: translateX(-50%) translateY(20px);
-	}
-	to {
-		opacity: 1;
-		transform: translateX(-50%) translateY(0);
-	}
+    from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
 }
 
-/* Server List */
-.server-list {
-	list-style: none;
+/* Loader */
+.loader {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
 }
 
-.server-item {
-	display: flex;
-	align-items: center;
-	gap: 1rem;
-	padding: 1rem;
-	border-radius: 12px;
-	cursor: pointer;
-	transition: background 0.2s;
+.loader span {
+    width: 12px;
+    height: 12px;
+    background: var(--lambo-orange);
+    border-radius: 50%;
+    animation: bounce 1.4s ease-in-out infinite both;
 }
 
-.server-item:active {
-	background: var(--bg-dark);
+.loader span:nth-child(1) { animation-delay: -0.32s; }
+.loader span:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes bounce {
+    0%, 80%, 100% { transform: scale(0); }
+    40% { transform: scale(1); }
 }
 
-.server-item.selected {
-	background: var(--bg-card-hover);
-	border: 1px solid var(--accent);
-}
-
-.server-flag {
-	font-size: 2rem;
-}
-
-.server-info {
-	flex: 1;
-}
-
-.server-name {
-	font-weight: 500;
-	margin-bottom: 0.25rem;
-}
-
-.server-location {
-	font-size: 0.85rem;
-	color: var(--text-secondary);
-}
-
-.server-ping {
-	font-size: 0.85rem;
-	color: var(--success);
-}
-
-/* Profile Section */
+/* Profile */
 .profile-section {
-	text-align: center;
-	padding: 1rem 0;
+    text-align: center;
+    padding: 1rem 0;
 }
 
 .profile-avatar {
-	width: 80px;
-	height: 80px;
-	border-radius: 50%;
-	background: var(--gradient);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin: 0 auto 1rem;
-	font-size: 2rem;
-	font-weight: 600;
-	color: white;
+    width: 80px;
+    height: 80px;
+    background: var(--gradient-flame);
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: bold;
 }
 
 .profile-name {
-	font-size: 1.25rem;
-	font-weight: 600;
-	margin-bottom: 0.25rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 0.25rem;
 }
 
 .profile-username {
-	color: var(--text-secondary);
-	margin-bottom: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
 }
 
 .profile-stats {
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	gap: 1rem;
-	margin-top: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 1.5rem;
 }
 
 .stat-item {
-	background: var(--bg-dark);
-	padding: 1rem;
-	border-radius: 12px;
+    background: var(--lambo-black);
+    border-radius: 12px;
+    padding: 1rem;
 }
 
 .stat-value {
-	font-size: 1.25rem;
-	font-weight: 600;
-	color: var(--accent);
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: var(--lambo-orange);
 }
 
 .stat-label {
-	font-size: 0.85rem;
-	color: var(--text-secondary);
-	margin-top: 0.25rem;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
 }
 
-/* Responsive */
-@media (min-width: 768px) {
-	.main {
-		max-width: 480px;
-		margin: 0 auto;
-	}
+/* Hidden */
+.hidden {
+    display: none !important;
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-	width: 4px;
+    width: 4px;
 }
 
 ::-webkit-scrollbar-track {
-	background: transparent;
+    background: var(--lambo-black);
 }
 
 ::-webkit-scrollbar-thumb {
-	background: var(--border);
-	border-radius: 2px;
+    background: var(--lambo-orange);
+    border-radius: 2px;
 }
 
-/* Status colors */
-.status-connected .status-ring {
-	border-color: var(--success);
-	box-shadow: 0 0 20px rgba(0, 230, 118, 0.3);
-}
-
-.status-connected .status-icon svg circle,
-.status-connected .status-icon svg path {
-	stroke: var(--success);
-}
-
-.status-connecting .status-ring {
-	border-color: var(--warning);
-	animation: ring-pulse 1s infinite;
-}
-
-.status-connecting .status-icon svg circle,
-.status-connecting .status-icon svg path {
-	stroke: var(--warning);
-}
-
-@keyframes ring-pulse {
-	0%,
-	100% {
-		box-shadow: 0 0 0 0 rgba(255, 179, 0, 0.4);
-	}
-	50% {
-		box-shadow: 0 0 0 10px rgba(255, 179, 0, 0);
-	}
+/* Media Query */
+@media (min-width: 768px) {
+    .main {
+        max-width: 480px;
+        margin: 0 auto;
+    }
 }
