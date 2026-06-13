@@ -182,30 +182,23 @@
 
     <script>
       // ==========================================
-      // SPORT SOUND SYSTEM - Simple Audio
+      // SPORT SOUND SYSTEM
       // ==========================================
       class SportSound {
         constructor() {
-          // AMG welcome/startup sound
           this.welcomeAudio = null;
-          // Pistol shot for button clicks  
-          this.clickAudio = null;
         }
 
-        // Init - create audio elements
+        // Init - create audio element
         init() {
           if (this.welcomeAudio) return;
           this.welcomeAudio = new Audio();
-          this.welcomeAudio.src = "https://storage.yandexcloud.net/promto-user-static-sites-prod/design-assets/941619812/6bb7db79-ec84-41c7-b74f-db5bb596911a/652fb1be-d427-4c80-8a30-d5ea8267b45c-_.mp3";
+          this.welcomeAudio.src = "https://storage.yandexcloud.net/promto-user-static-sites-prod/design-assets/941619812/6bb7db79-ec84-41c7-b74f-db5bb596911a/5a796e09-9442-4f56-a0bf-fc6a50bb5fc4-_.mp3";
           this.welcomeAudio.volume = 1;
-          
-          this.clickAudio = new Audio();
-          this.clickAudio.src = "https://storage.yandexcloud.net/promto-user-static-sites-prod/design-assets/941619812/6bb7db79-ec84-41c7-b74f-db5bb596911a/66a9fdb3-d6ca-4051-b26d-1d03813e97ff-short-single-pistol-shot.mp3";
-          this.clickAudio.volume = 0.8;
         }
 
-        // Play welcome/startup sound
-        playWelcome() {
+        // Play sound
+        play() {
           if (!this.welcomeAudio) this.init();
           try {
             this.welcomeAudio.currentTime = 0;
@@ -213,35 +206,27 @@
           } catch (e) {}
         }
 
-        // Play click sound
-        playClick() {
-          if (!this.clickAudio) this.init();
-          try {
-            this.clickAudio.currentTime = 0;
-            this.clickAudio.play().catch(e => console.log("Play error:", e));
-          } catch (e) {}
-        }
-
-        // All methods
-        welcome() { this.playWelcome(); }
-        startup() { this.playWelcome(); }
-        roar() { this.playWelcome(); }
-        snarl() { this.playWelcome(); }
-        growl() { this.playWelcome(); }
-        menace() { this.playWelcome(); }
-        helicopter() { this.playWelcome(); }
-        startGrowl() { this.playWelcome(); }
-        deceleration() { this.playWelcome(); }
+        // All methods play the same sound
+        welcome() { this.play(); }
+        startup() { this.play(); }
+        roar() { this.play(); }
+        snarl() { this.play(); }
+        growl() { this.play(); }
+        menace() { this.play(); }
+        helicopter() { this.play(); }
+        startGrowl() { this.play(); }
+        deceleration() { this.play(); }
         loadWelcomeAudio() { if (!this.welcomeAudio) this.init(); }
-        loadClickAudio() { if (!this.clickAudio) this.init(); }
-        yes() { this.playClick(); }
-        gunshot() { this.playClick(); }
-        click() { this.playClick(); }
+        loadClickAudio() { this.play(); }
+        yes() { this.play(); }
+        gunshot() { this.play(); }
+        click() { this.play(); }
+        init() { if (!this.welcomeAudio) this.init(); }
       }
 
       const sport = new SportSound();
       
-      // Initialize audio on first user interaction
+      // Initialize on first interaction
       document.addEventListener("click", function initAudio() {
         sport.init();
         document.removeEventListener("click", initAudio);
