@@ -191,10 +191,10 @@
           this.clickBuffer = null;
           this.welcomeLoaded = false;
           this.clickLoaded = false;
-          
+
           // AMG welcome/startup sound
           this.welcomeUrl = "https://storage.yandexcloud.net/promto-user-static-sites-prod/design-assets/941619812/6bb7db79-ec84-41c7-b74f-db5bb596911a/652fb1be-d427-4c80-8a30-d5ea8267b45c-_.mp3";
-          
+
           // Pistol shot for button clicks
           this.clickUrl = "https://storage.yandexcloud.net/promto-user-static-sites-prod/design-assets/941619812/6bb7db79-ec84-41c7-b74f-db5bb596911a/66a9fdb3-d6ca-4051-b26d-1d03813e97ff-short-single-pistol-shot.mp3";
         }
@@ -302,290 +302,6 @@
         sport.loadClickAudio();
       });
         yes() {
-          this.init();
-          const ctx = this.audioCtx;
-          const now = ctx.currentTime;
-
-          // Female voice "yes" - higher pitch, melodic
-          // Fundamental frequency around 220Hz (A3)
-          const fundamental = ctx.createOscillator();
-          const gain = ctx.createGain();
-
-          fundamental.type = "sine";
-          fundamental.frequency.setValueAtTime(400, now);
-          // Nice melodic rise and fall
-          fundamental.frequency.linearRampToValueAtTime(500, now + 0.08);
-          fundamental.frequency.linearRampToValueAtTime(450, now + 0.15);
-          fundamental.frequency.linearRampToValueAtTime(380, now + 0.25);
-
-          // Add harmonics for richness
-          const harm2 = ctx.createOscillator();
-          harm2.type = "sine";
-          harm2.frequency.setValueAtTime(800, now);
-          harm2.frequency.linearRampToValueAtTime(1000, now + 0.08);
-          harm2.frequency.linearRampToValueAtTime(900, now + 0.15);
-          harm2.frequency.linearRampToValueAtTime(760, now + 0.25);
-
-          const harm3 = ctx.createOscillator();
-          harm3.type = "sine";
-          harm3.frequency.setValueAtTime(1200, now);
-          harm3.frequency.linearRampToValueAtTime(1500, now + 0.08);
-          harm3.frequency.linearRampToValueAtTime(1350, now + 0.25);
-
-          // Envelope - soft attack, sustain, gentle release
-          gain.gain.setValueAtTime(0, now);
-          gain.gain.linearRampToValueAtTime(0.25, now + 0.03);
-          gain.gain.setValueAtTime(0.25, now + 0.15);
-          gain.gain.linearRampToValueAtTime(0.15, now + 0.2);
-          gain.gain.linearRampToValueAtTime(0, now + 0.3);
-
-          const harm2Gain = ctx.createGain();
-          harm2Gain.gain.value = 0.12;
-
-          const harm3Gain = ctx.createGain();
-          harm3Gain.gain.value = 0.05;
-
-          // Soft filter for pleasant tone
-          const filter = ctx.createBiquadFilter();
-          filter.type = "lowpass";
-          filter.frequency.value = 3000;
-
-          fundamental.connect(filter);
-          harm2.connect(harm2Gain);
-          harm2Gain.connect(filter);
-          harm3.connect(harm3Gain);
-          harm3Gain.connect(filter);
-          filter.connect(gain);
-          gain.connect(ctx.destination);
-
-          fundamental.start(now);
-          harm2.start(now);
-          harm3.start(now);
-
-          fundamental.stop(now + 0.35);
-          harm2.stop(now + 0.35);
-          harm3.stop(now + 0.35);
-        }
-
-        // Female voice - Welcome greeting
-        welcome() {
-          this.init();
-          const ctx = this.audioCtx;
-          const now = ctx.currentTime;
-
-          // Female voice "welcome" - warm and welcoming
-          // "Wel-come" with two syllables
-
-          // First syllable "Wel"
-          const wel = ctx.createOscillator();
-          const welGain = ctx.createGain();
-
-          wel.type = "sine";
-          wel.frequency.setValueAtTime(350, now);
-          wel.frequency.linearRampToValueAtTime(400, now + 0.1);
-          wel.frequency.linearRampToValueAtTime(380, now + 0.2);
-
-          welGain.gain.setValueAtTime(0, now);
-          welGain.gain.linearRampToValueAtTime(0.3, now + 0.02);
-          welGain.gain.setValueAtTime(0.3, now + 0.15);
-          welGain.gain.linearRampToValueAtTime(0.25, now + 0.2);
-
-          // Second syllable "come"
-          const come = ctx.createOscillator();
-          const comeGain = ctx.createGain();
-
-          come.type = "sine";
-          come.frequency.setValueAtTime(380, now + 0.22);
-          come.frequency.linearRampToValueAtTime(500, now + 0.32);
-          come.frequency.linearRampToValueAtTime(450, now + 0.45);
-
-          comeGain.gain.setValueAtTime(0, now + 0.22);
-          comeGain.gain.linearRampToValueAtTime(0.35, now + 0.24);
-          comeGain.gain.setValueAtTime(0.35, now + 0.38);
-          comeGain.gain.linearRampToValueAtTime(0.2, now + 0.45);
-          comeGain.gain.linearRampToValueAtTime(0, now + 0.55);
-
-          // Harmonics for warmth
-          const harm = ctx.createOscillator();
-          const harmGain = ctx.createGain();
-
-          harm.type = "sine";
-          harm.frequency.setValueAtTime(700, now);
-          harm.frequency.linearRampToValueAtTime(800, now + 0.1);
-          harm.frequency.linearRampToValueAtTime(900, now + 0.35);
-          harm.frequency.linearRampToValueAtTime(700, now + 0.5);
-
-          harmGain.gain.setValueAtTime(0, now);
-          harmGain.gain.linearRampToValueAtTime(0.1, now + 0.05);
-          harmGain.gain.setValueAtTime(0.1, now + 0.4);
-          harmGain.gain.linearRampToValueAtTime(0, now + 0.55);
-
-          // Filter for soft tone
-          const filter = ctx.createBiquadFilter();
-          filter.type = "lowpass";
-          filter.frequency.value = 2500;
-
-          const mainGain = ctx.createGain();
-          mainGain.gain.value = 1;
-
-          wel.connect(welGain);
-          come.connect(comeGain);
-          harm.connect(harmGain);
-
-          welGain.connect(filter);
-          comeGain.connect(filter);
-          harmGain.connect(filter);
-          filter.connect(mainGain);
-          mainGain.connect(ctx.destination);
-
-          wel.start(now);
-          come.start(now + 0.22);
-          harm.start(now);
-
-          wel.stop(now + 0.25);
-          come.stop(now + 0.6);
-          harm.stop(now + 0.6);
-        }
-
-        // Startup - Sport awakening
-        // Helicopter rotor sound
-        helicopter() {
-          this.init();
-          const ctx = this.audioCtx;
-          const now = ctx.currentTime;
-          const duration = 2;
-
-          // Main rotor - rhythmic thump
-          for (let i = 0; i < 8; i++) {
-            const startTime = now + i * 0.25;
-
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            const filter = ctx.createBiquadFilter();
-
-            osc.type = "sawtooth";
-            osc.frequency.setValueAtTime(80 + Math.random() * 20, startTime);
-            osc.frequency.linearRampToValueAtTime(40, startTime + 0.2);
-
-            filter.type = "lowpass";
-            filter.frequency.value = 300;
-
-            gain.gain.setValueAtTime(0, startTime);
-            gain.gain.linearRampToValueAtTime(0.3, startTime + 0.01);
-            gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.25);
-
-            osc.connect(filter);
-            filter.connect(gain);
-            gain.connect(ctx.destination);
-
-            osc.start(startTime);
-            osc.stop(startTime + 0.25);
-          }
-
-          // Whop-whop effect
-          const whop = ctx.createOscillator();
-          const whopGain = ctx.createGain();
-          const whopFilter = ctx.createBiquadFilter();
-
-          whop.type = "sawtooth";
-          whop.frequency.setValueAtTime(200, now);
-          whop.frequency.linearRampToValueAtTime(100, now + duration);
-
-          whopFilter.type = "lowpass";
-          whopFilter.frequency.value = 500;
-
-          whopGain.gain.setValueAtTime(0.1, now);
-          whopGain.gain.linearRampToValueAtTime(0.15, now + 0.5);
-          whopGain.gain.linearRampToValueAtTime(0.05, now + duration);
-
-          whop.connect(whopFilter);
-          whopFilter.connect(whopGain);
-          whopGain.connect(ctx.destination);
-
-          whop.start(now);
-          whop.stop(now + duration);
-        }
-
-        // Sustained growl for connecting
-        startGrowl() {
-          this.init();
-          const ctx = this.audioCtx;
-          const now = ctx.currentTime;
-
-          const osc1 = ctx.createOscillator();
-          const osc2 = ctx.createOscillator();
-
-          osc1.type = "sawtooth";
-          osc1.frequency.value = 80;
-
-          osc2.type = "sawtooth";
-          osc2.frequency.value = 120;
-
-          const filter = ctx.createBiquadFilter();
-          filter.type = "lowpass";
-          filter.frequency.value = 300;
-
-          const gain = ctx.createGain();
-          gain.gain.value = 0.2;
-
-          osc1.connect(filter);
-          osc2.connect(filter);
-          filter.connect(gain);
-          gain.connect(ctx.destination);
-
-          osc1.start(now);
-          osc2.start(now);
-
-          return {
-            stop: () => {
-              gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.3);
-              setTimeout(() => {
-                try {
-                  osc1.stop();
-                  osc2.stop();
-                } catch (e) {}
-              }, 300);
-            },
-          };
-        }
-
-        // Deceleration growl
-        deceleration() {
-          this.growl();
-          setTimeout(() => this.growl(), 150);
-        }
-
-        // Crackle replaced with snarl
-        snarl() {
-          this.init();
-          const ctx = this.audioCtx;
-          const now = ctx.currentTime;
-
-          // Quick aggressive sound
-          const osc = ctx.createOscillator();
-          osc.type = "sawtooth";
-          osc.frequency.setValueAtTime(300, now);
-          osc.frequency.linearRampToValueAtTime(100, now + 0.1);
-
-          const filter = ctx.createBiquadFilter();
-          filter.type = "bandpass";
-          filter.frequency.value = 400;
-          filter.Q.value = 5;
-
-          const gain = ctx.createGain();
-          gain.gain.setValueAtTime(0.3, now);
-          gain.gain.linearRampToValueAtTime(0, now + 0.15);
-
-          osc.connect(filter);
-          filter.connect(gain);
-          gain.connect(ctx.destination);
-          osc.start(now);
-          osc.stop(now + 0.15);
-        }
-      }
-
-      const Sport = new SportSound();
-
       // ==========================================
       // Configuration
       // ==========================================
@@ -693,7 +409,7 @@
         const startTime = Date.now();
 
         // Start exhaust sound
-        Sport.welcome();
+        sport.welcome();
 
         function animate() {
           const elapsed = Date.now() - startTime;
@@ -704,7 +420,7 @@
             rpm = progress * 25000; // 0 to 8000
           } else if (progress < 0.8) {
             rpm = 8000 + Math.sin(progress * 20) * 500; // Fluctuate
-            if (Math.random() < 0.1) Sport.yes(0.5);
+            if (Math.random() < 0.1) sport.yes();
           } else {
             rpm = 7000 - (progress - 0.8) * 15000; // Drop to idle
           }
@@ -727,7 +443,7 @@
             engineFlames.classList.add("active");
           } else if (progress < 0.9) {
             engineStatus.textContent = "SPORT SNARLS";
-            Sport.deceleration();
+            sport.deceleration();
           } else {
             engineStatus.textContent = "SPORT READY";
             engineFlames.classList.remove("active");
@@ -736,7 +452,7 @@
           if (progress < 1) {
             requestAnimationFrame(animate);
           } else {
-            Sport.yes(0.5);
+            sport.yes();
             setTimeout(() => {
               splash.style.display = "none";
               checkAuthState();
@@ -867,7 +583,7 @@
         updateConnectionUI();
 
         // Start rev sound
-        state.currentRev = Sport.yes(1);
+        state.currentRev = sport.yes();
 
         document.getElementById("statusIcon").textContent = "🔄";
         document.getElementById("statusText").textContent = "STARTING...";
@@ -885,8 +601,8 @@
             state.currentRev.stop();
             state.currentRev = null;
           }
-          Sport.deceleration();
-          setTimeout(() => Sport.yes(0.5), 200);
+          sport.deceleration();
+          setTimeout(() => sport.yes(), 200);
 
           document.getElementById("statusIcon").textContent = "🔥";
           document.getElementById("statusText").textContent = "RUNNING";
@@ -919,9 +635,9 @@
         state.config = null;
 
         // Dramatic shutdown
-        Sport.yes(1.2);
+        sport.yes();
         setTimeout(() => {
-          Sport.deceleration();
+          sport.deceleration();
           if (state.currentRev) {
             state.currentRev.stop();
             state.currentRev = null;
@@ -988,7 +704,7 @@
         a.click();
         URL.revokeObjectURL(url);
 
-        Sport.yes(0.5);
+        sport.yes();
         showToast("CONFIG DOWNLOADED!", "success");
       }
 
@@ -1003,7 +719,7 @@
         localStorage.setItem("vpn_token", state.token);
 
         try {
-          setTimeout(() => Sport.yes(0.5), 200);
+          setTimeout(() => sport.yes(), 200);
         } catch (e) {}
 
         showApp();
@@ -1095,7 +811,7 @@
                   `;
         document.getElementById("modal").classList.remove("hidden");
       }
-      
+
       function logout() {
         sport.click();
         localStorage.removeItem("vpn_user");
@@ -1142,7 +858,7 @@
             if (state.doubleVpn) {
               setTimeout(() => {
                 try {
-                  Sport.yes();
+                  sport.yes();
                 } catch (err) {}
               }, 200);
             }
