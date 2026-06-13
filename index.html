@@ -182,38 +182,57 @@
 
     <script>
       // ==========================================
-      // SPORT SOUND SYSTEM - Using MP3 file
+      // SPORT SOUND SYSTEM - Two audio files
       // ==========================================
       class SportSound {
         constructor() {
-          this.audio = null;
           this.audioCtx = null;
-          this.source = null;
-          this.buffer = null;
-          this.isLoaded = false;
-          // Audio file URL
-          this.audioUrl = "https://storage.yandexcloud.net/promto-user-static-sites-prod/design-assets/941619812/6bb7db79-ec84-41c7-b74f-db5bb596911a/652fb1be-d427-4c80-8a30-d5ea8267b45c-_.mp3";
+          this.welcomeBuffer = null;
+          this.clickBuffer = null;
+          this.welcomeLoaded = false;
+          this.clickLoaded = false;
+          
+          // AMG welcome/startup sound
+          this.welcomeUrl = "https://storage.yandexcloud.net/promto-user-static-sites-prod/design-assets/941619812/6bb7db79-ec84-41c7-b74f-db5bb596911a/652fb1be-d427-4c80-8a30-d5ea8267b45c-_.mp3";
+          
+          // Pistol shot for button clicks
+          this.clickUrl = "https://storage.yandexcloud.net/promto-user-static-sites-prod/design-assets/941619812/6bb7db79-ec84-41c7-b74f-db5bb596911a/66a9fdb3-d6ca-4051-b26d-1d03813e97ff-short-single-pistol-shot.mp3";
         }
 
-        // Load audio file
-        async loadAudio() {
-          if (this.isLoaded) return;
+        // Load welcome/startup audio
+        async loadWelcomeAudio() {
+          if (this.welcomeLoaded) return;
           try {
             this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            const response = await fetch(this.audioUrl);
+            const response = await fetch(this.welcomeUrl);
             const arrayBuffer = await response.arrayBuffer();
-            this.buffer = await this.audioCtx.decodeAudioData(arrayBuffer);
-            this.isLoaded = true;
+            this.welcomeBuffer = await this.audioCtx.decodeAudioData(arrayBuffer);
+            this.welcomeLoaded = true;
           } catch (e) {
-            console.log("Audio load failed, using fallback");
+            console.log("Welcome audio load failed");
           }
         }
 
-        // Play the sound
-        play() {
-          if (!this.isLoaded || !this.audioCtx || !this.buffer) {
-            // Fallback - try to play as regular audio
-            const audio = new Audio(this.audioUrl);
+        // Load click audio
+        async loadClickAudio() {
+          if (this.clickLoaded) return;
+          try {
+            if (!this.audioCtx) {
+              this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            const response = await fetch(this.clickUrl);
+            const arrayBuffer = await response.arrayBuffer();
+            this.clickBuffer = await this.audioCtx.decodeAudioData(arrayBuffer);
+            this.clickLoaded = true;
+          } catch (e) {
+            console.log("Click audio load failed");
+          }
+        }
+
+        // Play welcome/startup sound
+        playWelcome() {
+          if (!this.welcomeLoaded || !this.audioCtx || !this.welcomeBuffer) {
+            const audio = new Audio(this.welcomeUrl);
             audio.volume = 1;
             audio.play().catch(() => {});
             return;
@@ -223,34 +242,58 @@
             if (this.audioCtx.state === "suspended") {
               this.audioCtx.resume();
             }
-            this.source = this.audioCtx.createBufferSource();
-            this.source.buffer = this.buffer;
-            this.source.connect(this.audioCtx.destination);
-            this.source.start(0);
+            const source = this.audioCtx.createBufferSource();
+            source.buffer = this.welcomeBuffer;
+            source.connect(this.audioCtx.destination);
+            source.start(0);
           } catch (e) {
-            console.log("Play error:", e);
+            console.log("Welcome play error:", e);
           }
         }
 
-        // Alias methods for compatibility
-        welcome() { this.play(); }
-        yes() { this.play(); }
-        gunshot() { this.play(); }
-        roar() { this.play(); }
-        snarl() { this.play(); }
-        growl() { this.play(); }
-        menace() { this.play(); }
-        helicopter() { this.play(); }
-        startGrowl() { this.play(); }
-        deceleration() { this.play(); }
-        startup() { this.play(); }
+        // Play pistol shot for button clicks
+        playClick() {
+          if (!this.clickLoaded || !this.audioCtx || !this.clickBuffer) {
+            const audio = new Audio(this.clickUrl);
+            audio.volume = 0.8;
+            audio.play().catch(() => {});
+            return;
+          }
+
+          try {
+            if (this.audioCtx.state === "suspended") {
+              this.audioCtx.resume();
+            }
+            const source = this.audioCtx.createBufferSource();
+            source.buffer = this.clickBuffer;
+            source.connect(this.audioCtx.destination);
+            source.start(0);
+          } catch (e) {
+            console.log("Click play error:", e);
+          }
+        }
+
+        // Method aliases for compatibility
+        welcome() { this.playWelcome(); }
+        startup() { this.playWelcome(); }
+        roar() { this.playWelcome(); }
+        snarl() { this.playWelcome(); }
+        growl() { this.playWelcome(); }
+        menace() { this.playWelcome(); }
+        helicopter() { this.playWelcome(); }
+        startGrowl() { this.playWelcome(); }
+        deceleration() { this.playWelcome(); }
+        yes() { this.playClick(); }
+        gunshot() { this.playClick(); }
+        click() { this.playClick(); }
       }
 
       const sport = new SportSound();
       
-      // Preload audio when page loads
+      // Preload audio files when page loads
       window.addEventListener("load", () => {
-        sport.loadAudio();
+        sport.loadWelcomeAudio();
+        sport.loadClickAudio();
       });
         yes() {
           this.init();
@@ -776,7 +819,7 @@
 
         document.querySelectorAll(".server-item").forEach((item) => {
           item.addEventListener("click", () => {
-            sport.yes();
+            sport.click();
             const server = SERVERS.find((s) => s.id === item.dataset.serverId);
             selectServer(server);
           });
@@ -808,7 +851,7 @@
 
       async function connect() {
         if (!state.selectedServer) {
-          sport.yes();
+          sport.click();
           showToast("SELECT SERVER FIRST!", "error");
           return;
         }
@@ -924,7 +967,7 @@
       }
 
       function downloadConfig() {
-        sport.yes();
+        sport.click();
         if (!state.config) {
           showToast("CONNECT FIRST!", "error");
           return;
@@ -944,7 +987,7 @@
 
       function authenticate() {
         try {
-          sport.yes();
+          sport.click();
         } catch (e) {}
 
         state.user = { username: "SPORT_DRIVER", id: Date.now() };
@@ -963,7 +1006,7 @@
       }
 
       function showServersModal() {
-        sport.yes();
+        sport.click();
 
         let html =
           '<h3 class="modal-title">🌍 ALL SERVERS</h3><ul class="server-list">';
@@ -988,7 +1031,7 @@
 
         document.querySelectorAll("#modalBody .server-item").forEach((item) => {
           item.addEventListener("click", () => {
-            sport.yes();
+            sport.click();
             const server = SERVERS.find((s) => s.id === item.dataset.serverId);
             selectServer(server);
             closeModal();
@@ -997,7 +1040,7 @@
       }
 
       function showHelpModal() {
-        sport.yes();
+        sport.click();
 
         document.getElementById("modalBody").innerHTML = `
                       <h3 class="modal-title">❓ MANUAL</h3>
@@ -1017,7 +1060,7 @@
       }
 
       function showProfileModal() {
-        sport.yes();
+        sport.click();
 
         document.getElementById("modalBody").innerHTML = `
                       <h3 class="modal-title">👤 PROFILE</h3>
@@ -1069,7 +1112,7 @@
         if (doubleVpnCheckbox) {
           doubleVpnCheckbox.addEventListener("change", (e) => {
             try {
-              sport.yes();
+              sport.click();
             } catch (err) {}
             state.doubleVpn = e.target.checked;
             localStorage.setItem("double_vpn", state.doubleVpn);
@@ -1113,7 +1156,7 @@
         document.querySelectorAll(".nav-item").forEach((item) => {
           item.addEventListener("click", () => {
             try {
-              sport.yes();
+              sport.click();
             } catch (err) {}
             document
               .querySelectorAll(".nav-item")
