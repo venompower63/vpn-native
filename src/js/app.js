@@ -1,7 +1,7 @@
 // VPN App - Main Application
-import { api } from './api.js';
-import { wireguard } from './wireguard.js';
-import { CONFIG } from './config.js';
+import { api } from "./api.js";
+import { wireguard } from "./wireguard.js";
+import { CONFIG } from "./config.js";
 
 class VPNApp {
 	constructor() {
@@ -12,20 +12,31 @@ class VPNApp {
 	}
 
 	async init() {
-		// Cache DOM elements
-		this.cacheElements();
+		try {
+			console.log('VPN App: Starting initialization...');
+			
+			// Cache DOM elements
+			this.cacheElements();
+			console.log('VPN App: Elements cached');
 
-		// Setup event listeners
-		this.setupEventListeners();
+			// Setup event listeners
+			this.setupEventListeners();
+			console.log('VPN App: Events setup');
 
-		// Check auth status
-		await this.checkAuth();
+			// Check auth status
+			await this.checkAuth();
+			console.log('VPN App: Auth checked');
 
-		// Setup PWA
-		this.setupPWA();
-
-		// Hide splash screen
-		this.hideSplash();
+			// Setup PWA
+			this.setupPWA();
+			console.log('VPN App: PWA setup');
+		} catch (error) {
+			console.error('VPN App init error:', error);
+		} finally {
+			// Always hide splash screen
+			this.hideSplash();
+			console.log('VPN App: Splash hidden');
+		}
 	}
 
 	cacheElements() {
