@@ -1,14 +1,14 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from "vite";
 
 export default defineConfig({
-  base: './',
-  build: {
-    assetsDir: 'assets',
-    sourcemap: false,
-    minify: 'esbuild',
-  },
-  server: {
-    host: '0.0.0.0',
-    port: 5173,
-  },
+	base: "./",
+	build: {
+		assetsDir: "assets",
+		sourcemap: false,
+		minify: "esbuild",
+	},
+	server: {
+		host: "0.0.0.0",
+		port: 5173,
+	},
 });
