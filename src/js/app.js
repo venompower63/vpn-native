@@ -13,29 +13,29 @@ class VPNApp {
 
 	async init() {
 		try {
-			console.log('VPN App: Starting initialization...');
-			
+			console.log("VPN App: Starting initialization...");
+
 			// Cache DOM elements
 			this.cacheElements();
-			console.log('VPN App: Elements cached');
+			console.log("VPN App: Elements cached");
 
 			// Setup event listeners
 			this.setupEventListeners();
-			console.log('VPN App: Events setup');
+			console.log("VPN App: Events setup");
 
 			// Check auth status
 			await this.checkAuth();
-			console.log('VPN App: Auth checked');
+			console.log("VPN App: Auth checked");
 
 			// Setup PWA
 			this.setupPWA();
-			console.log('VPN App: PWA setup');
+			console.log("VPN App: PWA setup");
 		} catch (error) {
-			console.error('VPN App init error:', error);
+			console.error("VPN App init error:", error);
 		} finally {
 			// Always hide splash screen
 			this.hideSplash();
-			console.log('VPN App: Splash hidden');
+			console.log("VPN App: Splash hidden");
 		}
 	}
 
