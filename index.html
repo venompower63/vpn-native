@@ -168,35 +168,54 @@
         // ==========================================
         // AMG Exhaust Sound System
         // ==========================================
-        // AMG Sound System - Using MP3 file
+        // AMG Sound System - Two sounds
         class AMGExhaust {
             constructor() {
-                this.audio = null;
-                this.audioUrl = 'https://storage.yandexcloud.net/promto-user-static-sites-prod/design-assets/941619812/6bb7db79-ec84-41c7-b74f-db5bb596911a/b869ca66-06bf-45b2-b689-91e783159565-_.mp3';
+                this.startupAudio = null;
+                this.buttonAudio = null;
+                this.startupUrl = 'https://storage.yandexcloud.net/promto-user-static-sites-prod/design-assets/941619812/6bb7db79-ec84-41c7-b74f-db5bb596911a/b869ca66-06bf-45b2-b689-91e783159565-_.mp3';
+                this.buttonUrl = 'https://storage.yandexcloud.net/promto-user-static-sites-prod/design-assets/941619812/6bb7db79-ec84-41c7-b74f-db5bb596911a/d0685532-e4ea-4c6e-823f-7b68df43a197-reloading-weapons.mp3';
             }
 
             init() {
-                if (this.audio) return;
-                this.audio = new Audio(this.audioUrl);
-                this.audio.volume = 1;
+                if (!this.startupAudio) {
+                    this.startupAudio = new Audio(this.startupUrl);
+                    this.startupAudio.volume = 1;
+                }
+                if (!this.buttonAudio) {
+                    this.buttonAudio = new Audio(this.buttonUrl);
+                    this.buttonAudio.volume = 0.8;
+                }
             }
 
-            // Play the AMG sound
-            play() {
+            // Play startup sound (Splash + START button)
+            playStartup() {
                 this.init();
                 try {
-                    this.audio.currentTime = 0;
-                    this.audio.play().catch(e => console.log('Audio error:', e));
+                    this.startupAudio.currentTime = 0;
+                    this.startupAudio.play().catch(e => console.log('Startup audio error:', e));
                 } catch(e) {}
             }
 
-            // All methods play the same sound
-            pop() { this.play(); }
-            crackle() { this.play(); }
-            rev() { this.play(); }
-            startup() { this.play(); }
-            deceleration() { this.play(); }
-            click() { this.play(); }
+            // Play button sound (all other buttons)
+            playButton() {
+                this.init();
+                try {
+                    this.buttonAudio.currentTime = 0;
+                    this.buttonAudio.play().catch(e => console.log('Button audio error:', e));
+                } catch(e) {}
+            }
+
+            // Startup - plays once on splash
+            startup() { this.playStartup(); }
+            // Rev - for START button
+            rev() { this.playStartup(); }
+            
+            // All other buttons - button sound
+            pop() { this.playButton(); }
+            crackle() { this.playButton(); }
+            deceleration() { this.playButton(); }
+            click() { this.playButton(); }
         }
 
         const exhaust = new AMGExhaust();
@@ -288,7 +307,6 @@
                     engineFlames.classList.add('active');
                 } else if (progress < 0.9) {
                     engineStatus.textContent = 'EXHAUST Pops';
-                    exhaust.deceleration();
                 } else {
                     engineStatus.textContent = 'IDLE';
                     engineFlames.classList.remove('active');
@@ -297,7 +315,7 @@
                 if (progress < 1) {
                     requestAnimationFrame(animate);
                 } else {
-                    exhaust.pop();
+                    // Only play startup sound once here
                     setTimeout(() => {
                         splash.style.display = 'none';
                         checkAuthState();
@@ -412,8 +430,8 @@
             state.connecting = true;
             updateConnectionUI();
 
-            // Start rev sound
-            state.currentRev = exhaust.rev(5000);
+            // Play startup sound for START button
+            exhaust.rev();
 
             document.getElementById('statusIcon').textContent = '🔄';
             document.getElementById('statusText').textContent = 'STARTING...';
@@ -425,11 +443,7 @@
                 state.config = generateConfig(state.selectedServer, state.doubleVpn);
                 state.connected = true;
 
-                // Stop rev, add pops
-                if (state.currentRev) {
-                    state.currentRev.stop();
-                    state.currentRev = null;
-                }
+                // Button sound after connection
                 exhaust.deceleration();
                 setTimeout(() => exhaust.pop(), 200);
 
@@ -446,10 +460,6 @@
                 showToast(`CONNECTED TO ${state.selectedServer.name}!`, 'success');
 
             } catch (error) {
-                if (state.currentRev) {
-                    state.currentRev.stop();
-                    state.currentRev = null;
-                }
                 showToast('CONNECTION ERROR', 'error');
                 state.connected = false;
             } finally {
@@ -462,15 +472,8 @@
             state.connected = false;
             state.config = null;
 
-            // Dramatic shutdown
-            exhaust.rev(6000);
-            setTimeout(() => {
-                exhaust.deceleration();
-                if (state.currentRev) {
-                    state.currentRev.stop();
-                    state.currentRev = null;
-                }
-            }, 300);
+            // Button sound for stop
+            exhaust.deceleration();
 
             document.getElementById('statusIcon').textContent = '🔑';
             document.getElementById('statusText').textContent = 'STOP';
