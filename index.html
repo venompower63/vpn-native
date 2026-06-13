@@ -479,6 +479,11 @@
       // ==========================================
 
       function checkAuthState() {
+        // Always show auth screen first for now (reset for testing)
+        // To enable auto-login: remove the next 2 lines
+        showAuth();
+        return;
+        
         const savedUser = localStorage.getItem("vpn_user");
         const savedToken = localStorage.getItem("vpn_token");
 
