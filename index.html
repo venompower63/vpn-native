@@ -182,125 +182,70 @@
 
     <script>
       // ==========================================
-      // SPORT SOUND SYSTEM - Two audio files
+      // SPORT SOUND SYSTEM - Simple Audio
       // ==========================================
       class SportSound {
         constructor() {
-          this.audioCtx = null;
-          this.welcomeBuffer = null;
-          this.clickBuffer = null;
-          this.welcomeLoaded = false;
-          this.clickLoaded = false;
-
           // AMG welcome/startup sound
-          this.welcomeUrl = "https://storage.yandexcloud.net/promto-user-static-sites-prod/design-assets/941619812/6bb7db79-ec84-41c7-b74f-db5bb596911a/652fb1be-d427-4c80-8a30-d5ea8267b45c-_.mp3";
-
-          // Pistol shot for button clicks
-          this.clickUrl = "https://storage.yandexcloud.net/promto-user-static-sites-prod/design-assets/941619812/6bb7db79-ec84-41c7-b74f-db5bb596911a/66a9fdb3-d6ca-4051-b26d-1d03813e97ff-short-single-pistol-shot.mp3";
+          this.welcomeAudio = null;
+          // Pistol shot for button clicks  
+          this.clickAudio = null;
         }
 
-        // Init method for backwards compatibility
+        // Init - create audio elements
         init() {
-          this.loadWelcomeAudio();
-          this.loadClickAudio();
-        }
-
-        // Load welcome/startup audio
-        async loadWelcomeAudio() {
-          if (this.welcomeLoaded) return;
-          try {
-            this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            const response = await fetch(this.welcomeUrl);
-            const arrayBuffer = await response.arrayBuffer();
-            this.welcomeBuffer = await this.audioCtx.decodeAudioData(arrayBuffer);
-            this.welcomeLoaded = true;
-          } catch (e) {
-            console.log("Welcome audio load failed");
-          }
-        }
-
-        // Load click audio
-        async loadClickAudio() {
-          if (this.clickLoaded) return;
-          try {
-            if (!this.audioCtx) {
-              this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            }
-            const response = await fetch(this.clickUrl);
-            const arrayBuffer = await response.arrayBuffer();
-            this.clickBuffer = await this.audioCtx.decodeAudioData(arrayBuffer);
-            this.clickLoaded = true;
-          } catch (e) {
-            console.log("Click audio load failed");
-          }
+          if (this.welcomeAudio) return;
+          this.welcomeAudio = new Audio();
+          this.welcomeAudio.src = "https://storage.yandexcloud.net/promto-user-static-sites-prod/design-assets/941619812/6bb7db79-ec84-41c7-b74f-db5bb596911a/652fb1be-d427-4c80-8a30-d5ea8267b45c-_.mp3";
+          this.welcomeAudio.volume = 1;
+          
+          this.clickAudio = new Audio();
+          this.clickAudio.src = "https://storage.yandexcloud.net/promto-user-static-sites-prod/design-assets/941619812/6bb7db79-ec84-41c7-b74f-db5bb596911a/66a9fdb3-d6ca-4051-b26d-1d03813e97ff-short-single-pistol-shot.mp3";
+          this.clickAudio.volume = 0.8;
         }
 
         // Play welcome/startup sound
         playWelcome() {
-          if (!this.welcomeLoaded || !this.audioCtx || !this.welcomeBuffer) {
-            const audio = new Audio(this.welcomeUrl);
-            audio.volume = 1;
-            audio.play().catch(() => {});
-            return;
-          }
-
+          if (!this.welcomeAudio) this.init();
           try {
-            if (this.audioCtx.state === "suspended") {
-              this.audioCtx.resume();
-            }
-            const source = this.audioCtx.createBufferSource();
-            source.buffer = this.welcomeBuffer;
-            source.connect(this.audioCtx.destination);
-            source.start(0);
-          } catch (e) {
-            console.log("Welcome play error:", e);
-          }
+            this.welcomeAudio.currentTime = 0;
+            this.welcomeAudio.play().catch(e => console.log("Play error:", e));
+          } catch (e) {}
         }
 
-        // Play pistol shot for button clicks
+        // Play click sound
         playClick() {
-          if (!this.clickLoaded || !this.audioCtx || !this.clickBuffer) {
-            const audio = new Audio(this.clickUrl);
-            audio.volume = 0.8;
-            audio.play().catch(() => {});
-            return;
-          }
-
+          if (!this.clickAudio) this.init();
           try {
-            if (this.audioCtx.state === "suspended") {
-              this.audioCtx.resume();
-            }
-            const source = this.audioCtx.createBufferSource();
-            source.buffer = this.clickBuffer;
-            source.connect(this.audioCtx.destination);
-            source.start(0);
-          } catch (e) {
-            console.log("Click play error:", e);
-          }
+            this.clickAudio.currentTime = 0;
+            this.clickAudio.play().catch(e => console.log("Play error:", e));
+          } catch (e) {}
         }
 
-        // Method aliases for compatibility - all accept optional intensity param
-        welcome(intensity) { this.playWelcome(); }
-        startup(intensity) { this.playWelcome(); }
-        roar(intensity) { this.playWelcome(); }
-        snarl(intensity) { this.playWelcome(); }
-        growl(intensity) { this.playWelcome(); }
-        menace(intensity) { this.playWelcome(); }
-        helicopter(intensity) { this.playWelcome(); }
-        startGrowl(intensity) { this.playWelcome(); }
-        deceleration(intensity) { this.playWelcome(); }
-        yes(intensity) { this.playClick(); }
-        gunshot(intensity) { this.playClick(); }
-        click(intensity) { this.playClick(); }
+        // All methods
+        welcome() { this.playWelcome(); }
+        startup() { this.playWelcome(); }
+        roar() { this.playWelcome(); }
+        snarl() { this.playWelcome(); }
+        growl() { this.playWelcome(); }
+        menace() { this.playWelcome(); }
+        helicopter() { this.playWelcome(); }
+        startGrowl() { this.playWelcome(); }
+        deceleration() { this.playWelcome(); }
+        loadWelcomeAudio() { if (!this.welcomeAudio) this.init(); }
+        loadClickAudio() { if (!this.clickAudio) this.init(); }
+        yes() { this.playClick(); }
+        gunshot() { this.playClick(); }
+        click() { this.playClick(); }
       }
 
       const sport = new SportSound();
-
-      // Preload audio files when page loads
-      window.addEventListener("load", () => {
-        sport.loadWelcomeAudio();
-        sport.loadClickAudio();
-      });
+      
+      // Initialize audio on first user interaction
+      document.addEventListener("click", function initAudio() {
+        sport.init();
+        document.removeEventListener("click", initAudio);
+      }, { once: true });
         yes() {
       // ==========================================
       // Configuration
@@ -483,7 +428,7 @@
         // To enable auto-login: remove the next 2 lines
         showAuth();
         return;
-        
+
         const savedUser = localStorage.getItem("vpn_user");
         const savedToken = localStorage.getItem("vpn_token");
 
