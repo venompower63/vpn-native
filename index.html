@@ -199,6 +199,12 @@
           this.clickUrl = "https://storage.yandexcloud.net/promto-user-static-sites-prod/design-assets/941619812/6bb7db79-ec84-41c7-b74f-db5bb596911a/66a9fdb3-d6ca-4051-b26d-1d03813e97ff-short-single-pistol-shot.mp3";
         }
 
+        // Init method for backwards compatibility
+        init() {
+          this.loadWelcomeAudio();
+          this.loadClickAudio();
+        }
+
         // Load welcome/startup audio
         async loadWelcomeAudio() {
           if (this.welcomeLoaded) return;
@@ -273,23 +279,23 @@
           }
         }
 
-        // Method aliases for compatibility
-        welcome() { this.playWelcome(); }
-        startup() { this.playWelcome(); }
-        roar() { this.playWelcome(); }
-        snarl() { this.playWelcome(); }
-        growl() { this.playWelcome(); }
-        menace() { this.playWelcome(); }
-        helicopter() { this.playWelcome(); }
-        startGrowl() { this.playWelcome(); }
-        deceleration() { this.playWelcome(); }
-        yes() { this.playClick(); }
-        gunshot() { this.playClick(); }
-        click() { this.playClick(); }
+        // Method aliases for compatibility - all accept optional intensity param
+        welcome(intensity) { this.playWelcome(); }
+        startup(intensity) { this.playWelcome(); }
+        roar(intensity) { this.playWelcome(); }
+        snarl(intensity) { this.playWelcome(); }
+        growl(intensity) { this.playWelcome(); }
+        menace(intensity) { this.playWelcome(); }
+        helicopter(intensity) { this.playWelcome(); }
+        startGrowl(intensity) { this.playWelcome(); }
+        deceleration(intensity) { this.playWelcome(); }
+        yes(intensity) { this.playClick(); }
+        gunshot(intensity) { this.playClick(); }
+        click(intensity) { this.playClick(); }
       }
 
       const sport = new SportSound();
-      
+
       // Preload audio files when page loads
       window.addEventListener("load", () => {
         sport.loadWelcomeAudio();
@@ -742,7 +748,8 @@
         document.addEventListener(
           "click",
           function initAudio() {
-            Sport.init();
+            sport.loadWelcomeAudio();
+            sport.loadClickAudio();
             document.removeEventListener("click", initAudio);
           },
           { once: true },
@@ -1069,7 +1076,7 @@
                           <div class="profile-name">${state.user?.username || "GUEST"}</div>
                           <div class="profile-username">@venom_vpn</div>
                           <div style="margin-top: 1rem;">
-                              <span class="card-badge active">AMG EDITION</span>
+                              <span class="card-badge active">SPORT EDITION</span>
                           </div>
                       </div>
                       <div class="profile-stats">
@@ -1082,8 +1089,23 @@
                               <div class="stat-label">COUNTRIES</div>
                           </div>
                       </div>
+                      <button class="connect-btn" style="margin-top: 1.5rem; background: #ff4444;" onclick="logout()">
+                          LOGOUT
+                      </button>
                   `;
         document.getElementById("modal").classList.remove("hidden");
+      }
+      
+      function logout() {
+        sport.click();
+        localStorage.removeItem("vpn_user");
+        localStorage.removeItem("vpn_token");
+        state.user = null;
+        state.token = null;
+        state.connected = false;
+        state.config = null;
+        closeModal();
+        showAuth();
       }
 
       function closeModal() {
