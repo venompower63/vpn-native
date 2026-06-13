@@ -1,30 +1,27 @@
-/* Venom VPN - Lamborghini Sport Style */
+/* Venom VPN - AMG Edition */
 
 :root {
-    /* Lamborghini Color Palette */
-    --lambo-yellow: #ffd700;
-    --lambo-orange: #ff6b00;
-    --lambo-red: #ff0000;
-    --lambo-black: #0a0a0a;
-    --lambo-carbon: #1a1a1a;
-    --lambo-steel: #2d2d2d;
-    --lambo-silver: #c0c0c0;
-    --lambo-white: #ffffff;
+    /* AMG Color Palette */
+    --amg-black: #0d0d0d;
+    --amg-carbon: #1a1a1a;
+    --amg-steel: #2d2d2d;
+    --amg-silver: #c0c0c0;
+    --amg-red: #ff0000;
+    --amg-gold: #ffd700;
+    --amg-orange: #ff4500;
     
     /* Gradients */
-    --gradient-flame: linear-gradient(135deg, #ff6b00, #ffd700, #ff0000);
-    --gradient-carbon: linear-gradient(135deg, #1a1a1a, #2d2d2d);
-    --gradient-fire: linear-gradient(180deg, #ff6b00 0%, #ff0000 50%, #ffd700 100%);
+    --gradient-amg: linear-gradient(135deg, #c0c0c0, #ff0000, #ffd700);
+    --gradient-fire: linear-gradient(180deg, #ff4500, #ff0000);
     
-    /* Core */
-    --bg-dark: var(--lambo-black);
-    --bg-card: var(--lambo-carbon);
-    --bg-card-hover: var(--lambo-steel);
-    --text-primary: var(--lambo-white);
-    --text-secondary: #aaa;
+    --bg-dark: var(--amg-black);
+    --bg-card: var(--amg-carbon);
+    --bg-card-hover: var(--amg-steel);
+    --text-primary: #ffffff;
+    --text-secondary: #999;
     --text-muted: #666;
     --border: #333;
-    --gradient: var(--gradient-flame);
+    --gradient: var(--gradient-amg);
 }
 
 * {
@@ -34,21 +31,21 @@
 }
 
 body {
-    font-family: 'Arial Black', 'Helvetica Neue', sans-serif;
-    background: var(--lambo-black);
-    color: var(--lambo-white);
+    font-family: 'Arial', 'Helvetica Neue', sans-serif;
+    background: var(--amg-black);
+    color: var(--amg-white);
     min-height: 100vh;
     overflow-x: hidden;
 }
 
 /* ============================================
-   SPLASH SCREEN - Lamborghini Engine Start
+   SPLASH SCREEN - AMG Engine Start
    ============================================ */
 
 .splash {
     position: fixed;
     inset: 0;
-    background: var(--lambo-black);
+    background: var(--amg-black);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -56,195 +53,197 @@ body {
     z-index: 9999;
 }
 
-.splash-logo {
-    width: 180px;
-    height: 180px;
-    position: relative;
-    margin-bottom: 2rem;
+.splash-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+        radial-gradient(ellipse at 50% 30%, rgba(192, 192, 192, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 100%, rgba(255, 0, 0, 0.2) 0%, transparent 40%);
 }
 
-.splash-logo .lamborghini-emblem {
+.splash-logo {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.amg-emblem {
     width: 100%;
     height: 100%;
-    background: var(--gradient-flame);
-    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    background: var(--gradient-amg);
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    animation: pulse-glow 1.5s ease-in-out infinite;
+    position: relative;
+    box-shadow: 
+        0 0 50px rgba(192, 192, 192, 0.3),
+        0 0 100px rgba(255, 0, 0, 0.2),
+        inset 0 0 30px rgba(0, 0, 0, 0.5);
+    animation: amg-pulse 2s ease-in-out infinite;
 }
 
-.splash-logo .lamborghini-emblem::before {
-    content: '🐂';
-    font-size: 80px;
+.amg-emblem::before {
+    content: 'AMG';
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--amg-black);
+    text-shadow: 0 2px 4px rgba(255, 255, 255, 0.3);
+    letter-spacing: 4px;
 }
 
-@keyframes pulse-glow {
+@keyframes amg-pulse {
     0%, 100% { 
-        box-shadow: 0 0 30px rgba(255, 107, 0, 0.5), 
-                    0 0 60px rgba(255, 215, 0, 0.3);
         transform: scale(1);
+        box-shadow: 0 0 50px rgba(192, 192, 192, 0.3), 0 0 100px rgba(255, 0, 0, 0.2);
     }
     50% { 
-        box-shadow: 0 0 50px rgba(255, 107, 0, 0.8), 
-                    0 0 100px rgba(255, 215, 0, 0.5);
         transform: scale(1.05);
+        box-shadow: 0 0 80px rgba(192, 192, 192, 0.5), 0 0 150px rgba(255, 0, 0, 0.4);
     }
 }
 
-/* Engine Start Animation */
-.engine-start {
+/* Engine Rev Animation */
+.engine-flames {
     position: absolute;
-    width: 100%;
-    height: 100%;
-    background: var(--gradient-flame);
-    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-    animation: engine-rev 2s ease-out forwards;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
     opacity: 0;
 }
 
-@keyframes engine-rev {
-    0% { 
-        opacity: 0; 
-        transform: scale(0.5) rotate(0deg);
-    }
-    20% { 
-        opacity: 1; 
-        transform: scale(1) rotate(0deg);
-    }
-    40% { 
-        opacity: 1; 
-        transform: scale(1.1) rotate(-5deg);
-    }
-    60% { 
-        opacity: 1; 
-        transform: scale(1.15) rotate(5deg);
-    }
-    80% { 
-        opacity: 0.8; 
-        transform: scale(1.1) rotate(-2deg);
-    }
-    100% { 
-        opacity: 0; 
-        transform: scale(2) rotate(0deg);
-    }
+.engine-flames.active {
+    animation: flames 0.15s ease-out infinite;
+}
+
+.flame {
+    width: 30px;
+    height: 50px;
+    background: var(--gradient-fire);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    filter: blur(2px);
+}
+
+@keyframes flames {
+    0%, 100% { opacity: 0.8; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.3); }
 }
 
 .splash-text {
-    font-size: 2.5rem;
+    font-size: 3rem;
     font-weight: 900;
     text-transform: uppercase;
-    letter-spacing: 8px;
-    background: var(--gradient-flame);
+    letter-spacing: 12px;
+    background: var(--gradient-amg);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: flicker 0.1s infinite;
-}
-
-@keyframes flicker {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.95; }
+    margin-bottom: 0.25rem;
 }
 
 .splash-subtitle {
-    font-size: 1rem;
-    letter-spacing: 12px;
-    color: var(--lambo-orange);
-    margin-top: 0.5rem;
+    font-size: 1.2rem;
+    letter-spacing: 16px;
+    color: var(--amg-silver);
+    font-weight: 300;
     text-transform: uppercase;
 }
 
-/* RPM Gauge */
-.rpm-gauge {
-    width: 200px;
-    height: 100px;
+/* RPM Cluster */
+.rpm-cluster {
+    width: 280px;
     margin-top: 2rem;
+    position: relative;
+}
+
+.rpm-display {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.rpm-digit {
+    width: 50px;
+    height: 70px;
+    background: var(--amg-carbon);
+    border: 2px solid var(--amg-steel);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: var(--amg-red);
+    font-family: 'Courier New', monospace;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.rpm-label {
+    text-align: center;
+    color: var(--amg-silver);
+    font-size: 0.8rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+/* RPM Bar */
+.rpm-bar {
+    height: 8px;
+    background: var(--amg-carbon);
+    border-radius: 4px;
+    margin-top: 1rem;
+    overflow: hidden;
+    border: 1px solid var(--amg-steel);
+}
+
+.rpm-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00ff00, #ffff00, #ff4500, #ff0000);
+    border-radius: 4px;
+    width: 0%;
+    transition: width 0.05s linear;
+}
+
+/* Status */
+.engine-status {
+    margin-top: 1.5rem;
+    padding: 0.75rem 2rem;
+    background: transparent;
+    border: 2px solid var(--amg-red);
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--amg-red);
     position: relative;
     overflow: hidden;
 }
 
-.rpm-gauge .gauge-bg {
-    width: 200px;
-    height: 100px;
-    border: 3px solid var(--lambo-orange);
-    border-bottom: none;
-    border-radius: 100px 100px 0 0;
-    position: relative;
-}
-
-.rpm-gauge .gauge-fill {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 0%;
-    background: var(--gradient-flame);
-    transition: height 0.3s ease;
-    border-radius: 100px 100px 0 0;
-}
-
-.rpm-gauge .needle {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 4px;
-    height: 80px;
-    background: var(--lambo-red);
-    transform-origin: bottom center;
-    transform: translateX(-50%) rotate(-90deg);
-    transition: transform 0.5s ease;
-    border-radius: 2px;
-}
-
-.rpm-gauge .needle::after {
+.engine-status::before {
     content: '';
     position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 20px;
-    height: 20px;
-    background: var(--lambo-white);
-    border-radius: 50%;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 0, 0, 0.3), transparent);
+    animation: shine 2s infinite;
 }
 
-.rpm-label {
-    font-size: 0.8rem;
-    color: var(--lambo-orange);
-    letter-spacing: 4px;
-    margin-top: 0.5rem;
+@keyframes shine {
+    0% { left: -100%; }
+    100% { left: 100%; }
 }
 
-/* Engine status */
-.engine-status {
-    margin-top: 1.5rem;
-    padding: 0.75rem 2rem;
-    background: var(--lambo-carbon);
-    border: 2px solid var(--lambo-orange);
-    border-radius: 50px;
-    font-size: 0.9rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-}
-
-.engine-status::before {
-    content: '●';
-    color: var(--lambo-orange);
-    margin-right: 0.5rem;
-    animation: blink 0.5s infinite;
-}
-
-@keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-}
-
-/* Loading bar */
+/* Loading */
 .loading-bar {
     width: 200px;
     height: 4px;
-    background: var(--lambo-carbon);
+    background: var(--amg-carbon);
     border-radius: 2px;
     margin-top: 1.5rem;
     overflow: hidden;
@@ -252,8 +251,8 @@ body {
 
 .loading-bar-fill {
     height: 100%;
-    background: var(--gradient-flame);
-    animation: loading 2s ease-out forwards;
+    background: var(--gradient-amg);
+    animation: loading 3s ease-out forwards;
     border-radius: 2px;
 }
 
@@ -263,7 +262,7 @@ body {
 }
 
 /* ============================================
-   MAIN APP - Sport Design
+   MAIN APP - AMG Design
    ============================================ */
 
 .app {
@@ -274,12 +273,12 @@ body {
 
 /* Header */
 .header {
-    background: linear-gradient(180deg, var(--lambo-black) 0%, var(--lambo-carbon) 100%);
+    background: linear-gradient(180deg, var(--amg-carbon) 0%, var(--amg-black) 100%);
     padding: 1rem 1.25rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid var(--lambo-orange);
+    border-bottom: 3px solid var(--amg-red);
     position: sticky;
     top: 0;
     z-index: 100;
@@ -291,71 +290,87 @@ body {
     gap: 0.75rem;
 }
 
-.lambo-emblem {
-    width: 40px;
-    height: 40px;
-    background: var(--gradient-flame);
-    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+.amg-badge {
+    width: 45px;
+    height: 45px;
+    background: var(--gradient-amg);
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 900;
+    color: var(--amg-black);
+    letter-spacing: 1px;
 }
 
 .app-name {
-    font-size: 1.25rem;
+    font-size: 1.3rem;
     font-weight: 900;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    background: var(--gradient-flame);
+    letter-spacing: 3px;
+    background: var(--gradient-amg);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 
 .icon-btn {
-    width: 40px;
-    height: 40px;
-    background: var(--lambo-carbon);
-    border: 2px solid var(--lambo-orange);
+    width: 44px;
+    height: 44px;
+    background: var(--amg-carbon);
+    border: 2px solid var(--amg-steel);
     border-radius: 50%;
-    color: var(--lambo-orange);
+    color: var(--amg-silver);
     font-size: 1.2rem;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.2s;
 }
 
 .icon-btn:active {
-    background: var(--lambo-orange);
-    color: var(--lambo-black);
+    background: var(--amg-red);
+    border-color: var(--amg-red);
+    color: white;
     transform: scale(0.95);
 }
 
-/* Main Content */
+/* Main */
 .main {
     flex: 1;
     padding: 1.25rem;
     padding-bottom: 100px;
 }
 
-/* Status Card - Speedometer Style */
+/* Status Card */
 .status-card {
-    background: var(--lambo-carbon);
-    border: 2px solid var(--lambo-orange);
-    border-radius: 20px;
-    padding: 2rem;
+    background: var(--amg-carbon);
+    border: 2px solid var(--amg-steel);
+    border-radius: 16px;
+    padding: 1.5rem;
     margin-bottom: 1rem;
     position: relative;
     overflow: hidden;
 }
 
 .status-card::before {
+    content: 'VENOM';
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 0.7rem;
+    font-weight: 900;
+    color: var(--amg-steel);
+    letter-spacing: 4px;
+}
+
+.status-card::after {
     content: '';
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: 0;
     right: 0;
     height: 3px;
-    background: var(--gradient-flame);
+    background: var(--gradient-amg);
 }
 
 .status-indicator {
@@ -364,22 +379,8 @@ body {
 }
 
 .status-icon {
-    font-size: 4rem;
-    display: inline-block;
-    animation: none;
-}
-
-.status-connected .status-icon {
-    animation: heartbeat 1s infinite;
-}
-
-@keyframes heartbeat {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-}
-
-.status-ring {
-    display: none;
+    font-size: 5rem;
+    line-height: 1;
 }
 
 .status-text {
@@ -387,47 +388,24 @@ body {
     font-weight: 900;
     text-transform: uppercase;
     text-align: center;
-    margin-bottom: 0.5rem;
+    letter-spacing: 4px;
+    margin-bottom: 0.25rem;
 }
 
 .status-subtext {
     text-align: center;
     color: var(--text-secondary);
-    font-size: 0.9rem;
-    letter-spacing: 1px;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
 }
 
-/* Connection Info - Racing Stripes */
+/* Connection Info */
 .connection-info {
-    background: var(--lambo-black);
-    border-radius: 12px;
+    background: var(--amg-black);
+    border-radius: 10px;
     padding: 1rem;
     margin: 1rem 0;
-    border: 1px solid var(--lambo-orange);
-    position: relative;
-    overflow: hidden;
-}
-
-.connection-info::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 10px,
-        rgba(255, 107, 0, 0.1) 10px,
-        rgba(255, 107, 0, 0.1) 20px
-    );
-    animation: stripes 2s linear infinite;
-}
-
-@keyframes stripes {
-    0% { left: -100%; }
-    100% { left: 100%; }
+    border: 1px solid var(--amg-steel);
 }
 
 .info-row {
@@ -442,34 +420,37 @@ body {
 }
 
 .info-label {
-    color: var(--lambo-orange);
-    font-size: 0.85rem;
+    color: var(--amg-silver);
+    font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
 .info-value {
-    color: var(--lambo-white);
+    color: var(--amg-white);
     font-weight: bold;
     font-family: 'Courier New', monospace;
 }
 
-/* Connect Button - Racing Style */
+/* Connect Button - AMG Style */
 .connect-btn {
     width: 100%;
     padding: 1.25rem;
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     font-weight: 900;
     text-transform: uppercase;
-    letter-spacing: 4px;
+    letter-spacing: 6px;
     border: none;
     border-radius: 50px;
-    background: var(--gradient-flame);
-    color: var(--lambo-black);
+    background: linear-gradient(135deg, #333 0%, #1a1a1a 50%, #333 100%);
+    color: var(--amg-white);
     cursor: pointer;
     position: relative;
     overflow: hidden;
     transition: all 0.3s;
+    box-shadow: 
+        0 4px 15px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .connect-btn::before {
@@ -477,9 +458,9 @@ body {
     position: absolute;
     top: 0;
     left: -100%;
-    width: 100%;
+    width: 50%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
     transition: left 0.5s;
 }
 
@@ -492,18 +473,18 @@ body {
 }
 
 .connect-btn.connected {
-    background: #00ff00;
-    box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+    background: linear-gradient(135deg, #00aa00 0%, #006600 50%, #00aa00 100%);
+    box-shadow: 0 0 30px rgba(0, 255, 0, 0.3);
 }
 
 .connect-btn.connecting {
-    background: var(--lambo-orange);
-    animation: pulse 1s infinite;
+    background: linear-gradient(135deg, var(--amg-red) 0%, #aa0000 50%, var(--amg-red) 100%);
+    animation: race-pulse 0.5s infinite;
 }
 
-@keyframes pulse {
-    0%, 100% { box-shadow: 0 0 20px rgba(255, 107, 0, 0.5); }
-    50% { box-shadow: 0 0 40px rgba(255, 107, 0, 0.8); }
+@keyframes race-pulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); }
+    50% { box-shadow: 0 0 40px rgba(255, 0, 0, 0.8); }
 }
 
 /* Double VPN Toggle */
@@ -513,24 +494,24 @@ body {
     justify-content: center;
     gap: 1rem;
     margin: 1rem 0;
-    padding: 1rem;
-    background: var(--lambo-black);
+    padding: 0.75rem 1rem;
+    background: var(--amg-black);
     border-radius: 50px;
-    border: 2px solid var(--lambo-yellow);
+    border: 1px solid var(--amg-steel);
 }
 
 .double-vpn-toggle span {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 2px;
-    color: var(--lambo-yellow);
+    color: var(--amg-silver);
 }
 
 .toggle-switch {
     position: relative;
-    width: 60px;
-    height: 30px;
+    width: 56px;
+    height: 28px;
 }
 
 .toggle-switch input {
@@ -543,39 +524,39 @@ body {
     position: absolute;
     cursor: pointer;
     inset: 0;
-    background: var(--lambo-carbon);
-    border: 2px solid var(--lambo-orange);
-    border-radius: 30px;
+    background: var(--amg-carbon);
+    border: 2px solid var(--amg-steel);
+    border-radius: 28px;
     transition: 0.3s;
 }
 
 .toggle-slider::before {
     content: '';
     position: absolute;
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
     left: 2px;
     bottom: 2px;
-    background: var(--lambo-orange);
+    background: var(--amg-silver);
     border-radius: 50%;
     transition: 0.3s;
 }
 
 input:checked + .toggle-slider {
-    background: var(--lambo-yellow);
-    border-color: var(--lambo-yellow);
+    background: var(--amg-red);
+    border-color: var(--amg-red);
 }
 
 input:checked + .toggle-slider::before {
-    transform: translateX(30px);
-    background: var(--lambo-black);
+    transform: translateX(28px);
+    background: white;
 }
 
-/* Subscription Card */
+/* Subscription */
 .subscription-card {
-    background: var(--lambo-carbon);
-    border: 2px solid var(--lambo-yellow);
-    border-radius: 20px;
+    background: var(--amg-carbon);
+    border: 2px solid var(--amg-gold);
+    border-radius: 16px;
     padding: 1.25rem;
     margin-bottom: 1rem;
 }
@@ -588,7 +569,7 @@ input:checked + .toggle-slider::before {
 }
 
 .card-title {
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -597,19 +578,14 @@ input:checked + .toggle-slider::before {
 .card-badge {
     padding: 0.25rem 0.75rem;
     border-radius: 50px;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: bold;
     text-transform: uppercase;
 }
 
 .card-badge.active {
-    background: var(--lambo-yellow);
-    color: var(--lambo-black);
-}
-
-.card-badge.expired {
-    background: var(--lambo-red);
-    color: var(--lambo-white);
+    background: var(--amg-gold);
+    color: var(--amg-black);
 }
 
 .sub-info {
@@ -620,7 +596,8 @@ input:checked + .toggle-slider::before {
 
 .sub-plan {
     font-weight: bold;
-    color: var(--lambo-orange);
+    color: var(--amg-silver);
+    font-size: 0.9rem;
 }
 
 .sub-expiry {
@@ -630,7 +607,7 @@ input:checked + .toggle-slider::before {
 
 .sub-progress {
     height: 6px;
-    background: var(--lambo-black);
+    background: var(--amg-black);
     border-radius: 3px;
     overflow: hidden;
     margin-bottom: 0.5rem;
@@ -638,54 +615,15 @@ input:checked + .toggle-slider::before {
 
 .progress-bar {
     height: 100%;
-    background: var(--gradient-flame);
+    background: var(--gradient-amg);
     border-radius: 3px;
-    transition: width 0.5s;
 }
 
 .sub-days {
     text-align: center;
-    color: var(--lambo-yellow);
+    color: var(--amg-gold);
     font-weight: bold;
-    font-size: 0.9rem;
-}
-
-/* Actions Grid */
-.actions-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    margin-bottom: 1rem;
-}
-
-.action-btn {
-    background: var(--lambo-carbon);
-    border: 2px solid var(--border);
-    border-radius: 16px;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.action-btn:active {
-    background: var(--lambo-steel);
-    border-color: var(--lambo-orange);
-    transform: scale(0.95);
-}
-
-.action-icon {
-    font-size: 1.5rem;
-}
-
-.action-text {
-    color: var(--text-secondary);
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    font-size: 0.85rem;
 }
 
 /* Server List */
@@ -701,27 +639,28 @@ input:checked + .toggle-slider::before {
     display: flex;
     align-items: center;
     gap: 1rem;
-    padding: 1rem;
-    background: var(--lambo-carbon);
+    padding: 0.875rem;
+    background: var(--amg-carbon);
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 10px;
     margin-bottom: 0.5rem;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.2s;
 }
 
 .server-item:active {
-    background: var(--lambo-steel);
-    border-color: var(--lambo-orange);
+    background: var(--amg-steel);
+    border-color: var(--amg-red);
+    transform: scale(0.98);
 }
 
 .server-item.selected {
-    border-color: var(--lambo-orange);
-    background: rgba(255, 107, 0, 0.1);
+    border-color: var(--amg-red);
+    background: rgba(255, 0, 0, 0.1);
 }
 
 .server-flag {
-    font-size: 2rem;
+    font-size: 1.8rem;
 }
 
 .server-info {
@@ -730,27 +669,65 @@ input:checked + .toggle-slider::before {
 
 .server-name {
     font-weight: bold;
-    margin-bottom: 0.25rem;
+    font-size: 0.9rem;
+    margin-bottom: 0.15rem;
 }
 
 .server-location {
     color: var(--text-secondary);
-    font-size: 0.85rem;
+    font-size: 0.8rem;
 }
 
 .server-ping {
     font-weight: bold;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
 }
 
-/* Bottom Navigation */
+/* Actions */
+.actions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+}
+
+.action-btn {
+    background: var(--amg-carbon);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0.875rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.action-btn:active {
+    background: var(--amg-steel);
+    border-color: var(--amg-red);
+    transform: scale(0.95);
+}
+
+.action-icon {
+    font-size: 1.4rem;
+}
+
+.action-text {
+    color: var(--text-secondary);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Bottom Nav */
 .bottom-nav {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    background: var(--lambo-black);
-    border-top: 2px solid var(--lambo-orange);
+    background: var(--amg-black);
+    border-top: 3px solid var(--amg-red);
     padding: 0.75rem;
     display: flex;
     justify-content: space-around;
@@ -766,27 +743,27 @@ input:checked + .toggle-slider::before {
     background: none;
     border: none;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.2s;
 }
 
 .nav-item.active {
-    color: var(--lambo-orange);
+    color: var(--amg-red);
 }
 
 .nav-item span {
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
 
-/* Auth Screen */
+/* Auth */
 .auth-screen {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 2rem;
-    background: radial-gradient(ellipse at center, var(--lambo-carbon) 0%, var(--lambo-black) 100%);
+    background: radial-gradient(ellipse at center, var(--amg-carbon) 0%, var(--amg-black) 100%);
 }
 
 .auth-content {
@@ -795,19 +772,23 @@ input:checked + .toggle-slider::before {
 }
 
 .auth-logo {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 }
 
-.auth-logo .hexagon {
-    width: 150px;
-    height: 150px;
-    background: var(--gradient-flame);
-    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+.auth-logo .amg-circle {
+    width: 140px;
+    height: 140px;
+    background: var(--gradient-amg);
+    border-radius: 50%;
     margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 60px;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--amg-black);
+    letter-spacing: 4px;
+    box-shadow: 0 0 40px rgba(192, 192, 192, 0.2);
     animation: float 3s ease-in-out infinite;
 }
 
@@ -817,21 +798,21 @@ input:checked + .toggle-slider::before {
 }
 
 .auth-content h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 900;
     text-transform: uppercase;
-    letter-spacing: 4px;
-    background: var(--gradient-flame);
+    letter-spacing: 6px;
+    background: var(--gradient-amg);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 .auth-desc {
     color: var(--text-secondary);
     margin-bottom: 2rem;
-    line-height: 1.6;
+    font-size: 0.9rem;
 }
 
 .telegram-btn {
@@ -841,7 +822,7 @@ input:checked + .toggle-slider::before {
     border: none;
     border-radius: 50px;
     color: white;
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 2px;
@@ -850,7 +831,7 @@ input:checked + .toggle-slider::before {
     align-items: center;
     justify-content: center;
     gap: 0.75rem;
-    transition: all 0.3s;
+    transition: all 0.2s;
 }
 
 .telegram-btn:active {
@@ -860,16 +841,15 @@ input:checked + .toggle-slider::before {
 
 .auth-hint {
     color: var(--text-muted);
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     margin-top: 1.5rem;
-    line-height: 1.5;
 }
 
 /* Modal */
 .modal {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.9);
+    background: rgba(0, 0, 0, 0.95);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -878,9 +858,9 @@ input:checked + .toggle-slider::before {
 }
 
 .modal-content {
-    background: var(--lambo-carbon);
-    border: 2px solid var(--lambo-orange);
-    border-radius: 20px;
+    background: var(--amg-carbon);
+    border: 2px solid var(--amg-red);
+    border-radius: 16px;
     width: 100%;
     max-width: 400px;
     max-height: 80vh;
@@ -891,14 +871,14 @@ input:checked + .toggle-slider::before {
 
 .modal-close {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
+    top: 0.75rem;
+    right: 0.75rem;
     width: 32px;
     height: 32px;
-    background: var(--lambo-black);
-    border: 2px solid var(--lambo-orange);
+    background: var(--amg-black);
+    border: 2px solid var(--amg-steel);
     border-radius: 50%;
-    color: var(--lambo-orange);
+    color: var(--amg-silver);
     font-size: 1.5rem;
     cursor: pointer;
     display: flex;
@@ -907,12 +887,12 @@ input:checked + .toggle-slider::before {
 }
 
 .modal-title {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: 2px;
     margin-bottom: 1rem;
-    color: var(--lambo-orange);
+    color: var(--amg-silver);
 }
 
 /* Toast */
@@ -921,11 +901,11 @@ input:checked + .toggle-slider::before {
     bottom: 100px;
     left: 50%;
     transform: translateX(-50%);
-    background: var(--lambo-carbon);
-    border: 2px solid var(--lambo-orange);
+    background: var(--amg-carbon);
+    border: 2px solid var(--amg-red);
     border-radius: 50px;
     padding: 0.75rem 1.5rem;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -934,13 +914,13 @@ input:checked + .toggle-slider::before {
 }
 
 .toast.success {
-    border-color: #00ff00;
-    color: #00ff00;
+    border-color: #00aa00;
+    color: #00aa00;
 }
 
 .toast.error {
-    border-color: var(--lambo-red);
-    color: var(--lambo-red);
+    border-color: var(--amg-red);
+    color: var(--amg-red);
 }
 
 @keyframes toast-in {
@@ -956,9 +936,9 @@ input:checked + .toggle-slider::before {
 }
 
 .loader span {
-    width: 12px;
-    height: 12px;
-    background: var(--lambo-orange);
+    width: 10px;
+    height: 10px;
+    background: var(--amg-red);
     border-radius: 50%;
     animation: bounce 1.4s ease-in-out infinite both;
 }
@@ -980,18 +960,19 @@ input:checked + .toggle-slider::before {
 .profile-avatar {
     width: 80px;
     height: 80px;
-    background: var(--gradient-flame);
+    background: var(--gradient-amg);
     border-radius: 50%;
     margin: 0 auto 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem;
-    font-weight: bold;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--amg-black);
 }
 
 .profile-name {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     font-weight: bold;
     margin-bottom: 0.25rem;
 }
@@ -1009,20 +990,20 @@ input:checked + .toggle-slider::before {
 }
 
 .stat-item {
-    background: var(--lambo-black);
-    border-radius: 12px;
+    background: var(--amg-black);
+    border-radius: 10px;
     padding: 1rem;
 }
 
 .stat-value {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     font-weight: bold;
-    color: var(--lambo-orange);
+    color: var(--amg-silver);
 }
 
 .stat-label {
     color: var(--text-secondary);
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     margin-top: 0.25rem;
 }
 
@@ -1037,15 +1018,14 @@ input:checked + .toggle-slider::before {
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--lambo-black);
+    background: var(--amg-black);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--lambo-orange);
+    background: var(--amg-red);
     border-radius: 2px;
 }
 
-/* Media Query */
 @media (min-width: 768px) {
     .main {
         max-width: 480px;
