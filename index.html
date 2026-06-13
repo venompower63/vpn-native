@@ -182,201 +182,76 @@
 
     <script>
       // ==========================================
-      // SPORT SOUND SYSTEM - Sport Roar
+      // SPORT SOUND SYSTEM - Using MP3 file
       // ==========================================
       class SportSound {
         constructor() {
+          this.audio = null;
           this.audioCtx = null;
-          this.isInit = false;
-          this.activeGrowls = [];
+          this.source = null;
+          this.buffer = null;
+          this.isLoaded = false;
+          // Audio file URL
+          this.audioUrl = "https://storage.yandexcloud.net/promto-user-static-sites-prod/design-assets/941619812/6bb7db79-ec84-41c7-b74f-db5bb596911a/652fb1be-d427-4c80-8a30-d5ea8267b45c-_.mp3";
         }
 
-        init() {
-          if (this.isInit) return;
-          this.audioCtx = new (
-            window.AudioContext || window.webkitAudioContext
-          )();
-          this.isInit = true;
+        // Load audio file
+        async loadAudio() {
+          if (this.isLoaded) return;
+          try {
+            this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const response = await fetch(this.audioUrl);
+            const arrayBuffer = await response.arrayBuffer();
+            this.buffer = await this.audioCtx.decodeAudioData(arrayBuffer);
+            this.isLoaded = true;
+          } catch (e) {
+            console.log("Audio load failed, using fallback");
+          }
         }
 
-        // Create Sport roar sound
-        roar(intensity = 1) {
-          this.init();
-          const ctx = this.audioCtx;
-          const now = ctx.currentTime;
-          const duration = 0.5 + intensity * 0.5;
-
-          // Low rumble base (Sport's chest)
-          const rumble = ctx.createOscillator();
-          const rumbleGain = ctx.createGain();
-          const rumbleFilter = ctx.createBiquadFilter();
-
-          rumble.type = "sawtooth";
-          rumble.frequency.setValueAtTime(60 * intensity, now);
-          rumble.frequency.linearRampToValueAtTime(
-            40 * intensity,
-            now + duration,
-          );
-
-          rumbleFilter.type = "lowpass";
-          rumbleFilter.frequency.value = 150;
-          rumbleFilter.Q.value = 5;
-
-          rumbleGain.gain.setValueAtTime(0, now);
-          rumbleGain.gain.linearRampToValueAtTime(0.4 * intensity, now + 0.1);
-          rumbleGain.gain.linearRampToValueAtTime(
-            0.3 * intensity,
-            now + duration * 0.7,
-          );
-          rumbleGain.gain.linearRampToValueAtTime(0, now + duration);
-
-          rumble.connect(rumbleFilter);
-          rumbleFilter.connect(rumbleGain);
-          rumbleGain.connect(ctx.destination);
-          rumble.start(now);
-          rumble.stop(now + duration);
-
-          // Growl harmonics
-          const growl = ctx.createOscillator();
-          const growlGain = ctx.createGain();
-          const growlFilter = ctx.createBiquadFilter();
-
-          growl.type = "sawtooth";
-          growl.frequency.setValueAtTime(150 * intensity, now);
-          growl.frequency.linearRampToValueAtTime(
-            100 * intensity,
-            now + duration,
-          );
-
-          growlFilter.type = "bandpass";
-          growlFilter.frequency.value = 300;
-          growlFilter.Q.value = 3;
-
-          growlGain.gain.setValueAtTime(0, now);
-          growlGain.gain.linearRampToValueAtTime(0.2 * intensity, now + 0.05);
-          growlGain.gain.linearRampToValueAtTime(
-            0.15 * intensity,
-            now + duration * 0.6,
-          );
-          growlGain.gain.linearRampToValueAtTime(0, now + duration);
-
-          growl.connect(growlFilter);
-          growlFilter.connect(growlGain);
-          growlGain.connect(ctx.destination);
-          growl.start(now);
-          growl.stop(now + duration);
-
-          // Roar texture (noise)
-          const bufferSize = ctx.sampleRate * duration;
-          const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-          const data = buffer.getChannelData(0);
-          for (let i = 0; i < bufferSize; i++) {
-            const t = i / ctx.sampleRate;
-            data[i] =
-              (Math.random() * 2 - 1) *
-              Math.sin((t * Math.PI) / duration) *
-              0.5;
+        // Play the sound
+        play() {
+          if (!this.isLoaded || !this.audioCtx || !this.buffer) {
+            // Fallback - try to play as regular audio
+            const audio = new Audio(this.audioUrl);
+            audio.volume = 1;
+            audio.play().catch(() => {});
+            return;
           }
 
-          const noise = ctx.createBufferSource();
-          noise.buffer = buffer;
-
-          const noiseFilter = ctx.createBiquadFilter();
-          noiseFilter.type = "bandpass";
-          noiseFilter.frequency.value = 500;
-          noiseFilter.Q.value = 1;
-
-          const noiseGain = ctx.createGain();
-          noiseGain.gain.value = 0.15 * intensity;
-
-          noise.connect(noiseFilter);
-          noiseFilter.connect(noiseGain);
-          noiseGain.connect(ctx.destination);
-          noise.start(now);
+          try {
+            if (this.audioCtx.state === "suspended") {
+              this.audioCtx.resume();
+            }
+            this.source = this.audioCtx.createBufferSource();
+            this.source.buffer = this.buffer;
+            this.source.connect(this.audioCtx.destination);
+            this.source.start(0);
+          } catch (e) {
+            console.log("Play error:", e);
+          }
         }
 
-        // Short growl for button clicks
-        growl() {
-          this.init();
-          const ctx = this.audioCtx;
-          const now = ctx.currentTime;
+        // Alias methods for compatibility
+        welcome() { this.play(); }
+        yes() { this.play(); }
+        gunshot() { this.play(); }
+        roar() { this.play(); }
+        snarl() { this.play(); }
+        growl() { this.play(); }
+        menace() { this.play(); }
+        helicopter() { this.play(); }
+        startGrowl() { this.play(); }
+        deceleration() { this.play(); }
+        startup() { this.play(); }
+      }
 
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-          const filter = ctx.createBiquadFilter();
-
-          osc.type = "sawtooth";
-          osc.frequency.setValueAtTime(120, now);
-          osc.frequency.linearRampToValueAtTime(80, now + 0.15);
-
-          filter.type = "lowpass";
-          filter.frequency.value = 400;
-          filter.Q.value = 2;
-
-          gain.gain.setValueAtTime(0, now);
-          gain.gain.linearRampToValueAtTime(0.25, now + 0.02);
-          gain.gain.linearRampToValueAtTime(0.15, now + 0.08);
-          gain.gain.linearRampToValueAtTime(0, now + 0.2);
-
-          osc.connect(filter);
-          filter.connect(gain);
-          gain.connect(ctx.destination);
-          osc.start(now);
-          osc.stop(now + 0.2);
-        }
-
-        // Long menacing roar
-        menace() {
-          this.init();
-          const ctx = this.audioCtx;
-          const now = ctx.currentTime;
-
-          // Deep chest rumble
-          const rumble = ctx.createOscillator();
-          rumble.type = "sawtooth";
-          rumble.frequency.setValueAtTime(50, now);
-          rumble.frequency.linearRampToValueAtTime(30, now + 1.5);
-
-          const rumbleFilter = ctx.createBiquadFilter();
-          rumbleFilter.type = "lowpass";
-          rumbleFilter.frequency.value = 200;
-
-          const rumbleGain = ctx.createGain();
-          rumbleGain.gain.setValueAtTime(0, now);
-          rumbleGain.gain.linearRampToValueAtTime(0.5, now + 0.2);
-          rumbleGain.gain.linearRampToValueAtTime(0.4, now + 1);
-          rumbleGain.gain.linearRampToValueAtTime(0, now + 1.5);
-
-          rumble.connect(rumbleFilter);
-          rumbleFilter.connect(rumbleGain);
-          rumbleGain.connect(ctx.destination);
-          rumble.start(now);
-          rumble.stop(now + 1.5);
-
-          // Screech overlay
-          setTimeout(() => {
-            const osc = ctx.createOscillator();
-            osc.type = "sawtooth";
-            osc.frequency.setValueAtTime(400, ctx.currentTime);
-            osc.frequency.linearRampToValueAtTime(200, ctx.currentTime + 0.3);
-
-            const oscFilter = ctx.createBiquadFilter();
-            oscFilter.type = "bandpass";
-            oscFilter.frequency.value = 600;
-
-            const oscGain = ctx.createGain();
-            oscGain.gain.setValueAtTime(0.15, ctx.currentTime);
-            oscGain.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.4);
-
-            osc.connect(oscFilter);
-            oscFilter.connect(oscGain);
-            oscGain.connect(ctx.destination);
-            osc.start(ctx.currentTime);
-            osc.stop(ctx.currentTime + 0.4);
-          }, 200);
-        }
-
-        // Female voice - Yes sound
+      const sport = new SportSound();
+      
+      // Preload audio when page loads
+      window.addEventListener("load", () => {
+        sport.loadAudio();
+      });
         yes() {
           this.init();
           const ctx = this.audioCtx;
@@ -386,8 +261,8 @@
           // Fundamental frequency around 220Hz (A3)
           const fundamental = ctx.createOscillator();
           const gain = ctx.createGain();
-          
-          fundamental.type = 'sine';
+
+          fundamental.type = "sine";
           fundamental.frequency.setValueAtTime(400, now);
           // Nice melodic rise and fall
           fundamental.frequency.linearRampToValueAtTime(500, now + 0.08);
@@ -396,14 +271,14 @@
 
           // Add harmonics for richness
           const harm2 = ctx.createOscillator();
-          harm2.type = 'sine';
+          harm2.type = "sine";
           harm2.frequency.setValueAtTime(800, now);
           harm2.frequency.linearRampToValueAtTime(1000, now + 0.08);
           harm2.frequency.linearRampToValueAtTime(900, now + 0.15);
           harm2.frequency.linearRampToValueAtTime(760, now + 0.25);
 
           const harm3 = ctx.createOscillator();
-          harm3.type = 'sine';
+          harm3.type = "sine";
           harm3.frequency.setValueAtTime(1200, now);
           harm3.frequency.linearRampToValueAtTime(1500, now + 0.08);
           harm3.frequency.linearRampToValueAtTime(1350, now + 0.25);
@@ -423,7 +298,7 @@
 
           // Soft filter for pleasant tone
           const filter = ctx.createBiquadFilter();
-          filter.type = 'lowpass';
+          filter.type = "lowpass";
           filter.frequency.value = 3000;
 
           fundamental.connect(filter);
@@ -451,12 +326,12 @@
 
           // Female voice "welcome" - warm and welcoming
           // "Wel-come" with two syllables
-          
+
           // First syllable "Wel"
           const wel = ctx.createOscillator();
           const welGain = ctx.createGain();
-          
-          wel.type = 'sine';
+
+          wel.type = "sine";
           wel.frequency.setValueAtTime(350, now);
           wel.frequency.linearRampToValueAtTime(400, now + 0.1);
           wel.frequency.linearRampToValueAtTime(380, now + 0.2);
@@ -469,8 +344,8 @@
           // Second syllable "come"
           const come = ctx.createOscillator();
           const comeGain = ctx.createGain();
-          
-          come.type = 'sine';
+
+          come.type = "sine";
           come.frequency.setValueAtTime(380, now + 0.22);
           come.frequency.linearRampToValueAtTime(500, now + 0.32);
           come.frequency.linearRampToValueAtTime(450, now + 0.45);
@@ -484,8 +359,8 @@
           // Harmonics for warmth
           const harm = ctx.createOscillator();
           const harmGain = ctx.createGain();
-          
-          harm.type = 'sine';
+
+          harm.type = "sine";
           harm.frequency.setValueAtTime(700, now);
           harm.frequency.linearRampToValueAtTime(800, now + 0.1);
           harm.frequency.linearRampToValueAtTime(900, now + 0.35);
@@ -498,7 +373,7 @@
 
           // Filter for soft tone
           const filter = ctx.createBiquadFilter();
-          filter.type = 'lowpass';
+          filter.type = "lowpass";
           filter.frequency.value = 2500;
 
           const mainGain = ctx.createGain();
@@ -507,7 +382,7 @@
           wel.connect(welGain);
           come.connect(comeGain);
           harm.connect(harmGain);
-          
+
           welGain.connect(filter);
           comeGain.connect(filter);
           harmGain.connect(filter);
