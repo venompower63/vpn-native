@@ -9,33 +9,32 @@
     <title>Venom VPN</title>
     <link rel="stylesheet" href="./src/css/styles.css">
 </head>
-<body style="background: #0a0a14; margin: 0; padding: 0;">
+<body style="background: #0a0a14; margin: 0; padding: 0; font-family: Inter, sans-serif;">
     
-    <!-- Auth Screen (visible by default) -->
+    <!-- Auth Screen -->
     <div id="auth" class="auth-screen" style="display: flex;">
         <div class="auth-content">
-            <div class="auth-logo">
-                <img src="https://storage.yandexcloud.net/promto-user-static-sites-prod/design-assets/941619812/6bb7db79-ec84-41c7-b74f-db5bb596911a/67183a73-f3d0-4b86-8ab6-4d1569df816c-Venom_25921-2944282668.jpg" 
-                     alt="Venom" style="width: 120px; border-radius: 20px; margin-bottom: 1rem;">
-            </div>
+            <img src="https://storage.yandexcloud.net/promto-user-static-sites-prod/design-assets/941619812/6bb7db79-ec84-41c7-b74f-db5bb596911a/67183a73-f3d0-4b86-8ab6-4d1569df816c-Venom_25921-2944282668.jpg" 
+                 alt="Venom" style="width: 120px; border-radius: 20px; margin-bottom: 1rem;">
             <h1>Venom VPN</h1>
-            <p class="auth-desc">Безопасное и быстрое VPN-подключение</p>
+            <p class="auth-desc">Безопасное и быстрое VPN-подключение в один клик</p>
             <button class="telegram-btn" id="telegramAuth">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
                 </svg>
                 <span>Войти через Telegram</span>
             </button>
-            <p class="auth-hint">Нажмите кнопку выше для авторизации</p>
+            <p class="auth-hint">Быстрый вход без пароля через Telegram</p>
         </div>
     </div>
 
-    <!-- Main App (hidden by default) -->
-    <div id="app" class="app" style="display: none;">
+    <!-- Main App -->
+    <div id="app" class="app" style="display: none; flex-direction: column; min-height: 100vh;">
+        <!-- Header -->
         <header class="header">
             <div class="header-left">
                 <img src="https://storage.yandexcloud.net/promto-user-static-sites-prod/design-assets/941619812/6bb7db79-ec84-41c7-b74f-db5bb596911a/67183a73-f3d0-4b86-8ab6-4d1569df816c-Venom_25921-2944282668.jpg" 
-                     alt="Logo" style="width: 32px; height: 32px; border-radius: 8px;">
+                     alt="Logo" style="width: 32px; height: 32px; border-radius: 8px; object-fit: cover;">
                 <span class="app-name">Venom VPN</span>
             </div>
             <div class="header-right">
@@ -43,15 +42,23 @@
             </div>
         </header>
 
+        <!-- Main Content -->
         <main class="main">
-            <div class="status-card" id="statusCard">
-                <div class="status-indicator" id="statusIndicator">
-                    <div class="status-ring"></div>
-                    <div class="status-icon">🔓</div>
+            <!-- Status Card -->
+            <div class="status-card">
+                <div class="status-indicator">
+                    <div class="status-ring" id="statusRing"></div>
+                    <div class="status-icon" id="statusIcon">🔓</div>
                 </div>
                 <h2 class="status-text" id="statusText">Отключено</h2>
                 <p class="status-subtext" id="statusSubtext">Нажмите для подключения</p>
+                
+                <!-- Connection Info -->
                 <div class="connection-info" id="connectionInfo" style="display: none;">
+                    <div class="info-row">
+                        <span class="info-label">Сервер</span>
+                        <span class="info-value" id="serverName">—</span>
+                    </div>
                     <div class="info-row">
                         <span class="info-label">IP</span>
                         <span class="info-value" id="ipAddress">—</span>
@@ -61,28 +68,45 @@
                         <span class="info-value" id="location">—</span>
                     </div>
                 </div>
+                
+                <!-- Double VPN Toggle -->
+                <div class="double-vpn-toggle" id="doubleVpnToggle" style="margin: 1rem 0; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                    <span style="color: var(--text-secondary);">🔐 Double VPN</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="doubleVpnCheckbox">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                
                 <button class="connect-btn" id="connectBtn">Подключить</button>
             </div>
 
+            <!-- Subscription Card -->
             <div class="subscription-card">
                 <div class="card-header">
                     <span class="card-title">Подписка</span>
                     <span class="card-badge active" id="subBadge">Активна</span>
                 </div>
                 <div class="sub-info">
-                    <span class="sub-plan" id="subPlan">Оптимум</span>
-                    <span class="sub-expiry" id="subExpiry">До 14.07.2026</span>
+                    <span class="sub-plan" id="subPlan">Premium</span>
+                    <span class="sub-expiry" id="subExpiry">∞</span>
                 </div>
-                <div class="sub-progress">
-                    <div class="progress-bar" style="width: 17%"></div>
-                </div>
-                <p class="sub-days" id="subDays">30 дней осталось</p>
+                <p class="sub-days" id="subDays">Безлимит</p>
             </div>
 
+            <!-- Server Selection -->
+            <div class="server-selection" id="serverSelection">
+                <h3 style="color: var(--text-primary); margin-bottom: 1rem;">🌍 Выбор сервера</h3>
+                <div class="region-group" id="regionGroups">
+                    <!-- Regions will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Actions Grid -->
             <div class="actions-grid">
-                <button class="action-btn" id="serverBtn">
+                <button class="action-btn" id="serversBtn">
                     <span class="action-icon">🌐</span>
-                    <span class="action-text">Сервер</span>
+                    <span class="action-text">Серверы</span>
                 </button>
                 <button class="action-btn" id="configBtn">
                     <span class="action-icon">📥</span>
@@ -95,136 +119,565 @@
             </div>
         </main>
 
+        <!-- Bottom Navigation -->
         <nav class="bottom-nav">
-            <button class="nav-item active">🏠<span>Главная</span></button>
-            <button class="nav-item">⚙️<span>Настройки</span></button>
-            <button class="nav-item">👤<span>Профиль</span></button>
+            <button class="nav-item active" data-tab="home">🏠<span>Главная</span></button>
+            <button class="nav-item" data-tab="servers" id="navServers">🌐<span>Серверы</span></button>
+            <button class="nav-item" data-tab="profile">👤<span>Профиль</span></button>
         </nav>
     </div>
 
     <!-- Modal -->
     <div id="modal" class="modal" style="display: none;">
         <div class="modal-content">
-            <button class="modal-close" onclick="closeModal()">×</button>
+            <button class="modal-close" id="modalCloseBtn">×</button>
             <div id="modalBody"></div>
         </div>
     </div>
 
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="modal" style="display: none; background: rgba(0,0,0,0.9);">
+        <div style="text-align: center;">
+            <div class="loader" style="margin-bottom: 1rem;"><span></span><span></span><span></span></div>
+            <p id="loadingText" style="color: white;">Загрузка...</p>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast" style="display: none;">
+        <span id="toastText"></span>
+    </div>
+
     <script>
-        // Simple app state
-        var connected = false;
+        // ==========================================
+        // Venom VPN App - Configuration & State
+        // ==========================================
         
-        // DOM elements
-        var authScreen = document.getElementById('auth');
-        var appScreen = document.getElementById('app');
-        var modal = document.getElementById('modal');
-        var modalBody = document.getElementById('modalBody');
-        var statusText = document.getElementById('statusText');
-        var statusSubtext = document.getElementById('statusSubtext');
-        var statusIcon = document.querySelector('.status-icon');
-        var connectBtn = document.getElementById('connectBtn');
-        var connectionInfo = document.getElementById('connectionInfo');
-        var ipAddress = document.getElementById('ipAddress');
-        var locationEl = document.getElementById('location');
+        const CONFIG = {
+            API_URL: 'https://api.venomvpn.com/api/v1', // Замените на ваш API URL
+            APP_NAME: 'Venom VPN',
+            WG_PORT: 51820,
+            WG_DNS: '1.1.1.1',
+        };
+        
+        const SERVERS = [
+            // Americas
+            { id: 'us-east-1', name: 'US East', location: 'Virginia, USA', country: 'us', flag: '🇺🇸', ping: 45 },
+            { id: 'us-west-1', name: 'US West', location: 'California, USA', country: 'us', flag: '🇺🇸', ping: 78 },
+            { id: 'sa-east-1', name: 'Brazil', location: 'São Paulo', country: 'br', flag: '🇧🇷', ping: 120 },
+            { id: 'ca-central-1', name: 'Canada', location: 'Toronto', country: 'ca', flag: '🇨🇦', ping: 55 },
+            
+            // Europe
+            { id: 'eu-central-1', name: 'Germany', location: 'Frankfurt', country: 'de', flag: '🇩🇪', ping: 25 },
+            { id: 'eu-west-1', name: 'Ireland', location: 'Dublin', country: 'ie', flag: '🇮🇪', ping: 30 },
+            { id: 'eu-west-2', name: 'UK', location: 'London', country: 'uk', flag: '🇬🇧', ping: 35 },
+            { id: 'eu-west-3', name: 'France', location: 'Paris', country: 'fr', flag: '🇫🇷', ping: 28 },
+            { id: 'eu-north-1', name: 'Sweden', location: 'Stockholm', country: 'se', flag: '🇸🇪', ping: 40 },
+            { id: 'eu-south-1', name: 'Italy', location: 'Milan', country: 'it', flag: '🇮🇹', ping: 35 },
+            { id: 'pl-central-1', name: 'Poland', location: 'Warsaw', country: 'pl', flag: '🇵🇱', ping: 32 },
+            
+            // Asia Pacific
+            { id: 'ap-northeast-1', name: 'Japan', location: 'Tokyo', country: 'jp', flag: '🇯🇵', ping: 120 },
+            { id: 'ap-southeast-1', name: 'Singapore', location: 'Singapore', country: 'sg', flag: '🇸🇬', ping: 100 },
+            { id: 'ap-south-1', name: 'India', location: 'Mumbai', country: 'in', flag: '🇮🇳', ping: 90 },
+            { id: 'ap-southeast-2', name: 'Australia', location: 'Sydney', country: 'au', flag: '🇦🇺', ping: 150 },
+            
+            // Middle East & Africa
+            { id: 'me-central-1', name: 'UAE', location: 'Dubai', country: 'ae', flag: '🇦🇪', ping: 85 },
+            { id: 'il-central-1', name: 'Israel', location: 'Tel Aviv', country: 'il', flag: '🇮🇱', ping: 75 },
+            { id: 'af-south-1', name: 'South Africa', location: 'Cape Town', country: 'za', flag: '🇿🇦', ping: 180 },
+        ];
+        
+        // App State
+        const state = {
+            connected: false,
+            connecting: false,
+            selectedServer: null,
+            doubleVpn: false,
+            user: null,
+            token: null,
+            config: null,
+        };
+        
+        // DOM Elements
+        const elements = {
+            auth: document.getElementById('auth'),
+            app: document.getElementById('app'),
+            modal: document.getElementById('modal'),
+            modalBody: document.getElementById('modalBody'),
+            modalCloseBtn: document.getElementById('modalCloseBtn'),
+            loadingOverlay: document.getElementById('loadingOverlay'),
+            loadingText: document.getElementById('loadingText'),
+            toast: document.getElementById('toast'),
+            toastText: document.getElementById('toastText'),
+            statusIcon: document.getElementById('statusIcon'),
+            statusRing: document.getElementById('statusRing'),
+            statusText: document.getElementById('statusText'),
+            statusSubtext: document.getElementById('statusSubtext'),
+            connectionInfo: document.getElementById('connectionInfo'),
+            serverName: document.getElementById('serverName'),
+            ipAddress: document.getElementById('ipAddress'),
+            location: document.getElementById('location'),
+            connectBtn: document.getElementById('connectBtn'),
+            doubleVpnCheckbox: document.getElementById('doubleVpnCheckbox'),
+            regionGroups: document.getElementById('regionGroups'),
+            subBadge: document.getElementById('subBadge'),
+            subPlan: document.getElementById('subPlan'),
+            subDays: document.getElementById('subDays'),
+        };
+        
+        // ==========================================
+        // Utility Functions
+        // ==========================================
+        
+        function showLoading(text = 'Загрузка...') {
+            elements.loadingOverlay.style.display = 'flex';
+            elements.loadingText.textContent = text;
+        }
+        
+        function hideLoading() {
+            elements.loadingOverlay.style.display = 'none';
+        }
+        
+        function showToast(message, type = 'info') {
+            elements.toastText.textContent = message;
+            elements.toast.className = `toast ${type}`;
+            elements.toast.style.display = 'block';
+            setTimeout(() => elements.toast.style.display = 'none', 3000);
+        }
+        
+        function openModal(content) {
+            elements.modalBody.innerHTML = content;
+            elements.modal.style.display = 'flex';
+        }
+        
+        function closeModal() {
+            elements.modal.style.display = 'none';
+        }
+        
+        function showAuth() {
+            elements.auth.style.display = 'flex';
+            elements.app.style.display = 'none';
+        }
+        
+        function showApp() {
+            elements.auth.style.display = 'none';
+            elements.app.style.display = 'flex';
+        }
+        
+        // ==========================================
+        // Server Selection UI
+        // ==========================================
+        
+        function renderServers() {
+            // Group servers by region
+            const regions = {
+                '🌎 Americas': SERVERS.filter(s => ['us', 'ca', 'br'].includes(s.country)),
+                '🇪🇺 Europe': SERVERS.filter(s => ['de', 'ie', 'uk', 'fr', 'se', 'it', 'pl'].includes(s.country)),
+                '🌏 Asia Pacific': SERVERS.filter(s => ['jp', 'sg', 'in', 'au'].includes(s.country)),
+                '🌍 Middle East & Africa': SERVERS.filter(s => ['ae', 'il', 'za'].includes(s.country)),
+            };
+            
+            let html = '';
+            for (const [regionName, servers] of Object.entries(regions)) {
+                if (servers.length === 0) continue;
+                
+                html += `<div class="region-section">
+                    <h4 style="color: var(--text-secondary); margin: 1rem 0 0.5rem;">${regionName}</h4>
+                    <ul class="server-list">`;
+                
+                for (const server of servers) {
+                    const selected = state.selectedServer?.id === server.id ? 'selected' : '';
+                    html += `<li class="server-item ${selected}" data-server-id="${server.id}">
+                        <span class="server-flag">${server.flag}</span>
+                        <div class="server-info">
+                            <div class="server-name">${server.name}</div>
+                            <div class="server-location">${server.location}</div>
+                        </div>
+                        <span class="server-ping" style="color: ${server.ping < 50 ? 'var(--success)' : server.ping < 100 ? 'var(--warning)' : 'var(--error)'}">${server.ping}ms</span>
+                    </li>`;
+                }
+                
+                html += '</ul></div>';
+            }
+            
+            elements.regionGroups.innerHTML = html;
+            
+            // Add click handlers
+            document.querySelectorAll('.server-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const serverId = item.dataset.serverId;
+                    selectServer(SERVERS.find(s => s.id === serverId));
+                    closeModal();
+                });
+            });
+        }
+        
+        function selectServer(server) {
+            state.selectedServer = server;
+            localStorage.setItem('vpn_server', JSON.stringify(server));
+            elements.serverName.textContent = `${server.flag} ${server.name}`;
+            elements.location.textContent = server.location;
+            showToast(`Сервер: ${server.name}`, 'success');
+        }
+        
+        function loadSavedServer() {
+            const saved = localStorage.getItem('vpn_server');
+            if (saved) {
+                try {
+                    state.selectedServer = JSON.parse(saved);
+                    elements.serverName.textContent = `${state.selectedServer.flag} ${state.selectedServer.name}`;
+                    elements.location.textContent = state.selectedServer.location;
+                } catch (e) {}
+            }
+        }
+        
+        // ==========================================
+        // VPN Connection
+        // ==========================================
+        
+        async function connect() {
+            if (!state.selectedServer) {
+                showToast('Сначала выберите сервер!', 'error');
+                return;
+            }
+            
+            state.connecting = true;
+            updateConnectionUI();
+            
+            showLoading('Подключение...');
+            
+            try {
+                // Simulate API call for demo
+                // In production: const config = await api.generateConfig(state.token, state.selectedServer.id, state.doubleVpn);
+                
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                // Generate WireGuard config
+                state.config = generateWireGuardConfig(state.selectedServer, state.doubleVpn);
+                state.connected = true;
+                
+                // Update UI
+                elements.statusIcon.textContent = '🔒';
+                elements.statusText.textContent = 'Подключено';
+                elements.statusSubtext.textContent = 'Ваше соединение защищено';
+                elements.statusRing.style.borderColor = 'var(--success)';
+                elements.statusRing.style.boxShadow = '0 0 20px #00e6764d';
+                elements.connectionInfo.style.display = 'block';
+                elements.connectBtn.textContent = 'Отключить';
+                elements.connectBtn.className = 'connect-btn connected';
+                
+                // Show connection details
+                elements.ipAddress.textContent = state.config.address;
+                
+                showToast(`Подключено к ${state.selectedServer.name}!`, 'success');
+                
+            } catch (error) {
+                showToast('Ошибка подключения', 'error');
+                state.connected = false;
+            } finally {
+                state.connecting = false;
+                hideLoading();
+                updateConnectionUI();
+            }
+        }
+        
+        function disconnect() {
+            state.connected = false;
+            state.config = null;
+            
+            elements.statusIcon.textContent = '🔓';
+            elements.statusText.textContent = 'Отключено';
+            elements.statusSubtext.textContent = 'Нажмите для подключения';
+            elements.statusRing.style.borderColor = '';
+            elements.statusRing.style.boxShadow = '';
+            elements.connectionInfo.style.display = 'none';
+            elements.connectBtn.textContent = 'Подключить';
+            elements.connectBtn.className = 'connect-btn';
+            elements.ipAddress.textContent = '—';
+            
+            showToast('VPN отключен');
+        }
+        
+        function updateConnectionUI() {
+            if (state.connecting) {
+                elements.connectBtn.disabled = true;
+                elements.connectBtn.textContent = '...';
+            } else {
+                elements.connectBtn.disabled = false;
+            }
+        }
+        
+        function generateWireGuardConfig(server, doubleVpn = false) {
+            // Generate random client keys (in production, this comes from API)
+            const privateKey = generateRandomKey();
+            const publicKey = generateRandomKey();
+            
+            let config = `[Interface]
+PrivateKey = ${privateKey}
+Address = 10.0.0.2/32
+DNS = 1.1.1.1
 
-        // Telegram auth
-        document.getElementById('telegramAuth').addEventListener('click', function() {
-            // Simple demo login
-            authScreen.style.display = 'none';
-            appScreen.style.display = 'flex';
-        });
-
-        // Connect button
-        connectBtn.addEventListener('click', function() {
-            if (connected) {
+[Peer]
+PublicKey = ${server.publicKey || 'SERVER_PUBLIC_KEY'}
+Endpoint = ${server.endpoint || 'vpn.venomvpn.com'}:${CONFIG.WG_PORT}
+AllowedIPs = 0.0.0.0/0
+PersistentKeepalive = 25
+`;
+            
+            if (doubleVpn) {
+                // Add second hop for double VPN
+                config += `
+# Double VPN - Second Hop
+[Peer]
+PublicKey = SECOND_HOP_PUBLIC_KEY
+Endpoint = second-hop.vpn.venomvpn.com:${CONFIG.WG_PORT}
+AllowedIPs = 0.0.0.0/0
+PersistentKeepalive = 25
+`;
+            }
+            
+            return {
+                text: config,
+                address: '10.0.0.2',
+                server: server.name,
+                doubleVpn: doubleVpn
+            };
+        }
+        
+        function generateRandomKey() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+            let key = '';
+            for (let i = 0; i < 43; i++) {
+                key += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return key;
+        }
+        
+        function downloadConfig() {
+            if (!state.config) {
+                showToast('Сначала подключитесь!', 'error');
+                return;
+            }
+            
+            const blob = new Blob([state.config.text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `venom-vpn-${state.selectedServer.id}.conf`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            showToast('Конфиг скачан!', 'success');
+        }
+        
+        // ==========================================
+        // Authentication
+        // ==========================================
+        
+        async function authenticate() {
+            // Demo mode - in production this would use Telegram auth
+            state.user = {
+                id: Date.now(),
+                username: 'demo_user',
+                first_name: 'Demo',
+                subscription: { active: true, days: '∞' }
+            };
+            state.token = 'demo_token_' + Date.now();
+            
+            localStorage.setItem('vpn_user', JSON.stringify(state.user));
+            localStorage.setItem('vpn_token', state.token);
+            
+            showApp();
+            renderServers();
+            loadSavedServer();
+            showToast('Добро пожаловать в Venom VPN!', 'success');
+        }
+        
+        // ==========================================
+        // Modal Content
+        // ==========================================
+        
+        function showServersModal() {
+            renderServers();
+            openModal(`
+                <h3 class="modal-title">🌍 Выбор сервера</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 1rem;">Выберите страну для подключения</p>
+                ${elements.regionGroups.innerHTML}
+            `);
+            
+            // Add click handlers again for modal
+            document.querySelectorAll('.server-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const serverId = item.dataset.serverId;
+                    selectServer(SERVERS.find(s => s.id === serverId));
+                    closeModal();
+                });
+            });
+        }
+        
+        function showHelpModal() {
+            openModal(`
+                <h3 class="modal-title">❓ Помощь</h3>
+                <div style="color: var(--text-secondary); line-height: 1.8;">
+                    <p><strong>Как подключиться?</strong></p>
+                    <ol style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                        <li>Выберите сервер в списке</li>
+                        <li>Включите Double VPN для максимальной защиты</li>
+                        <li>Нажмите "Подключить"</li>
+                        <li>Скачайте конфиг и импортируйте в WireGuard</li>
+                    </ol>
+                    
+                    <p style="margin-top: 1rem;"><strong>Что такое Double VPN?</strong></p>
+                    <p>Трафик проходит через 2 сервера, что обеспечивает дополнительную защиту и анонимность.</p>
+                    
+                    <p style="margin-top: 1rem;"><strong>Проблемы?</strong></p>
+                    <p>Напишите: @VenompowerVPN_bot</p>
+                </div>
+            `);
+        }
+        
+        function showProfileModal() {
+            openModal(`
+                <h3 class="modal-title">👤 Профиль</h3>
+                <div class="profile-section">
+                    <img src="https://storage.yandexcloud.net/promto-user-static-sites-prod/design-assets/941619812/6bb7db79-ec84-41c7-b74f-db5bb596911a/67183a73-f3d0-4b86-8ab6-4d1569df816c-Venom_25921-2944282668.jpg" 
+                         alt="Avatar" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-bottom: 1rem;">
+                    <div class="profile-name">${state.user?.username || 'Guest'}</div>
+                    <div class="profile-username">@${state.user?.username || 'guest'}</div>
+                    <div style="margin-top: 1rem;">
+                        <span class="card-badge active">Premium</span>
+                    </div>
+                </div>
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">${SERVERS.length}</div>
+                        <div class="stat-label">Серверов</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">20+</div>
+                        <div class="stat-label">Стран</div>
+                    </div>
+                </div>
+            `);
+        }
+        
+        // ==========================================
+        // Event Listeners
+        // ==========================================
+        
+        document.getElementById('telegramAuth').addEventListener('click', authenticate);
+        
+        elements.connectBtn.addEventListener('click', () => {
+            if (state.connected) {
                 disconnect();
             } else {
                 connect();
             }
         });
-
-        function connect() {
-            statusText.textContent = 'Подключение...';
-            statusSubtext.textContent = 'Пожалуйста, подождите';
-            connectBtn.textContent = '...';
-            connectBtn.disabled = true;
+        
+        elements.doubleVpnCheckbox.addEventListener('change', (e) => {
+            state.doubleVpn = e.target.checked;
+            localStorage.setItem('double_vpn', state.doubleVpn);
+            showToast(state.doubleVpn ? '🔐 Double VPN включен' : 'Double VPN выключен');
+        });
+        
+        document.getElementById('serversBtn').addEventListener('click', showServersModal);
+        document.getElementById('navServers').addEventListener('click', showServersModal);
+        document.getElementById('helpBtn').addEventListener('click', showHelpModal);
+        document.getElementById('profileBtn').addEventListener('click', showProfileModal);
+        
+        elements.configBtn.addEventListener('click', downloadConfig);
+        
+        elements.modalCloseBtn.addEventListener('click', closeModal);
+        elements.modal.addEventListener('click', (e) => {
+            if (e.target === elements.modal) closeModal();
+        });
+        
+        // Bottom navigation
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                
+                const tab = item.dataset.tab;
+                if (tab === 'servers') showServersModal();
+                if (tab === 'profile') showProfileModal();
+            });
+        });
+        
+        // ==========================================
+        // Initialize
+        // ==========================================
+        
+        (function init() {
+            // Check saved state
+            const savedUser = localStorage.getItem('vpn_user');
+            const savedToken = localStorage.getItem('vpn_token');
+            const savedDoubleVpn = localStorage.getItem('double_vpn');
             
-            setTimeout(function() {
-                connected = true;
-                statusText.textContent = 'Подключено';
-                statusSubtext.textContent = 'Ваше соединение защищено';
-                statusIcon.textContent = '🔒';
-                connectBtn.textContent = 'Отключить';
-                connectBtn.disabled = false;
-                connectionInfo.style.display = 'block';
-                ipAddress.textContent = '10.0.0.2';
-                locationEl.textContent = '🇩🇪 Frankfurt';
-            }, 1500);
-        }
-
-        function disconnect() {
-            connected = false;
-            statusText.textContent = 'Отключено';
-            statusSubtext.textContent = 'Нажмите для подключения';
-            statusIcon.textContent = '🔓';
-            connectBtn.textContent = 'Подключить';
-            connectionInfo.style.display = 'none';
-        }
-
-        // Server button
-        document.getElementById('serverBtn').addEventListener('click', function() {
-            modalBody.innerHTML = '<h3>Выбор сервера</h3><ul class="server-list">' +
-                '<li class="server-item" onclick="selectServer(this)">🇩🇪 Germany - Frankfurt</li>' +
-                '<li class="server-item" onclick="selectServer(this)">🇳🇱 Netherlands - Amsterdam</li>' +
-                '<li class="server-item" onclick="selectServer(this)">🇺🇸 USA - New York</li>' +
-                '<li class="server-item" onclick="selectServer(this)">🇷🇺 Russia - Moscow</li>' +
-                '</ul>';
-            modal.style.display = 'flex';
-        });
-
-        function selectServer(el) {
-            modal.style.display = 'none';
-            var server = el.textContent;
-            alert('Сервер: ' + server);
-        }
-
-        // Config button
-        document.getElementById('configBtn').addEventListener('click', function() {
-            modalBody.innerHTML = '<h3>Скачать конфиг</h3><p>Нажмите кнопку ниже для скачивания WireGuard конфига</p><button class="connect-btn" onclick="downloadConfig()">Скачать</button>';
-            modal.style.display = 'flex';
-        });
-
-        function downloadConfig() {
-            var config = '[Interface]\nPrivateKey = demo_key\nAddress = 10.0.0.2/32\nDNS = 1.1.1.1\n\n[Peer]\nPublicKey = server_key\nEndpoint = vpn.example.com:51820\nAllowedIPs = 0.0.0.0/0\nPersistentKeepalive = 25';
-            var blob = new Blob([config], {type: 'text/plain'});
-            var url = URL.createObjectURL(blob);
-            var a = document.createElement('a');
-            a.href = url;
-            a.download = 'venom-vpn.conf';
-            a.click();
-            modal.style.display = 'none';
-        }
-
-        // Help button
-        document.getElementById('helpBtn').addEventListener('click', function() {
-            modalBody.innerHTML = '<h3>Помощь</h3><p><strong>Как подключиться?</strong></p><p>1. Нажмите "Подключить"<br>2. Скачайте конфиг<br>3. Импортируйте в WireGuard</p><p><strong>Проблемы?</strong></p><p>@VenompowerVPN_bot</p>';
-            modal.style.display = 'flex';
-        });
-
-        // Profile button
-        document.getElementById('profileBtn').addEventListener('click', function() {
-            modalBody.innerHTML = '<h3>Профиль</h3><div style="text-align: center;"><img src="https://storage.yandexcloud.net/promto-user-static-sites-prod/design-assets/941619812/6bb7db79-ec84-41c7-b74f-db5bb596911a/67183a73-f3d0-4b86-8ab6-4d1569df816c-Venom_25921-2944282668.jpg" style="width: 80px; border-radius: 50%;"><p><strong>Demo User</strong></p><p>@demo_user</p></div>';
-            modal.style.display = 'flex';
-        });
-
-        function closeModal() {
-            modal.style.display = 'none';
-        }
-
-        // Close modal on background click
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) closeModal();
-        });
+            if (savedUser && savedToken) {
+                state.user = JSON.parse(savedUser);
+                state.token = savedToken;
+                state.doubleVpn = savedDoubleVpn === 'true';
+                elements.doubleVpnCheckbox.checked = state.doubleVpn;
+                showApp();
+                renderServers();
+                loadSavedServer();
+            } else {
+                showAuth();
+            }
+        })();
     </script>
+    
+    <style>
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--bg-card);
+            transition: 0.3s;
+            border-radius: 26px;
+            border: 1px solid var(--border);
+        }
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: 0.3s;
+            border-radius: 50%;
+        }
+        input:checked + .toggle-slider {
+            background: var(--gradient);
+            border-color: var(--primary);
+        }
+        input:checked + .toggle-slider:before {
+            transform: translateX(24px);
+        }
+        .region-section {
+            margin-bottom: 0.5rem;
+        }
+        .connect-btn.connected {
+            background: var(--success) !important;
+        }
+    </style>
 </body>
 </html>
