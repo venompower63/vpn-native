@@ -1,6 +1,6 @@
 {
-  "appId": "com.vpnapp.app",
-  "appName": "VPN App",
+  "appId": "com.venom.vpn",
+  "appName": "Venom VPN",
   "webDir": "dist",
   "plugins": {
     "SplashScreen": {

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">VPN App</string>
-    <string name="title_activity_main">VPN App</string>
-    <string name="package_name">com.vpnapp.app</string>
-    <string name="custom_url_scheme">com.vpnapp.app</string>
+    <string name="app_name">Venom VPN</string>
+    <string name="title_activity_main">Venom VPN</string>
+    <string name="package_name">com.venom.vpn</string>
+    <string name="custom_url_scheme">com.venom.vpn</string>
 </resources>
