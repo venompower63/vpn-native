@@ -1,7 +1,7 @@
 // VPN App - Main Application
-import { api } from './api.js';
-import { wireguard } from './wireguard.js';
-import { CONFIG } from './config.js';
+import { api } from "./api.js";
+import { wireguard } from "./wireguard.js";
+import { CONFIG } from "./config.js";
 
 class VPNApp {
 	constructor() {
@@ -13,31 +13,30 @@ class VPNApp {
 
 	init() {
 		try {
-			console.log('VPN App: Initializing...');
-			
+			console.log("VPN App: Initializing...");
+
 			// Cache DOM elements
 			this.cacheElements();
-			console.log('VPN App: Elements cached');
-			
+			console.log("VPN App: Elements cached");
+
 			// Setup event listeners
 			this.setupEventListeners();
-			console.log('VPN App: Events setup');
-			
+			console.log("VPN App: Events setup");
+
 			// Check auth status - sync call
 			this.checkAuth();
-			console.log('VPN App: Auth checked');
-			
+			console.log("VPN App: Auth checked");
+
 			// Setup PWA
 			this.setupPWA();
-			console.log('VPN App: PWA setup');
-			
+			console.log("VPN App: PWA setup");
 		} catch (error) {
-			console.error('VPN App init error:', error);
-			alert('Error: ' + error.message);
+			console.error("VPN App init error:", error);
+			alert("Error: " + error.message);
 		} finally {
 			// Always hide splash screen after short delay
 			setTimeout(() => this.hideSplash(), 500);
-			console.log('VPN App: Ready');
+			console.log("VPN App: Ready");
 		}
 	}
 
@@ -76,16 +75,28 @@ class VPNApp {
 	}
 
 	setupEventListeners() {
-		this.elements.connectBtn?.addEventListener("click", () => this.toggleConnection());
-		this.elements.telegramAuth?.addEventListener("click", () => this.authenticateWithTelegram());
-		this.elements.modalClose?.addEventListener("click", () => this.closeModal());
+		this.elements.connectBtn?.addEventListener("click", () =>
+			this.toggleConnection(),
+		);
+		this.elements.telegramAuth?.addEventListener("click", () =>
+			this.authenticateWithTelegram(),
+		);
+		this.elements.modalClose?.addEventListener("click", () =>
+			this.closeModal(),
+		);
 		this.elements.modal?.addEventListener("click", (e) => {
 			if (e.target === this.elements.modal) this.closeModal();
 		});
-		this.elements.changeServerBtn?.addEventListener("click", () => this.showServerList());
-		this.elements.downloadConfigBtn?.addEventListener("click", () => this.downloadConfig());
+		this.elements.changeServerBtn?.addEventListener("click", () =>
+			this.showServerList(),
+		);
+		this.elements.downloadConfigBtn?.addEventListener("click", () =>
+			this.downloadConfig(),
+		);
 		this.elements.helpBtn?.addEventListener("click", () => this.showHelp());
-		this.elements.profileBtn?.addEventListener("click", () => this.showProfile());
+		this.elements.profileBtn?.addEventListener("click", () =>
+			this.showProfile(),
+		);
 		document.querySelectorAll(".nav-item").forEach((item) => {
 			item.addEventListener("click", (e) => this.handleNavigation(e));
 		});
@@ -93,7 +104,10 @@ class VPNApp {
 
 	setupPWA() {
 		if ("serviceWorker" in navigator) {
-			navigator.serviceWorker.register("sw.js").then((reg) => console.log("SW registered")).catch((err) => console.log("SW failed:", err));
+			navigator.serviceWorker
+				.register("sw.js")
+				.then((reg) => console.log("SW registered"))
+				.catch((err) => console.log("SW failed:", err));
 		}
 	}
 
@@ -131,7 +145,12 @@ class VPNApp {
 	}
 
 	simulateAuth() {
-		const demoUser = { id: 7875416316, first_name: "Demo", last_name: "User", username: "demo_user" };
+		const demoUser = {
+			id: 7875416316,
+			first_name: "Demo",
+			last_name: "User",
+			username: "demo_user",
+		};
 		api.storeUser(demoUser);
 		localStorage.setItem("vpn_token", "demo_token_" + Date.now());
 		this.showApp();
@@ -159,7 +178,9 @@ class VPNApp {
 	updateSubscriptionUI() {
 		if (!this.subscription) return;
 		const { active, plan, expires_at, days_total } = this.subscription;
-		const daysLeft = Math.ceil((new Date(expires_at) - new Date()) / (1000 * 60 * 60 * 24));
+		const daysLeft = Math.ceil(
+			(new Date(expires_at) - new Date()) / (1000 * 60 * 60 * 24),
+		);
 		const progress = ((days_total - daysLeft) / days_total) * 100;
 
 		this.elements.subBadge.textContent = active ? "Активна" : "Истекла";
@@ -253,7 +274,8 @@ class VPNApp {
 	}
 
 	showServerList() {
-		const servers = CONFIG.SERVERS.map((s) => `
+		const servers = CONFIG.SERVERS.map(
+			(s) => `
 			<li class="server-item ${s.id === this.selectedServer ? "selected" : ""}" data-id="${s.id}">
 				<span class="server-flag">${s.flag}</span>
 				<div class="server-info">
@@ -262,7 +284,8 @@ class VPNApp {
 				</div>
 				<span class="server-ping">${s.ping}ms</span>
 			</li>
-		`).join("");
+		`,
+		).join("");
 
 		this.elements.modalBody.innerHTML = `<h3 class="modal-title">Выбор сервера</h3><ul class="server-list">${servers}</ul>`;
 		this.elements.modalBody.querySelectorAll(".server-item").forEach((item) => {
@@ -277,7 +300,9 @@ class VPNApp {
 	selectServer(serverId) {
 		this.selectedServer = serverId;
 		localStorage.setItem("vpn_server", serverId);
-		this.showToast(`Сервер: ${CONFIG.SERVERS.find((s) => s.id === serverId)?.name}`);
+		this.showToast(
+			`Сервер: ${CONFIG.SERVERS.find((s) => s.id === serverId)?.name}`,
+		);
 	}
 
 	downloadConfig() {
