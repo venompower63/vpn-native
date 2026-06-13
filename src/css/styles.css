@@ -1,22 +1,22 @@
-/* Venom VPN - AMG Edition */
+/* Sport VPN - AMG Edition */
 
 :root {
 	/* AMG Color Palette */
-	--amg-black: #0d0d0d;
-	--amg-carbon: #1a1a1a;
-	--amg-steel: #2d2d2d;
-	--amg-silver: #c0c0c0;
-	--amg-red: #ff0000;
-	--amg-gold: #ffd700;
-	--amg-orange: #ff4500;
+	--sport-black: #0d0d0d;
+	--sport-carbon: #1a1a1a;
+	--sport-steel: #2d2d2d;
+	--sport-silver: #c0c0c0;
+	--sport-red: #ff0000;
+	--sport-gold: #ffd700;
+	--sport-orange: #ff4500;
 
 	/* Gradients */
 	--gradient-amg: linear-gradient(135deg, #ff6b00, #ff0000, #ffd700);
 	--gradient-fire: linear-gradient(180deg, #ff6600, #ff0000, #ff9900);
 
-	--bg-dark: var(--amg-black);
-	--bg-card: var(--amg-carbon);
-	--bg-card-hover: var(--amg-steel);
+	--bg-dark: var(--sport-black);
+	--bg-card: var(--sport-carbon);
+	--bg-card-hover: var(--sport-steel);
 	--text-primary: #ffffff;
 	--text-secondary: #999;
 	--text-muted: #666;
@@ -32,8 +32,8 @@
 
 body {
 	font-family: "Arial", "Helvetica Neue", sans-serif;
-	background: var(--amg-black);
-	color: var(--amg-white);
+	background: var(--sport-black);
+	color: var(--sport-white);
 	min-height: 100vh;
 	overflow-x: hidden;
 }
@@ -45,7 +45,7 @@ body {
 .splash {
 	position: fixed;
 	inset: 0;
-	background: var(--amg-black);
+	background: var(--sport-black);
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -76,7 +76,7 @@ body {
 	margin-bottom: 1.5rem;
 }
 
-.amg-emblem {
+.sport-emblem {
 	width: 100%;
 	height: 100%;
 	background: var(--gradient-amg);
@@ -89,19 +89,19 @@ body {
 		0 0 50px rgba(192, 192, 192, 0.3),
 		0 0 100px rgba(255, 0, 0, 0.2),
 		inset 0 0 30px rgba(0, 0, 0, 0.5);
-	animation: amg-pulse 2s ease-in-out infinite;
+	animation: sport-pulse 2s ease-in-out infinite;
 }
 
-.amg-emblem::before {
+.sport-emblem::before {
 	content: "AMG";
 	font-size: 48px;
 	font-weight: 900;
-	color: var(--amg-black);
+	color: var(--sport-black);
 	text-shadow: 0 2px 4px rgba(255, 255, 255, 0.3);
 	letter-spacing: 4px;
 }
 
-@keyframes amg-pulse {
+@keyframes sport-pulse {
 	0%,
 	100% {
 		transform: scale(1);
@@ -167,7 +167,7 @@ body {
 .splash-subtitle {
 	font-size: 1.2rem;
 	letter-spacing: 16px;
-	color: var(--amg-silver);
+	color: var(--sport-silver);
 	font-weight: 300;
 	text-transform: uppercase;
 }
@@ -188,22 +188,22 @@ body {
 .rpm-digit {
 	width: 50px;
 	height: 70px;
-	background: var(--amg-carbon);
-	border: 2px solid var(--amg-steel);
+	background: var(--sport-carbon);
+	border: 2px solid var(--sport-steel);
 	border-radius: 8px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	font-size: 2.5rem;
 	font-weight: 900;
-	color: var(--amg-red);
+	color: var(--sport-red);
 	font-family: "Courier New", monospace;
 	box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
 .rpm-label {
 	text-align: center;
-	color: var(--amg-silver);
+	color: var(--sport-silver);
 	font-size: 0.8rem;
 	letter-spacing: 4px;
 	text-transform: uppercase;
@@ -212,11 +212,11 @@ body {
 /* RPM Bar */
 .rpm-bar {
 	height: 8px;
-	background: var(--amg-carbon);
+	background: var(--sport-carbon);
 	border-radius: 4px;
 	margin-top: 1rem;
 	overflow: hidden;
-	border: 1px solid var(--amg-steel);
+	border: 1px solid var(--sport-steel);
 }
 
 .rpm-bar-fill {
@@ -232,13 +232,13 @@ body {
 	margin-top: 1.5rem;
 	padding: 0.75rem 2rem;
 	background: transparent;
-	border: 2px solid var(--amg-red);
+	border: 2px solid var(--sport-red);
 	border-radius: 50px;
 	font-size: 0.9rem;
 	font-weight: bold;
 	letter-spacing: 4px;
 	text-transform: uppercase;
-	color: var(--amg-red);
+	color: var(--sport-red);
 	position: relative;
 	overflow: hidden;
 }
@@ -272,7 +272,7 @@ body {
 .loading-bar {
 	width: 200px;
 	height: 4px;
-	background: var(--amg-carbon);
+	background: var(--sport-carbon);
 	border-radius: 2px;
 	margin-top: 1.5rem;
 	overflow: hidden;
@@ -308,14 +308,14 @@ body {
 .header {
 	background: linear-gradient(
 		180deg,
-		var(--amg-carbon) 0%,
-		var(--amg-black) 100%
+		var(--sport-carbon) 0%,
+		var(--sport-black) 100%
 	);
 	padding: 1rem 1.25rem;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	border-bottom: 3px solid var(--amg-red);
+	border-bottom: 3px solid var(--sport-red);
 	position: sticky;
 	top: 0;
 	z-index: 100;
@@ -327,7 +327,7 @@ body {
 	gap: 0.75rem;
 }
 
-.amg-badge {
+.sport-badge {
 	width: 45px;
 	height: 45px;
 	background: var(--gradient-amg);
@@ -337,7 +337,7 @@ body {
 	justify-content: center;
 	font-size: 0.7rem;
 	font-weight: 900;
-	color: var(--amg-black);
+	color: var(--sport-black);
 	letter-spacing: 1px;
 }
 
@@ -355,18 +355,18 @@ body {
 .icon-btn {
 	width: 44px;
 	height: 44px;
-	background: var(--amg-carbon);
-	border: 2px solid var(--amg-steel);
+	background: var(--sport-carbon);
+	border: 2px solid var(--sport-steel);
 	border-radius: 50%;
-	color: var(--amg-silver);
+	color: var(--sport-silver);
 	font-size: 1.2rem;
 	cursor: pointer;
 	transition: all 0.2s;
 }
 
 .icon-btn:active {
-	background: var(--amg-red);
-	border-color: var(--amg-red);
+	background: var(--sport-red);
+	border-color: var(--sport-red);
 	color: white;
 	transform: scale(0.95);
 }
@@ -380,8 +380,8 @@ body {
 
 /* Status Card */
 .status-card {
-	background: var(--amg-carbon);
-	border: 2px solid var(--amg-steel);
+	background: var(--sport-carbon);
+	border: 2px solid var(--sport-steel);
 	border-radius: 16px;
 	padding: 1.5rem;
 	margin-bottom: 1rem;
@@ -390,13 +390,13 @@ body {
 }
 
 .status-card::before {
-	content: "VENOM";
+	content: "SPORT";
 	position: absolute;
 	top: 10px;
 	right: 15px;
 	font-size: 0.7rem;
 	font-weight: 900;
-	color: var(--amg-steel);
+	color: var(--sport-steel);
 	letter-spacing: 4px;
 }
 
@@ -438,11 +438,11 @@ body {
 
 /* Connection Info */
 .connection-info {
-	background: var(--amg-black);
+	background: var(--sport-black);
 	border-radius: 10px;
 	padding: 1rem;
 	margin: 1rem 0;
-	border: 1px solid var(--amg-steel);
+	border: 1px solid var(--sport-steel);
 }
 
 .info-row {
@@ -457,14 +457,14 @@ body {
 }
 
 .info-label {
-	color: var(--amg-silver);
+	color: var(--sport-silver);
 	font-size: 0.8rem;
 	text-transform: uppercase;
 	letter-spacing: 1px;
 }
 
 .info-value {
-	color: var(--amg-white);
+	color: var(--sport-white);
 	font-weight: bold;
 	font-family: "Courier New", monospace;
 }
@@ -480,7 +480,7 @@ body {
 	border: none;
 	border-radius: 50px;
 	background: linear-gradient(135deg, #333 0%, #1a1a1a 50%, #333 100%);
-	color: var(--amg-white);
+	color: var(--sport-white);
 	cursor: pointer;
 	position: relative;
 	overflow: hidden;
@@ -522,9 +522,9 @@ body {
 .connect-btn.connecting {
 	background: linear-gradient(
 		135deg,
-		var(--amg-red) 0%,
+		var(--sport-red) 0%,
 		#aa0000 50%,
-		var(--amg-red) 100%
+		var(--sport-red) 100%
 	);
 	animation: race-pulse 0.5s infinite;
 }
@@ -547,9 +547,9 @@ body {
 	gap: 1rem;
 	margin: 1rem 0;
 	padding: 0.75rem 1rem;
-	background: var(--amg-black);
+	background: var(--sport-black);
 	border-radius: 50px;
-	border: 1px solid var(--amg-steel);
+	border: 1px solid var(--sport-steel);
 }
 
 .double-vpn-toggle span {
@@ -557,7 +557,7 @@ body {
 	font-weight: bold;
 	text-transform: uppercase;
 	letter-spacing: 2px;
-	color: var(--amg-silver);
+	color: var(--sport-silver);
 }
 
 .toggle-switch {
@@ -576,8 +576,8 @@ body {
 	position: absolute;
 	cursor: pointer;
 	inset: 0;
-	background: var(--amg-carbon);
-	border: 2px solid var(--amg-steel);
+	background: var(--sport-carbon);
+	border: 2px solid var(--sport-steel);
 	border-radius: 28px;
 	transition: 0.3s;
 }
@@ -589,14 +589,14 @@ body {
 	height: 20px;
 	left: 2px;
 	bottom: 2px;
-	background: var(--amg-silver);
+	background: var(--sport-silver);
 	border-radius: 50%;
 	transition: 0.3s;
 }
 
 input:checked + .toggle-slider {
-	background: var(--amg-red);
-	border-color: var(--amg-red);
+	background: var(--sport-red);
+	border-color: var(--sport-red);
 }
 
 input:checked + .toggle-slider::before {
@@ -606,8 +606,8 @@ input:checked + .toggle-slider::before {
 
 /* Subscription */
 .subscription-card {
-	background: var(--amg-carbon);
-	border: 2px solid var(--amg-gold);
+	background: var(--sport-carbon);
+	border: 2px solid var(--sport-gold);
 	border-radius: 16px;
 	padding: 1.25rem;
 	margin-bottom: 1rem;
@@ -636,8 +636,8 @@ input:checked + .toggle-slider::before {
 }
 
 .card-badge.active {
-	background: var(--amg-gold);
-	color: var(--amg-black);
+	background: var(--sport-gold);
+	color: var(--sport-black);
 }
 
 .sub-info {
@@ -648,7 +648,7 @@ input:checked + .toggle-slider::before {
 
 .sub-plan {
 	font-weight: bold;
-	color: var(--amg-silver);
+	color: var(--sport-silver);
 	font-size: 0.9rem;
 }
 
@@ -659,7 +659,7 @@ input:checked + .toggle-slider::before {
 
 .sub-progress {
 	height: 6px;
-	background: var(--amg-black);
+	background: var(--sport-black);
 	border-radius: 3px;
 	overflow: hidden;
 	margin-bottom: 0.5rem;
@@ -673,7 +673,7 @@ input:checked + .toggle-slider::before {
 
 .sub-days {
 	text-align: center;
-	color: var(--amg-gold);
+	color: var(--sport-gold);
 	font-weight: bold;
 	font-size: 0.85rem;
 }
@@ -692,7 +692,7 @@ input:checked + .toggle-slider::before {
 	align-items: center;
 	gap: 1rem;
 	padding: 0.875rem;
-	background: var(--amg-carbon);
+	background: var(--sport-carbon);
 	border: 1px solid var(--border);
 	border-radius: 10px;
 	margin-bottom: 0.5rem;
@@ -701,13 +701,13 @@ input:checked + .toggle-slider::before {
 }
 
 .server-item:active {
-	background: var(--amg-steel);
-	border-color: var(--amg-red);
+	background: var(--sport-steel);
+	border-color: var(--sport-red);
 	transform: scale(0.98);
 }
 
 .server-item.selected {
-	border-color: var(--amg-red);
+	border-color: var(--sport-red);
 	background: rgba(255, 0, 0, 0.1);
 }
 
@@ -743,7 +743,7 @@ input:checked + .toggle-slider::before {
 }
 
 .action-btn {
-	background: var(--amg-carbon);
+	background: var(--sport-carbon);
 	border: 1px solid var(--border);
 	border-radius: 12px;
 	padding: 0.875rem;
@@ -756,8 +756,8 @@ input:checked + .toggle-slider::before {
 }
 
 .action-btn:active {
-	background: var(--amg-steel);
-	border-color: var(--amg-red);
+	background: var(--sport-steel);
+	border-color: var(--sport-red);
 	transform: scale(0.95);
 }
 
@@ -778,8 +778,8 @@ input:checked + .toggle-slider::before {
 	bottom: 0;
 	left: 0;
 	right: 0;
-	background: var(--amg-black);
-	border-top: 3px solid var(--amg-red);
+	background: var(--sport-black);
+	border-top: 3px solid var(--sport-red);
 	padding: 0.75rem;
 	display: flex;
 	justify-content: space-around;
@@ -799,7 +799,7 @@ input:checked + .toggle-slider::before {
 }
 
 .nav-item.active {
-	color: var(--amg-red);
+	color: var(--sport-red);
 }
 
 .nav-item span {
@@ -817,8 +817,8 @@ input:checked + .toggle-slider::before {
 	padding: 2rem;
 	background: radial-gradient(
 		ellipse at center,
-		var(--amg-carbon) 0%,
-		var(--amg-black) 100%
+		var(--sport-carbon) 0%,
+		var(--sport-black) 100%
 	);
 }
 
@@ -831,7 +831,7 @@ input:checked + .toggle-slider::before {
 	margin-bottom: 1.5rem;
 }
 
-.auth-logo .amg-circle {
+.auth-logo .sport-circle {
 	width: 140px;
 	height: 140px;
 	background: var(--gradient-amg);
@@ -842,7 +842,7 @@ input:checked + .toggle-slider::before {
 	justify-content: center;
 	font-size: 28px;
 	font-weight: 900;
-	color: var(--amg-black);
+	color: var(--sport-black);
 	letter-spacing: 4px;
 	box-shadow: 0 0 40px rgba(192, 192, 192, 0.2);
 	animation: float 3s ease-in-out infinite;
@@ -919,8 +919,8 @@ input:checked + .toggle-slider::before {
 }
 
 .modal-content {
-	background: var(--amg-carbon);
-	border: 2px solid var(--amg-red);
+	background: var(--sport-carbon);
+	border: 2px solid var(--sport-red);
 	border-radius: 16px;
 	width: 100%;
 	max-width: 400px;
@@ -936,10 +936,10 @@ input:checked + .toggle-slider::before {
 	right: 0.75rem;
 	width: 32px;
 	height: 32px;
-	background: var(--amg-black);
-	border: 2px solid var(--amg-steel);
+	background: var(--sport-black);
+	border: 2px solid var(--sport-steel);
 	border-radius: 50%;
-	color: var(--amg-silver);
+	color: var(--sport-silver);
 	font-size: 1.5rem;
 	cursor: pointer;
 	display: flex;
@@ -953,7 +953,7 @@ input:checked + .toggle-slider::before {
 	text-transform: uppercase;
 	letter-spacing: 2px;
 	margin-bottom: 1rem;
-	color: var(--amg-silver);
+	color: var(--sport-silver);
 }
 
 /* Toast */
@@ -962,8 +962,8 @@ input:checked + .toggle-slider::before {
 	bottom: 100px;
 	left: 50%;
 	transform: translateX(-50%);
-	background: var(--amg-carbon);
-	border: 2px solid var(--amg-red);
+	background: var(--sport-carbon);
+	border: 2px solid var(--sport-red);
 	border-radius: 50px;
 	padding: 0.75rem 1.5rem;
 	font-size: 0.85rem;
@@ -980,8 +980,8 @@ input:checked + .toggle-slider::before {
 }
 
 .toast.error {
-	border-color: var(--amg-red);
-	color: var(--amg-red);
+	border-color: var(--sport-red);
+	color: var(--sport-red);
 }
 
 @keyframes toast-in {
@@ -1005,7 +1005,7 @@ input:checked + .toggle-slider::before {
 .loader span {
 	width: 10px;
 	height: 10px;
-	background: var(--amg-red);
+	background: var(--sport-red);
 	border-radius: 50%;
 	animation: bounce 1.4s ease-in-out infinite both;
 }
@@ -1045,7 +1045,7 @@ input:checked + .toggle-slider::before {
 	justify-content: center;
 	font-size: 1.8rem;
 	font-weight: 900;
-	color: var(--amg-black);
+	color: var(--sport-black);
 }
 
 .profile-name {
@@ -1067,7 +1067,7 @@ input:checked + .toggle-slider::before {
 }
 
 .stat-item {
-	background: var(--amg-black);
+	background: var(--sport-black);
 	border-radius: 10px;
 	padding: 1rem;
 }
@@ -1075,7 +1075,7 @@ input:checked + .toggle-slider::before {
 .stat-value {
 	font-size: 1.2rem;
 	font-weight: bold;
-	color: var(--amg-silver);
+	color: var(--sport-silver);
 }
 
 .stat-label {
@@ -1095,11 +1095,11 @@ input:checked + .toggle-slider::before {
 }
 
 ::-webkit-scrollbar-track {
-	background: var(--amg-black);
+	background: var(--sport-black);
 }
 
 ::-webkit-scrollbar-thumb {
-	background: var(--amg-red);
+	background: var(--sport-red);
 	border-radius: 2px;
 }
 

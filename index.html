@@ -8,7 +8,7 @@
     />
     <meta name="theme-color" content="#0d0d0d" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <title>Venom VPN - TIGER Edition</title>
+    <title>Sport VPN - SPORT Edition</title>
     <link rel="stylesheet" href="./src/css/styles.css" />
   </head>
   <body>
@@ -17,7 +17,7 @@
       <div class="splash-bg"></div>
 
       <div class="splash-logo">
-        <div class="amg-emblem"></div>
+        <div class="sport-emblem"></div>
         <div class="engine-flames" id="engineFlames">
           <div class="flame"></div>
           <div class="flame"></div>
@@ -25,8 +25,8 @@
         </div>
       </div>
 
-      <div class="splash-text">VENOM</div>
-      <div class="splash-subtitle">VPN TIGER</div>
+      <div class="splash-text">SPORT</div>
+      <div class="splash-subtitle">VPN SPORT</div>
 
       <div class="rpm-cluster">
         <div class="rpm-display">
@@ -41,7 +41,7 @@
         </div>
       </div>
 
-      <div class="engine-status" id="engineStatus">TIGER AWAKENS</div>
+      <div class="engine-status" id="engineStatus">SPORT AWAKENS</div>
       <div class="loading-bar">
         <div class="loading-bar-fill"></div>
       </div>
@@ -51,10 +51,10 @@
     <div id="auth" class="auth-screen hidden">
       <div class="auth-content">
         <div class="auth-logo">
-          <div class="amg-circle">AMG</div>
+          <div class="sport-circle">AMG</div>
         </div>
-        <h1>VENOM VPN</h1>
-        <p class="auth-desc">TIGER Edition - Sport VPN</p>
+        <h1>SPORT VPN</h1>
+        <p class="auth-desc">SPORT Edition - Sport VPN</p>
         <button class="telegram-btn" id="telegramAuth">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
             <path
@@ -71,8 +71,8 @@
     <div id="app" class="app hidden">
       <header class="header">
         <div class="header-left">
-          <div class="amg-badge">AMG</div>
-          <span class="app-name">VENOM VPN</span>
+          <div class="sport-badge">AMG</div>
+          <span class="app-name">SPORT VPN</span>
         </div>
         <button id="profileBtn" class="icon-btn">👤</button>
       </header>
@@ -83,7 +83,9 @@
             <div class="status-icon" id="statusIcon">🔑</div>
           </div>
           <h2 class="status-text" id="statusText">STOP</h2>
-          <p class="status-subtext" id="statusSubtext">Press to unleash tiger</p>
+          <p class="status-subtext" id="statusSubtext">
+            Press to unleash Sport
+          </p>
 
           <div
             class="connection-info"
@@ -112,7 +114,7 @@
             </label>
           </div>
 
-          <button class="connect-btn" id="connectBtn">AWAKEN TIGER</button>
+          <button class="connect-btn" id="connectBtn">AWAKEN SPORT</button>
         </div>
 
         <div class="subscription-card">
@@ -180,9 +182,9 @@
 
     <script>
       // ==========================================
-      // TIGER SOUND SYSTEM - Tiger Roar
+      // SPORT SOUND SYSTEM - Sport Roar
       // ==========================================
-      class TigerSound {
+      class SportSound {
         constructor() {
           this.audioCtx = null;
           this.isInit = false;
@@ -191,35 +193,43 @@
 
         init() {
           if (this.isInit) return;
-          this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          this.audioCtx = new (
+            window.AudioContext || window.webkitAudioContext
+          )();
           this.isInit = true;
         }
 
-        // Create tiger roar sound
+        // Create Sport roar sound
         roar(intensity = 1) {
           this.init();
           const ctx = this.audioCtx;
           const now = ctx.currentTime;
           const duration = 0.5 + intensity * 0.5;
 
-          // Low rumble base (tiger's chest)
+          // Low rumble base (Sport's chest)
           const rumble = ctx.createOscillator();
           const rumbleGain = ctx.createGain();
           const rumbleFilter = ctx.createBiquadFilter();
-          
-          rumble.type = 'sawtooth';
+
+          rumble.type = "sawtooth";
           rumble.frequency.setValueAtTime(60 * intensity, now);
-          rumble.frequency.linearRampToValueAtTime(40 * intensity, now + duration);
-          
-          rumbleFilter.type = 'lowpass';
+          rumble.frequency.linearRampToValueAtTime(
+            40 * intensity,
+            now + duration,
+          );
+
+          rumbleFilter.type = "lowpass";
           rumbleFilter.frequency.value = 150;
           rumbleFilter.Q.value = 5;
-          
+
           rumbleGain.gain.setValueAtTime(0, now);
           rumbleGain.gain.linearRampToValueAtTime(0.4 * intensity, now + 0.1);
-          rumbleGain.gain.linearRampToValueAtTime(0.3 * intensity, now + duration * 0.7);
+          rumbleGain.gain.linearRampToValueAtTime(
+            0.3 * intensity,
+            now + duration * 0.7,
+          );
           rumbleGain.gain.linearRampToValueAtTime(0, now + duration);
-          
+
           rumble.connect(rumbleFilter);
           rumbleFilter.connect(rumbleGain);
           rumbleGain.connect(ctx.destination);
@@ -230,20 +240,26 @@
           const growl = ctx.createOscillator();
           const growlGain = ctx.createGain();
           const growlFilter = ctx.createBiquadFilter();
-          
-          growl.type = 'sawtooth';
+
+          growl.type = "sawtooth";
           growl.frequency.setValueAtTime(150 * intensity, now);
-          growl.frequency.linearRampToValueAtTime(100 * intensity, now + duration);
-          
-          growlFilter.type = 'bandpass';
+          growl.frequency.linearRampToValueAtTime(
+            100 * intensity,
+            now + duration,
+          );
+
+          growlFilter.type = "bandpass";
           growlFilter.frequency.value = 300;
           growlFilter.Q.value = 3;
-          
+
           growlGain.gain.setValueAtTime(0, now);
           growlGain.gain.linearRampToValueAtTime(0.2 * intensity, now + 0.05);
-          growlGain.gain.linearRampToValueAtTime(0.15 * intensity, now + duration * 0.6);
+          growlGain.gain.linearRampToValueAtTime(
+            0.15 * intensity,
+            now + duration * 0.6,
+          );
           growlGain.gain.linearRampToValueAtTime(0, now + duration);
-          
+
           growl.connect(growlFilter);
           growlFilter.connect(growlGain);
           growlGain.connect(ctx.destination);
@@ -256,20 +272,23 @@
           const data = buffer.getChannelData(0);
           for (let i = 0; i < bufferSize; i++) {
             const t = i / ctx.sampleRate;
-            data[i] = (Math.random() * 2 - 1) * Math.sin(t * Math.PI / duration) * 0.5;
+            data[i] =
+              (Math.random() * 2 - 1) *
+              Math.sin((t * Math.PI) / duration) *
+              0.5;
           }
-          
+
           const noise = ctx.createBufferSource();
           noise.buffer = buffer;
-          
+
           const noiseFilter = ctx.createBiquadFilter();
-          noiseFilter.type = 'bandpass';
+          noiseFilter.type = "bandpass";
           noiseFilter.frequency.value = 500;
           noiseFilter.Q.value = 1;
-          
+
           const noiseGain = ctx.createGain();
           noiseGain.gain.value = 0.15 * intensity;
-          
+
           noise.connect(noiseFilter);
           noiseFilter.connect(noiseGain);
           noiseGain.connect(ctx.destination);
@@ -286,11 +305,11 @@
           const gain = ctx.createGain();
           const filter = ctx.createBiquadFilter();
 
-          osc.type = 'sawtooth';
+          osc.type = "sawtooth";
           osc.frequency.setValueAtTime(120, now);
           osc.frequency.linearRampToValueAtTime(80, now + 0.15);
 
-          filter.type = 'lowpass';
+          filter.type = "lowpass";
           filter.frequency.value = 400;
           filter.Q.value = 2;
 
@@ -314,12 +333,12 @@
 
           // Deep chest rumble
           const rumble = ctx.createOscillator();
-          rumble.type = 'sawtooth';
+          rumble.type = "sawtooth";
           rumble.frequency.setValueAtTime(50, now);
           rumble.frequency.linearRampToValueAtTime(30, now + 1.5);
 
           const rumbleFilter = ctx.createBiquadFilter();
-          rumbleFilter.type = 'lowpass';
+          rumbleFilter.type = "lowpass";
           rumbleFilter.frequency.value = 200;
 
           const rumbleGain = ctx.createGain();
@@ -337,12 +356,12 @@
           // Screech overlay
           setTimeout(() => {
             const osc = ctx.createOscillator();
-            osc.type = 'sawtooth';
+            osc.type = "sawtooth";
             osc.frequency.setValueAtTime(400, ctx.currentTime);
             osc.frequency.linearRampToValueAtTime(200, ctx.currentTime + 0.3);
 
             const oscFilter = ctx.createBiquadFilter();
-            oscFilter.type = 'bandpass';
+            oscFilter.type = "bandpass";
             oscFilter.frequency.value = 600;
 
             const oscGain = ctx.createGain();
@@ -357,34 +376,73 @@
           }, 200);
         }
 
-        // Click/button sound - tiger grunt
-        click() {
+        // Gunshot sound for button clicks
+        gunshot() {
           this.init();
           const ctx = this.audioCtx;
           const now = ctx.currentTime;
 
-          const osc = ctx.createOscillator();
+          // Create noise burst (the crack)
+          const bufferSize = ctx.sampleRate * 0.15;
+          const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+          const data = buffer.getChannelData(0);
+
+          for (let i = 0; i < bufferSize; i++) {
+            const t = i / ctx.sampleRate;
+            // Sharp attack then decay
+            data[i] = (Math.random() * 2 - 1) * Math.exp(-t * 40) * 0.8;
+          }
+
+          const noise = ctx.createBufferSource();
+          noise.buffer = buffer;
+
+          // High-pass to make it sharp
+          const hpFilter = ctx.createBiquadFilter();
+          hpFilter.type = 'highpass';
+          hpFilter.frequency.value = 1000;
+
+          // Band-pass for punch
+          const bpFilter = ctx.createBiquadFilter();
+          bpFilter.type = 'bandpass';
+          bpFilter.frequency.value = 2000;
+          bpFilter.Q.value = 1;
+
           const gain = ctx.createGain();
-          const filter = ctx.createBiquadFilter();
+          gain.gain.setValueAtTime(0.5, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
 
-          osc.type = 'sawtooth';
-          osc.frequency.setValueAtTime(200, now);
-          osc.frequency.exponentialRampToValueAtTime(100, now + 0.05);
-
-          filter.type = 'lowpass';
-          filter.frequency.value = 500;
-
-          gain.gain.setValueAtTime(0.2, now);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
-
-          osc.connect(filter);
-          filter.connect(gain);
+          noise.connect(hpFilter);
+          hpFilter.connect(bpFilter);
+          bpFilter.connect(gain);
           gain.connect(ctx.destination);
+
+          noise.start(now);
+          noise.stop(now + 0.15);
+
+          // Low thump (the punch)
+          const osc = ctx.createOscillator();
+          const oscGain = ctx.createGain();
+          const oscFilter = ctx.createBiquadFilter();
+
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(150, now);
+          osc.frequency.exponentialRampToValueAtTime(50, now + 0.1);
+
+          oscFilter.type = 'lowpass';
+          oscFilter.frequency.value = 200;
+
+          oscGain.gain.setValueAtTime(0.4, now);
+          oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+
+          osc.connect(oscFilter);
+          oscFilter.connect(oscGain);
+          oscGain.connect(ctx.destination);
+
           osc.start(now);
           osc.stop(now + 0.1);
         }
 
-        // Startup - tiger awakening
+        // Startup - Sport awakening
         startup() {
           this.init();
           // Initial grunt
@@ -403,15 +461,15 @@
 
           const osc1 = ctx.createOscillator();
           const osc2 = ctx.createOscillator();
-          
-          osc1.type = 'sawtooth';
+
+          osc1.type = "sawtooth";
           osc1.frequency.value = 80;
-          
-          osc2.type = 'sawtooth';
+
+          osc2.type = "sawtooth";
           osc2.frequency.value = 120;
 
           const filter = ctx.createBiquadFilter();
-          filter.type = 'lowpass';
+          filter.type = "lowpass";
           filter.frequency.value = 300;
 
           const gain = ctx.createGain();
@@ -429,9 +487,12 @@
             stop: () => {
               gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.3);
               setTimeout(() => {
-                try { osc1.stop(); osc2.stop(); } catch(e) {}
+                try {
+                  osc1.stop();
+                  osc2.stop();
+                } catch (e) {}
               }, 300);
-            }
+            },
           };
         }
 
@@ -449,12 +510,12 @@
 
           // Quick aggressive sound
           const osc = ctx.createOscillator();
-          osc.type = 'sawtooth';
+          osc.type = "sawtooth";
           osc.frequency.setValueAtTime(300, now);
           osc.frequency.linearRampToValueAtTime(100, now + 0.1);
 
           const filter = ctx.createBiquadFilter();
-          filter.type = 'bandpass';
+          filter.type = "bandpass";
           filter.frequency.value = 400;
           filter.Q.value = 5;
 
@@ -470,7 +531,7 @@
         }
       }
 
-      const tiger = new TigerSound();
+      const Sport = new SportSound();
 
       // ==========================================
       // Configuration
@@ -579,7 +640,7 @@
         const startTime = Date.now();
 
         // Start exhaust sound
-        tiger.startup();
+        Sport.startup();
 
         function animate() {
           const elapsed = Date.now() - startTime;
@@ -590,7 +651,7 @@
             rpm = progress * 25000; // 0 to 8000
           } else if (progress < 0.8) {
             rpm = 8000 + Math.sin(progress * 20) * 500; // Fluctuate
-            if (Math.random() < 0.1) tiger.roar(0.5);
+            if (Math.random() < 0.1) Sport.roar(0.5);
           } else {
             rpm = 7000 - (progress - 0.8) * 15000; // Drop to idle
           }
@@ -607,22 +668,22 @@
 
           // Update status
           if (progress < 0.3) {
-            engineStatus.textContent = "TIGER AWAKENS";
+            engineStatus.textContent = "SPORT AWAKENS";
           } else if (progress < 0.6) {
-            engineStatus.textContent = "TIGER ROARS!";
+            engineStatus.textContent = "SPORT ROARS!";
             engineFlames.classList.add("active");
           } else if (progress < 0.9) {
-            engineStatus.textContent = "TIGER SNARLS";
-            tiger.deceleration();
+            engineStatus.textContent = "SPORT SNARLS";
+            Sport.deceleration();
           } else {
-            engineStatus.textContent = "TIGER READY";
+            engineStatus.textContent = "SPORT READY";
             engineFlames.classList.remove("active");
           }
 
           if (progress < 1) {
             requestAnimationFrame(animate);
           } else {
-            tiger.roar(0.5);
+            Sport.roar(0.5);
             setTimeout(() => {
               splash.style.display = "none";
               checkAuthState();
@@ -634,7 +695,7 @@
         document.addEventListener(
           "click",
           function initAudio() {
-            tiger.init();
+            Sport.init();
             document.removeEventListener("click", initAudio);
           },
           { once: true },
@@ -684,7 +745,7 @@
       function renderServers() {
         const container = document.getElementById("regionGroups");
         let html =
-          '<h3 style="color: var(--amg-silver); margin-bottom: 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;">🌍 SELECT SERVER</h3><ul class="server-list">';
+          '<h3 style="color: var(--sport-silver); margin-bottom: 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;">🌍 SELECT SERVER</h3><ul class="server-list">';
 
         SERVERS.forEach((server) => {
           const selected =
@@ -711,7 +772,7 @@
 
         document.querySelectorAll(".server-item").forEach((item) => {
           item.addEventListener("click", () => {
-            tiger.click();
+            sport.gunshot();
             const server = SERVERS.find((s) => s.id === item.dataset.serverId);
             selectServer(server);
           });
@@ -743,7 +804,7 @@
 
       async function connect() {
         if (!state.selectedServer) {
-          tiger.click();
+          sport.gunshot();
           showToast("SELECT SERVER FIRST!", "error");
           return;
         }
@@ -752,11 +813,12 @@
         updateConnectionUI();
 
         // Start rev sound
-        state.currentRev = tiger.roar(1);
+        state.currentRev = Sport.roar(1);
 
         document.getElementById("statusIcon").textContent = "🔄";
         document.getElementById("statusText").textContent = "STARTING...";
-        document.getElementById("statusSubtext").textContent = "Tiger hunting...";
+        document.getElementById("statusSubtext").textContent =
+          "Sport hunting...";
 
         try {
           await new Promise((resolve) => setTimeout(resolve, 2500));
@@ -769,19 +831,19 @@
             state.currentRev.stop();
             state.currentRev = null;
           }
-          tiger.deceleration();
-          setTimeout(() => tiger.roar(0.5), 200);
+          Sport.deceleration();
+          setTimeout(() => Sport.roar(0.5), 200);
 
           document.getElementById("statusIcon").textContent = "🔥";
           document.getElementById("statusText").textContent = "RUNNING";
           document.getElementById("statusSubtext").textContent =
-            "Tiger is hunting!";
+            "Sport is hunting!";
           document.getElementById("connectionInfo").style.display = "block";
           document.getElementById("ipAddress").textContent =
             state.config.address;
 
           const btn = document.getElementById("connectBtn");
-          btn.textContent = "STOP TIGER";
+          btn.textContent = "STOP SPORT";
           btn.className = "connect-btn connected";
 
           showToast(`CONNECTED TO ${state.selectedServer.name}!`, "success");
@@ -803,9 +865,9 @@
         state.config = null;
 
         // Dramatic shutdown
-        tiger.roar(1.2);
+        Sport.roar(1.2);
         setTimeout(() => {
-          tiger.deceleration();
+          Sport.deceleration();
           if (state.currentRev) {
             state.currentRev.stop();
             state.currentRev = null;
@@ -815,11 +877,11 @@
         document.getElementById("statusIcon").textContent = "🔑";
         document.getElementById("statusText").textContent = "STOP";
         document.getElementById("statusSubtext").textContent =
-          "Press to unleash tiger";
+          "Press to unleash Sport";
         document.getElementById("connectionInfo").style.display = "none";
 
         const btn = document.getElementById("connectBtn");
-        btn.textContent = "AWAKEN TIGER";
+        btn.textContent = "AWAKEN SPORT";
         btn.className = "connect-btn";
 
         showToast("ENGINE STOPPED");
@@ -858,7 +920,7 @@ PersistentKeepalive = 25
       }
 
       function downloadConfig() {
-        tiger.click();
+        sport.gunshot();
         if (!state.config) {
           showToast("CONNECT FIRST!", "error");
           return;
@@ -872,19 +934,19 @@ PersistentKeepalive = 25
         a.click();
         URL.revokeObjectURL(url);
 
-        tiger.roar(0.5);
+        Sport.roar(0.5);
         showToast("CONFIG DOWNLOADED!", "success");
       }
 
       function authenticate() {
-        tiger.click();
+        sport.gunshot();
 
         state.user = { username: "AMG_DRIVER", id: Date.now() };
         state.token = "token_" + Date.now();
         localStorage.setItem("vpn_user", JSON.stringify(state.user));
         localStorage.setItem("vpn_token", state.token);
 
-        setTimeout(() => tiger.snarl(), 200);
+        setTimeout(() => Sport.snarl(), 200);
 
         showApp();
         renderServers();
@@ -893,7 +955,7 @@ PersistentKeepalive = 25
       }
 
       function showServersModal() {
-        tiger.click();
+        sport.gunshot();
 
         let html =
           '<h3 class="modal-title">🌍 ALL SERVERS</h3><ul class="server-list">';
@@ -918,7 +980,7 @@ PersistentKeepalive = 25
 
         document.querySelectorAll("#modalBody .server-item").forEach((item) => {
           item.addEventListener("click", () => {
-            tiger.click();
+            sport.gunshot();
             const server = SERVERS.find((s) => s.id === item.dataset.serverId);
             selectServer(server);
             closeModal();
@@ -927,27 +989,27 @@ PersistentKeepalive = 25
       }
 
       function showHelpModal() {
-        tiger.click();
+        sport.gunshot();
 
         document.getElementById("modalBody").innerHTML = `
                 <h3 class="modal-title">❓ MANUAL</h3>
                 <div style="color: var(--text-secondary); line-height: 2;">
-                    <p><strong style="color: var(--amg-silver);">HOW TO CONNECT?</strong></p>
+                    <p><strong style="color: var(--sport-silver);">HOW TO CONNECT?</strong></p>
                     <ol style="margin: 0.5rem 0; padding-left: 1.5rem;">
                         <li>Select server</li>
                         <li>Enable Double VPN</li>
-                        <li>Press AWAKEN TIGER</li>
+                        <li>Press AWAKEN SPORT</li>
                         <li>Download config</li>
                     </ol>
-                    <p style="margin-top: 1rem;"><strong style="color: var(--amg-silver);">SUPPORT:</strong></p>
-                    <p>@VenompowerVPN_bot</p>
+                    <p style="margin-top: 1rem;"><strong style="color: var(--sport-silver);">SUPPORT:</strong></p>
+                    <p>@SportpowerVPN_bot</p>
                 </div>
             `;
         document.getElementById("modal").classList.remove("hidden");
       }
 
       function showProfileModal() {
-        tiger.click();
+        sport.gunshot();
 
         document.getElementById("modalBody").innerHTML = `
                 <h3 class="modal-title">👤 PROFILE</h3>
@@ -993,12 +1055,12 @@ PersistentKeepalive = 25
       document
         .getElementById("doubleVpnCheckbox")
         .addEventListener("change", (e) => {
-          tiger.click();
+          sport.gunshot();
           state.doubleVpn = e.target.checked;
           localStorage.setItem("double_vpn", state.doubleVpn);
           showToast(state.doubleVpn ? "🔥 DOUBLE VPN ON" : "DOUBLE VPN OFF");
           if (state.doubleVpn) {
-            setTimeout(() => tiger.snarl(), 200);
+            setTimeout(() => Sport.snarl(), 200);
           }
         });
 
@@ -1027,7 +1089,7 @@ PersistentKeepalive = 25
 
       document.querySelectorAll(".nav-item").forEach((item) => {
         item.addEventListener("click", () => {
-          tiger.click();
+          sport.gunshot();
           document
             .querySelectorAll(".nav-item")
             .forEach((i) => i.classList.remove("active"));
