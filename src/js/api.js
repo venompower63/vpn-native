@@ -177,4 +177,4 @@ class TelegramAuth {
 }
 
 // Global API instance
-const api = new VPNAPI();
+export const api = new VPNAPI();

@@ -1,4 +1,4 @@
 // Main entry point for VPN App
-// App initialization is handled in js/app.js
+import './js/app.js';
 
 console.log("VPN App loaded");

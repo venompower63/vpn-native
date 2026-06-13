@@ -1,4 +1,7 @@
 // VPN App - Main Application
+import { api } from './api.js';
+import { wireguard } from './wireguard.js';
+import { CONFIG } from './config.js';
 
 class VPNApp {
 	constructor() {

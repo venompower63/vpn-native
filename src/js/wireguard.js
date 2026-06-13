@@ -316,5 +316,5 @@ class VPNStateManager {
 }
 
 // Global instances
-const wireguard = new WireGuardManager();
-const vpnState = new VPNStateManager();
+export const wireguard = new WireGuardManager();
+export const vpnState = new VPNStateManager();

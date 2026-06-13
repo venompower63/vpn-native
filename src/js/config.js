@@ -1,6 +1,6 @@
 // VPN App - Configuration
 
-const CONFIG = {
+export const CONFIG = {
 	// API Server URL - change this to your deployed server
 	API_URL: "http://localhost:8080/api",
 
