@@ -1,384 +1,513 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#0d0d0d">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="theme-color" content="#0d0d0d" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
     <title>Venom VPN - AMG Edition</title>
-    <link rel="stylesheet" href="./src/css/styles.css">
-</head>
-<body>
-
+    <link rel="stylesheet" href="./src/css/styles.css" />
+  </head>
+  <body>
     <!-- SPLASH SCREEN -->
     <div id="splash" class="splash">
-        <div class="splash-bg"></div>
+      <div class="splash-bg"></div>
 
-        <div class="splash-logo">
-            <div class="amg-emblem"></div>
-            <div class="engine-flames" id="engineFlames">
-                <div class="flame"></div>
-                <div class="flame"></div>
-                <div class="flame"></div>
-            </div>
+      <div class="splash-logo">
+        <div class="amg-emblem"></div>
+        <div class="engine-flames" id="engineFlames">
+          <div class="flame"></div>
+          <div class="flame"></div>
+          <div class="flame"></div>
         </div>
+      </div>
 
-        <div class="splash-text">VENOM</div>
-        <div class="splash-subtitle">VPN AMG</div>
+      <div class="splash-text">VENOM</div>
+      <div class="splash-subtitle">VPN AMG</div>
 
-        <div class="rpm-cluster">
-            <div class="rpm-display">
-                <div class="rpm-digit" id="rpm1">0</div>
-                <div class="rpm-digit" id="rpm2">0</div>
-                <div class="rpm-digit" id="rpm3">0</div>
-                <div class="rpm-digit" id="rpm4">0</div>
-            </div>
-            <div class="rpm-label">RPM × 1000</div>
-            <div class="rpm-bar">
-                <div class="rpm-bar-fill" id="rpmBar"></div>
-            </div>
+      <div class="rpm-cluster">
+        <div class="rpm-display">
+          <div class="rpm-digit" id="rpm1">0</div>
+          <div class="rpm-digit" id="rpm2">0</div>
+          <div class="rpm-digit" id="rpm3">0</div>
+          <div class="rpm-digit" id="rpm4">0</div>
         </div>
-
-        <div class="engine-status" id="engineStatus">STARTING ENGINE</div>
-        <div class="loading-bar">
-            <div class="loading-bar-fill"></div>
+        <div class="rpm-label">RPM × 1000</div>
+        <div class="rpm-bar">
+          <div class="rpm-bar-fill" id="rpmBar"></div>
         </div>
+      </div>
+
+      <div class="engine-status" id="engineStatus">STARTING ENGINE</div>
+      <div class="loading-bar">
+        <div class="loading-bar-fill"></div>
+      </div>
     </div>
 
     <!-- AUTH SCREEN -->
     <div id="auth" class="auth-screen hidden">
-        <div class="auth-content">
-            <div class="auth-logo">
-                <div class="amg-circle">AMG</div>
-            </div>
-            <h1>VENOM VPN</h1>
-            <p class="auth-desc">AMG Edition - Sport VPN</p>
-            <button class="telegram-btn" id="telegramAuth">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0z"/>
-                </svg>
-                <span>LOGIN VIA TELEGRAM</span>
-            </button>
-            <p class="auth-hint">Fast auth in one click</p>
+      <div class="auth-content">
+        <div class="auth-logo">
+          <div class="amg-circle">AMG</div>
         </div>
+        <h1>VENOM VPN</h1>
+        <p class="auth-desc">AMG Edition - Sport VPN</p>
+        <button class="telegram-btn" id="telegramAuth">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0z"
+            />
+          </svg>
+          <span>LOGIN VIA TELEGRAM</span>
+        </button>
+        <p class="auth-hint">Fast auth in one click</p>
+      </div>
     </div>
 
     <!-- MAIN APP -->
     <div id="app" class="app hidden">
-        <header class="header">
-            <div class="header-left">
-                <div class="amg-badge">AMG</div>
-                <span class="app-name">VENOM VPN</span>
+      <header class="header">
+        <div class="header-left">
+          <div class="amg-badge">AMG</div>
+          <span class="app-name">VENOM VPN</span>
+        </div>
+        <button id="profileBtn" class="icon-btn">👤</button>
+      </header>
+
+      <main class="main">
+        <div class="status-card">
+          <div class="status-indicator">
+            <div class="status-icon" id="statusIcon">🔑</div>
+          </div>
+          <h2 class="status-text" id="statusText">STOP</h2>
+          <p class="status-subtext" id="statusSubtext">Press to start engine</p>
+
+          <div
+            class="connection-info"
+            id="connectionInfo"
+            style="display: none"
+          >
+            <div class="info-row">
+              <span class="info-label">SERVER</span>
+              <span class="info-value" id="serverName">-</span>
             </div>
-            <button id="profileBtn" class="icon-btn">👤</button>
-        </header>
-
-        <main class="main">
-            <div class="status-card">
-                <div class="status-indicator">
-                    <div class="status-icon" id="statusIcon">🔑</div>
-                </div>
-                <h2 class="status-text" id="statusText">STOP</h2>
-                <p class="status-subtext" id="statusSubtext">Press to start engine</p>
-
-                <div class="connection-info" id="connectionInfo" style="display: none;">
-                    <div class="info-row">
-                        <span class="info-label">SERVER</span>
-                        <span class="info-value" id="serverName">-</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">IP</span>
-                        <span class="info-value" id="ipAddress">-</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">LOCATION</span>
-                        <span class="info-value" id="location">-</span>
-                    </div>
-                </div>
-
-                <div class="double-vpn-toggle">
-                    <span>🔥 DOUBLE VPN</span>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="doubleVpnCheckbox">
-                        <span class="toggle-slider"></span>
-                    </label>
-                </div>
-
-                <button class="connect-btn" id="connectBtn">START ENGINE</button>
+            <div class="info-row">
+              <span class="info-label">IP</span>
+              <span class="info-value" id="ipAddress">-</span>
             </div>
-
-            <div class="subscription-card">
-                <div class="card-header">
-                    <span class="card-title">SUBSCRIPTION</span>
-                    <span class="card-badge active" id="subBadge">AMG EDITION</span>
-                </div>
-                <div class="sub-info">
-                    <span class="sub-plan">Mercedes-AMG</span>
-                    <span class="sub-expiry">∞</span>
-                </div>
-                <div class="sub-progress">
-                    <div class="progress-bar" style="width: 100%"></div>
-                </div>
-                <p class="sub-days">UNLIMITED</p>
+            <div class="info-row">
+              <span class="info-label">LOCATION</span>
+              <span class="info-value" id="location">-</span>
             </div>
+          </div>
 
-            <div class="server-selection">
-                <div id="regionGroups">
-                    <!-- Servers will be rendered here -->
-                </div>
-            </div>
+          <div class="double-vpn-toggle">
+            <span>🔥 DOUBLE VPN</span>
+            <label class="toggle-switch">
+              <input type="checkbox" id="doubleVpnCheckbox" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
 
-            <div class="actions-grid">
-                <button class="action-btn" id="serversBtn">
-                    <span class="action-icon">🌐</span>
-                    <span class="action-text">Servers</span>
-                </button>
-                <button class="action-btn" id="configBtn">
-                    <span class="action-icon">📥</span>
-                    <span class="action-text">Config</span>
-                </button>
-                <button class="action-btn" id="helpBtn">
-                    <span class="action-icon">❓</span>
-                    <span class="action-text">Help</span>
-                </button>
-            </div>
-        </main>
+          <button class="connect-btn" id="connectBtn">START ENGINE</button>
+        </div>
 
-        <nav class="bottom-nav">
-            <button class="nav-item active" data-tab="home">🏠<span>Home</span></button>
-            <button class="nav-item" data-tab="servers">🌐<span>Servers</span></button>
-            <button class="nav-item" data-tab="profile">👤<span>Profile</span></button>
-        </nav>
+        <div class="subscription-card">
+          <div class="card-header">
+            <span class="card-title">SUBSCRIPTION</span>
+            <span class="card-badge active" id="subBadge">AMG EDITION</span>
+          </div>
+          <div class="sub-info">
+            <span class="sub-plan">Mercedes-AMG</span>
+            <span class="sub-expiry">∞</span>
+          </div>
+          <div class="sub-progress">
+            <div class="progress-bar" style="width: 100%"></div>
+          </div>
+          <p class="sub-days">UNLIMITED</p>
+        </div>
+
+        <div class="server-selection">
+          <div id="regionGroups">
+            <!-- Servers will be rendered here -->
+          </div>
+        </div>
+
+        <div class="actions-grid">
+          <button class="action-btn" id="serversBtn">
+            <span class="action-icon">🌐</span>
+            <span class="action-text">Servers</span>
+          </button>
+          <button class="action-btn" id="configBtn">
+            <span class="action-icon">📥</span>
+            <span class="action-text">Config</span>
+          </button>
+          <button class="action-btn" id="helpBtn">
+            <span class="action-icon">❓</span>
+            <span class="action-text">Help</span>
+          </button>
+        </div>
+      </main>
+
+      <nav class="bottom-nav">
+        <button class="nav-item active" data-tab="home">
+          🏠<span>Home</span>
+        </button>
+        <button class="nav-item" data-tab="servers">
+          🌐<span>Servers</span>
+        </button>
+        <button class="nav-item" data-tab="profile">
+          👤<span>Profile</span>
+        </button>
+      </nav>
     </div>
 
     <!-- Modal -->
     <div id="modal" class="modal hidden">
-        <div class="modal-content">
-            <button class="modal-close" id="modalCloseBtn">×</button>
-            <div id="modalBody"></div>
-        </div>
+      <div class="modal-content">
+        <button class="modal-close" id="modalCloseBtn">×</button>
+        <div id="modalBody"></div>
+      </div>
     </div>
 
     <!-- Toast -->
     <div id="toast" class="toast hidden">
-        <span id="toastText"></span>
+      <span id="toastText"></span>
     </div>
 
     <script>
-        // ==========================================
-        // AMG Exhaust Sound System
-        // ==========================================
-        // AMG Sound System - Two sounds
-        class AMGExhaust {
-            constructor() {
-                this.startupAudio = null;
-                this.buttonAudio = null;
-                this.startupUrl = 'https://storage.yandexcloud.net/promto-user-static-sites-prod/design-assets/941619812/6bb7db79-ec84-41c7-b74f-db5bb596911a/b869ca66-06bf-45b2-b689-91e783159565-_.mp3';
-                this.buttonUrl = 'https://storage.yandexcloud.net/promto-user-static-sites-prod/design-assets/941619812/6bb7db79-ec84-41c7-b74f-db5bb596911a/d0685532-e4ea-4c6e-823f-7b68df43a197-reloading-weapons.mp3';
-            }
-
-            init() {
-                if (!this.startupAudio) {
-                    this.startupAudio = new Audio(this.startupUrl);
-                    this.startupAudio.volume = 1;
-                }
-                if (!this.buttonAudio) {
-                    this.buttonAudio = new Audio(this.buttonUrl);
-                    this.buttonAudio.volume = 0.8;
-                }
-            }
-
-            // Play startup sound (Splash + START button)
-            playStartup() {
-                this.init();
-                try {
-                    this.startupAudio.currentTime = 0;
-                    this.startupAudio.play().catch(e => console.log('Startup audio error:', e));
-                } catch(e) {}
-            }
-
-            // Play button sound (all other buttons)
-            playButton() {
-                this.init();
-                try {
-                    this.buttonAudio.currentTime = 0;
-                    this.buttonAudio.play().catch(e => console.log('Button audio error:', e));
-                } catch(e) {}
-            }
-
-            // Startup - plays once on splash
-            startup() { this.playStartup(); }
-            // Rev - for START button
-            rev() { this.playStartup(); }
-            
-            // All other buttons - button sound
-            pop() { this.playButton(); }
-            crackle() { this.playButton(); }
-            deceleration() { this.playButton(); }
-            click() { this.playButton(); }
+      // ==========================================
+      // AMG Exhaust Sound System
+      // ==========================================
+      class AMGExhaust {
+        constructor() {
+          this.startupAudio = null;
+          this.buttonAudio = null;
+          this.serverAudio = null;
+          this.startupUrl =
+            "https://storage.yandexcloud.net/promto-user-static-sites-prod/design-assets/941619812/6bb7db79-ec84-41c7-b74f-db5bb596911a/b869ca66-06bf-45b2-b689-91e783159565-_.mp3";
+          this.buttonUrl =
+            "https://storage.yandexcloud.net/promto-user-static-sites-prod/design-assets/941619812/6bb7db79-ec84-41c7-b74f-db5bb596911a/d0685532-e4ea-4c6e-823f-7b68df43a197-reloading-weapons.mp3";
+          this.serverUrl =
+            "https://storage.yandexcloud.net/promto-user-static-sites-prod/design-assets/941619812/6bb7db79-ec84-41c7-b74f-db5bb596911a/6b0107f0-6c39-4734-8ca5-7c73e6ec3a58-loud-pistol-shot.mp3";
         }
 
-        const exhaust = new AMGExhaust();
+        init() {
+          if (!this.startupAudio) {
+            this.startupAudio = new Audio(this.startupUrl);
+            this.startupAudio.volume = 1;
+          }
+          if (!this.buttonAudio) {
+            this.buttonAudio = new Audio(this.buttonUrl);
+            this.buttonAudio.volume = 0.8;
+          }
+          if (!this.serverAudio) {
+            this.serverAudio = new Audio(this.serverUrl);
+            this.serverAudio.volume = 0.8;
+          }
+        }
 
-        // Initialize audio on first interaction
-        document.addEventListener('click', function initAudio() {
+        // Play startup sound (Splash + START button)
+        playStartup() {
+          this.init();
+          try {
+            this.startupAudio.currentTime = 0;
+            this.startupAudio
+              .play()
+              .catch((e) => console.log("Startup audio error:", e));
+          } catch (e) {}
+        }
+
+        // Play button sound (other buttons)
+        playButton() {
+          this.init();
+          try {
+            this.buttonAudio.currentTime = 0;
+            this.buttonAudio
+              .play()
+              .catch((e) => console.log("Button audio error:", e));
+          } catch (e) {}
+        }
+
+        // Play server click sound (country selection)
+        playServer() {
+          this.init();
+          try {
+            this.serverAudio.currentTime = 0;
+            this.serverAudio
+              .play()
+              .catch((e) => console.log("Server audio error:", e));
+          } catch (e) {}
+        }
+
+        // Startup - plays once on splash
+        startup() {
+          this.playStartup();
+        }
+        // Rev - for START button
+        rev() {
+          this.playStartup();
+        }
+
+        // Server - for country/server selection
+        server() {
+          this.playServer();
+        }
+
+        // All other buttons - button sound
+        pop() {
+          this.playButton();
+        }
+        crackle() {
+          this.playButton();
+        }
+        deceleration() {
+          this.playButton();
+        }
+        click() {
+          this.playButton();
+        }
+      }
+
+      const exhaust = new AMGExhaust();
+
+      // Initialize audio on first interaction
+      document.addEventListener(
+        "click",
+        function initAudio() {
+          exhaust.init();
+          document.removeEventListener("click", initAudio);
+        },
+        { once: true },
+      );
+
+      // ==========================================
+      // Configuration
+      // ==========================================
+
+      const SERVERS = [
+        {
+          id: "us-east-1",
+          name: "US EAST",
+          location: "Virginia, USA",
+          flag: "🇺🇸",
+          ping: 45,
+        },
+        {
+          id: "us-west-1",
+          name: "US WEST",
+          location: "California, USA",
+          flag: "🇺🇸",
+          ping: 78,
+        },
+        {
+          id: "eu-central-1",
+          name: "GERMANY",
+          location: "Frankfurt",
+          flag: "🇩🇪",
+          ping: 25,
+        },
+        {
+          id: "uk-london",
+          name: "UK",
+          location: "London",
+          flag: "🇬🇧",
+          ping: 35,
+        },
+        {
+          id: "nl-amsterdam",
+          name: "NETHERLANDS",
+          location: "Amsterdam",
+          flag: "🇳🇱",
+          ping: 30,
+        },
+        {
+          id: "fr-paris",
+          name: "FRANCE",
+          location: "Paris",
+          flag: "🇫🇷",
+          ping: 28,
+        },
+        {
+          id: "jp-tokyo",
+          name: "JAPAN",
+          location: "Tokyo",
+          flag: "🇯🇵",
+          ping: 120,
+        },
+        {
+          id: "sg-singapore",
+          name: "SINGAPORE",
+          location: "Singapore",
+          flag: "🇸🇬",
+          ping: 100,
+        },
+        {
+          id: "ae-dubai",
+          name: "UAE",
+          location: "Dubai",
+          flag: "🇦🇪",
+          ping: 85,
+        },
+        {
+          id: "br-saopaulo",
+          name: "BRAZIL",
+          location: "São Paulo",
+          flag: "🇧🇷",
+          ping: 120,
+        },
+      ];
+
+      const state = {
+        connected: false,
+        connecting: false,
+        selectedServer: null,
+        doubleVpn: false,
+        user: null,
+        token: null,
+        config: null,
+        currentRev: null,
+      };
+
+      // ==========================================
+      // Splash Animation
+      // ==========================================
+
+      function runSplashAnimation() {
+        const splash = document.getElementById("splash");
+        const rpm1 = document.getElementById("rpm1");
+        const rpm2 = document.getElementById("rpm2");
+        const rpm3 = document.getElementById("rpm3");
+        const rpm4 = document.getElementById("rpm4");
+        const rpmBar = document.getElementById("rpmBar");
+        const engineStatus = document.getElementById("engineStatus");
+        const engineFlames = document.getElementById("engineFlames");
+
+        let rpm = 0;
+        const duration = 3500;
+        const startTime = Date.now();
+
+        // Start exhaust sound
+        exhaust.startup();
+
+        function animate() {
+          const elapsed = Date.now() - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+
+          // RPM simulation
+          if (progress < 0.4) {
+            rpm = progress * 25000; // 0 to 8000
+          } else if (progress < 0.8) {
+            rpm = 8000 + Math.sin(progress * 20) * 500; // Fluctuate
+            if (Math.random() < 0.1) exhaust.pop();
+          } else {
+            rpm = 7000 - (progress - 0.8) * 15000; // Drop to idle
+          }
+
+          // Update display
+          const rpmStr = Math.floor(rpm).toString().padStart(4, "0");
+          rpm1.textContent = rpmStr[0];
+          rpm2.textContent = rpmStr[1];
+          rpm3.textContent = rpmStr[2];
+          rpm4.textContent = rpmStr[3];
+
+          // Update bar
+          rpmBar.style.width = `${(rpm / 8000) * 100}%`;
+
+          // Update status
+          if (progress < 0.3) {
+            engineStatus.textContent = "STARTER ENGAGED";
+          } else if (progress < 0.6) {
+            engineStatus.textContent = "HIGH RPM!";
+            engineFlames.classList.add("active");
+          } else if (progress < 0.9) {
+            engineStatus.textContent = "EXHAUST Pops";
+          } else {
+            engineStatus.textContent = "IDLE";
+            engineFlames.classList.remove("active");
+          }
+
+          if (progress < 1) {
+            requestAnimationFrame(animate);
+          } else {
+            // Only play startup sound once here
+            setTimeout(() => {
+              splash.style.display = "none";
+              checkAuthState();
+            }, 600);
+          }
+        }
+
+        // Initialize audio on first click
+        document.addEventListener(
+          "click",
+          function initAudio() {
             exhaust.init();
-            document.removeEventListener('click', initAudio);
-        }, { once: true });
+            document.removeEventListener("click", initAudio);
+          },
+          { once: true },
+        );
 
-        // ==========================================
-        // Configuration
-        // ==========================================
+        animate();
+      }
 
-        const SERVERS = [
-            { id: 'us-east-1', name: 'US EAST', location: 'Virginia, USA', flag: '🇺🇸', ping: 45 },
-            { id: 'us-west-1', name: 'US WEST', location: 'California, USA', flag: '🇺🇸', ping: 78 },
-            { id: 'eu-central-1', name: 'GERMANY', location: 'Frankfurt', flag: '🇩🇪', ping: 25 },
-            { id: 'uk-london', name: 'UK', location: 'London', flag: '🇬🇧', ping: 35 },
-            { id: 'nl-amsterdam', name: 'NETHERLANDS', location: 'Amsterdam', flag: '🇳🇱', ping: 30 },
-            { id: 'fr-paris', name: 'FRANCE', location: 'Paris', flag: '🇫🇷', ping: 28 },
-            { id: 'jp-tokyo', name: 'JAPAN', location: 'Tokyo', flag: '🇯🇵', ping: 120 },
-            { id: 'sg-singapore', name: 'SINGAPORE', location: 'Singapore', flag: '🇸🇬', ping: 100 },
-            { id: 'ae-dubai', name: 'UAE', location: 'Dubai', flag: '🇦🇪', ping: 85 },
-            { id: 'br-saopaulo', name: 'BRAZIL', location: 'São Paulo', flag: '🇧🇷', ping: 120 },
-        ];
+      // ==========================================
+      // App Logic
+      // ==========================================
 
-        const state = {
-            connected: false,
-            connecting: false,
-            selectedServer: null,
-            doubleVpn: false,
-            user: null,
-            token: null,
-            config: null,
-            currentRev: null,
-        };
+      function checkAuthState() {
+        const savedUser = localStorage.getItem("vpn_user");
+        const savedToken = localStorage.getItem("vpn_token");
 
-        // ==========================================
-        // Splash Animation
-        // ==========================================
-
-        function runSplashAnimation() {
-            const splash = document.getElementById('splash');
-            const rpm1 = document.getElementById('rpm1');
-            const rpm2 = document.getElementById('rpm2');
-            const rpm3 = document.getElementById('rpm3');
-            const rpm4 = document.getElementById('rpm4');
-            const rpmBar = document.getElementById('rpmBar');
-            const engineStatus = document.getElementById('engineStatus');
-            const engineFlames = document.getElementById('engineFlames');
-
-            let rpm = 0;
-            const duration = 3500;
-            const startTime = Date.now();
-
-            // Start exhaust sound
-            exhaust.startup();
-
-            function animate() {
-                const elapsed = Date.now() - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-
-                // RPM simulation
-                if (progress < 0.4) {
-                    rpm = progress * 25000; // 0 to 8000
-                } else if (progress < 0.8) {
-                    rpm = 8000 + Math.sin(progress * 20) * 500; // Fluctuate
-                    if (Math.random() < 0.1) exhaust.pop();
-                } else {
-                    rpm = 7000 - ((progress - 0.8) * 15000); // Drop to idle
-                }
-
-                // Update display
-                const rpmStr = Math.floor(rpm).toString().padStart(4, '0');
-                rpm1.textContent = rpmStr[0];
-                rpm2.textContent = rpmStr[1];
-                rpm3.textContent = rpmStr[2];
-                rpm4.textContent = rpmStr[3];
-
-                // Update bar
-                rpmBar.style.width = `${(rpm / 8000) * 100}%`;
-
-                // Update status
-                if (progress < 0.3) {
-                    engineStatus.textContent = 'STARTER ENGAGED';
-                } else if (progress < 0.6) {
-                    engineStatus.textContent = 'HIGH RPM!';
-                    engineFlames.classList.add('active');
-                } else if (progress < 0.9) {
-                    engineStatus.textContent = 'EXHAUST Pops';
-                } else {
-                    engineStatus.textContent = 'IDLE';
-                    engineFlames.classList.remove('active');
-                }
-
-                if (progress < 1) {
-                    requestAnimationFrame(animate);
-                } else {
-                    // Only play startup sound once here
-                    setTimeout(() => {
-                        splash.style.display = 'none';
-                        checkAuthState();
-                    }, 600);
-                }
-            }
-
-            // Initialize audio on first click
-            document.addEventListener('click', function initAudio() {
-                exhaust.init();
-                document.removeEventListener('click', initAudio);
-            }, { once: true });
-
-            animate();
+        if (savedUser && savedToken) {
+          state.user = JSON.parse(savedUser);
+          state.token = savedToken;
+          showApp();
+          renderServers();
+          loadSavedServer();
+        } else {
+          showAuth();
         }
+      }
 
-        // ==========================================
-        // App Logic
-        // ==========================================
+      function showAuth() {
+        document.getElementById("auth").classList.remove("hidden");
+        document.getElementById("app").classList.add("hidden");
+      }
 
-        function checkAuthState() {
-            const savedUser = localStorage.getItem('vpn_user');
-            const savedToken = localStorage.getItem('vpn_token');
+      function showApp() {
+        document.getElementById("auth").classList.add("hidden");
+        document.getElementById("app").classList.remove("hidden");
+      }
 
-            if (savedUser && savedToken) {
-                state.user = JSON.parse(savedUser);
-                state.token = savedToken;
-                showApp();
-                renderServers();
-                loadSavedServer();
-            } else {
-                showAuth();
-            }
-        }
+      function showToast(message, type = "info") {
+        const toast = document.getElementById("toast");
+        const toastText = document.getElementById("toastText");
+        toastText.textContent = message;
+        toast.className = `toast ${type}`;
+        toast.style.display = "block";
+        setTimeout(() => (toast.style.display = "none"), 3000);
+      }
 
-        function showAuth() {
-            document.getElementById('auth').classList.remove('hidden');
-            document.getElementById('app').classList.add('hidden');
-        }
+      function renderServers() {
+        const container = document.getElementById("regionGroups");
+        let html =
+          '<h3 style="color: var(--amg-silver); margin-bottom: 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;">🌍 SELECT SERVER</h3><ul class="server-list">';
 
-        function showApp() {
-            document.getElementById('auth').classList.add('hidden');
-            document.getElementById('app').classList.remove('hidden');
-        }
+        SERVERS.forEach((server) => {
+          const selected =
+            state.selectedServer?.id === server.id ? "selected" : "";
+          const pingColor =
+            server.ping < 50
+              ? "#00aa00"
+              : server.ping < 100
+                ? "#ffd700"
+                : "#ff4500";
 
-        function showToast(message, type = 'info') {
-            const toast = document.getElementById('toast');
-            const toastText = document.getElementById('toastText');
-            toastText.textContent = message;
-            toast.className = `toast ${type}`;
-            toast.style.display = 'block';
-            setTimeout(() => toast.style.display = 'none', 3000);
-        }
-
-        function renderServers() {
-            const container = document.getElementById('regionGroups');
-            let html = '<h3 style="color: var(--amg-silver); margin-bottom: 1rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;">🌍 SELECT SERVER</h3><ul class="server-list">';
-
-            SERVERS.forEach(server => {
-                const selected = state.selectedServer?.id === server.id ? 'selected' : '';
-                const pingColor = server.ping < 50 ? '#00aa00' : server.ping < 100 ? '#ffd700' : '#ff4500';
-
-                html += `<li class="server-item ${selected}" data-server-id="${server.id}">
+          html += `<li class="server-item ${selected}" data-server-id="${server.id}">
                     <span class="server-flag">${server.flag}</span>
                     <div class="server-info">
                         <div class="server-name">${server.name}</div>
@@ -386,115 +515,120 @@
                     </div>
                     <span class="server-ping" style="color: ${pingColor}">${server.ping}ms</span>
                 </li>`;
-            });
+        });
 
-            html += '</ul>';
-            container.innerHTML = html;
+        html += "</ul>";
+        container.innerHTML = html;
 
-            document.querySelectorAll('.server-item').forEach(item => {
-                item.addEventListener('click', () => {
-                    exhaust.click();
-                    const server = SERVERS.find(s => s.id === item.dataset.serverId);
-                    selectServer(server);
-                });
-            });
+        document.querySelectorAll(".server-item").forEach((item) => {
+          item.addEventListener("click", () => {
+            exhaust.server();
+            const server = SERVERS.find((s) => s.id === item.dataset.serverId);
+            selectServer(server);
+          });
+        });
+      }
+
+      function selectServer(server) {
+        state.selectedServer = server;
+        localStorage.setItem("vpn_server", JSON.stringify(server));
+        document.getElementById("serverName").textContent =
+          `${server.flag} ${server.name}`;
+        document.getElementById("location").textContent = server.location;
+        renderServers();
+        showToast(`SERVER: ${server.name}`, "success");
+      }
+
+      function loadSavedServer() {
+        const saved = localStorage.getItem("vpn_server");
+        if (saved) {
+          try {
+            state.selectedServer = JSON.parse(saved);
+            document.getElementById("serverName").textContent =
+              `${state.selectedServer.flag} ${state.selectedServer.name}`;
+            document.getElementById("location").textContent =
+              state.selectedServer.location;
+          } catch (e) {}
+        }
+      }
+
+      async function connect() {
+        if (!state.selectedServer) {
+          exhaust.click();
+          showToast("SELECT SERVER FIRST!", "error");
+          return;
         }
 
-        function selectServer(server) {
-            state.selectedServer = server;
-            localStorage.setItem('vpn_server', JSON.stringify(server));
-            document.getElementById('serverName').textContent = `${server.flag} ${server.name}`;
-            document.getElementById('location').textContent = server.location;
-            renderServers();
-            showToast(`SERVER: ${server.name}`, 'success');
+        state.connecting = true;
+        updateConnectionUI();
+
+        // Play startup sound for START button
+        exhaust.rev();
+
+        document.getElementById("statusIcon").textContent = "🔄";
+        document.getElementById("statusText").textContent = "STARTING...";
+        document.getElementById("statusSubtext").textContent = "Connecting...";
+
+        try {
+          await new Promise((resolve) => setTimeout(resolve, 2500));
+
+          state.config = generateConfig(state.selectedServer, state.doubleVpn);
+          state.connected = true;
+
+          // Button sound after connection
+          exhaust.deceleration();
+          setTimeout(() => exhaust.pop(), 200);
+
+          document.getElementById("statusIcon").textContent = "🔥";
+          document.getElementById("statusText").textContent = "RUNNING";
+          document.getElementById("statusSubtext").textContent =
+            "Engine is running!";
+          document.getElementById("connectionInfo").style.display = "block";
+          document.getElementById("ipAddress").textContent =
+            state.config.address;
+
+          const btn = document.getElementById("connectBtn");
+          btn.textContent = "STOP ENGINE";
+          btn.className = "connect-btn connected";
+
+          showToast(`CONNECTED TO ${state.selectedServer.name}!`, "success");
+        } catch (error) {
+          showToast("CONNECTION ERROR", "error");
+          state.connected = false;
+        } finally {
+          state.connecting = false;
+          updateConnectionUI();
         }
+      }
 
-        function loadSavedServer() {
-            const saved = localStorage.getItem('vpn_server');
-            if (saved) {
-                try {
-                    state.selectedServer = JSON.parse(saved);
-                    document.getElementById('serverName').textContent = `${state.selectedServer.flag} ${state.selectedServer.name}`;
-                    document.getElementById('location').textContent = state.selectedServer.location;
-                } catch (e) {}
-            }
-        }
+      function disconnect() {
+        state.connected = false;
+        state.config = null;
 
-        async function connect() {
-            if (!state.selectedServer) {
-                exhaust.click();
-                showToast('SELECT SERVER FIRST!', 'error');
-                return;
-            }
+        // Button sound for stop
+        exhaust.deceleration();
 
-            state.connecting = true;
-            updateConnectionUI();
+        document.getElementById("statusIcon").textContent = "🔑";
+        document.getElementById("statusText").textContent = "STOP";
+        document.getElementById("statusSubtext").textContent =
+          "Press to start engine";
+        document.getElementById("connectionInfo").style.display = "none";
 
-            // Play startup sound for START button
-            exhaust.rev();
+        const btn = document.getElementById("connectBtn");
+        btn.textContent = "START ENGINE";
+        btn.className = "connect-btn";
 
-            document.getElementById('statusIcon').textContent = '🔄';
-            document.getElementById('statusText').textContent = 'STARTING...';
-            document.getElementById('statusSubtext').textContent = 'Connecting...';
+        showToast("ENGINE STOPPED");
+      }
 
-            try {
-                await new Promise(resolve => setTimeout(resolve, 2500));
+      function updateConnectionUI() {
+        const btn = document.getElementById("connectBtn");
+        btn.disabled = state.connecting;
+      }
 
-                state.config = generateConfig(state.selectedServer, state.doubleVpn);
-                state.connected = true;
-
-                // Button sound after connection
-                exhaust.deceleration();
-                setTimeout(() => exhaust.pop(), 200);
-
-                document.getElementById('statusIcon').textContent = '🔥';
-                document.getElementById('statusText').textContent = 'RUNNING';
-                document.getElementById('statusSubtext').textContent = 'Engine is running!';
-                document.getElementById('connectionInfo').style.display = 'block';
-                document.getElementById('ipAddress').textContent = state.config.address;
-
-                const btn = document.getElementById('connectBtn');
-                btn.textContent = 'STOP ENGINE';
-                btn.className = 'connect-btn connected';
-
-                showToast(`CONNECTED TO ${state.selectedServer.name}!`, 'success');
-
-            } catch (error) {
-                showToast('CONNECTION ERROR', 'error');
-                state.connected = false;
-            } finally {
-                state.connecting = false;
-                updateConnectionUI();
-            }
-        }
-
-        function disconnect() {
-            state.connected = false;
-            state.config = null;
-
-            // Button sound for stop
-            exhaust.deceleration();
-
-            document.getElementById('statusIcon').textContent = '🔑';
-            document.getElementById('statusText').textContent = 'STOP';
-            document.getElementById('statusSubtext').textContent = 'Press to start engine';
-            document.getElementById('connectionInfo').style.display = 'none';
-
-            const btn = document.getElementById('connectBtn');
-            btn.textContent = 'START ENGINE';
-            btn.className = 'connect-btn';
-
-            showToast('ENGINE STOPPED');
-        }
-
-        function updateConnectionUI() {
-            const btn = document.getElementById('connectBtn');
-            btn.disabled = state.connecting;
-        }
-
-        function generateConfig(server, doubleVpn) {
-            return {
-                text: `[Interface]
+      function generateConfig(server, doubleVpn) {
+        return {
+          text: `[Interface]
 PrivateKey = ${generateKey()}
 Address = 10.0.0.2/32
 DNS = 1.1.1.1
@@ -505,59 +639,65 @@ Endpoint = vpn.venomvpn.com:51820
 AllowedIPs = 0.0.0.0/0
 PersistentKeepalive = 25
 `,
-                address: '10.0.0.2',
-                server: server.name
-            };
+          address: "10.0.0.2",
+          server: server.name,
+        };
+      }
+
+      function generateKey() {
+        const chars =
+          "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+        return Array.from(
+          { length: 43 },
+          () => chars[Math.floor(Math.random() * chars.length)],
+        ).join("");
+      }
+
+      function downloadConfig() {
+        exhaust.click();
+        if (!state.config) {
+          showToast("CONNECT FIRST!", "error");
+          return;
         }
 
-        function generateKey() {
-            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
-            return Array.from({length: 43}, () => chars[Math.floor(Math.random() * chars.length)]).join('');
-        }
+        const blob = new Blob([state.config.text], { type: "text/plain" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `venom-vpn-${state.selectedServer.id}.conf`;
+        a.click();
+        URL.revokeObjectURL(url);
 
-        function downloadConfig() {
-            exhaust.click();
-            if (!state.config) {
-                showToast('CONNECT FIRST!', 'error');
-                return;
-            }
+        exhaust.pop();
+        showToast("CONFIG DOWNLOADED!", "success");
+      }
 
-            const blob = new Blob([state.config.text], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `venom-vpn-${state.selectedServer.id}.conf`;
-            a.click();
-            URL.revokeObjectURL(url);
+      function authenticate() {
+        exhaust.click();
 
-            exhaust.pop();
-            showToast('CONFIG DOWNLOADED!', 'success');
-        }
+        state.user = { username: "AMG_DRIVER", id: Date.now() };
+        state.token = "token_" + Date.now();
+        localStorage.setItem("vpn_user", JSON.stringify(state.user));
+        localStorage.setItem("vpn_token", state.token);
 
-        function authenticate() {
-            exhaust.click();
+        setTimeout(() => exhaust.crackle(), 200);
 
-            state.user = { username: 'AMG_DRIVER', id: Date.now() };
-            state.token = 'token_' + Date.now();
-            localStorage.setItem('vpn_user', JSON.stringify(state.user));
-            localStorage.setItem('vpn_token', state.token);
+        showApp();
+        renderServers();
+        loadSavedServer();
+        showToast("WELCOME, DRIVER!", "success");
+      }
 
-            setTimeout(() => exhaust.crackle(), 200);
+      function showServersModal() {
+        exhaust.click();
 
-            showApp();
-            renderServers();
-            loadSavedServer();
-            showToast('WELCOME, DRIVER!', 'success');
-        }
+        let html =
+          '<h3 class="modal-title">🌍 ALL SERVERS</h3><ul class="server-list">';
 
-        function showServersModal() {
-            exhaust.click();
-
-            let html = '<h3 class="modal-title">🌍 ALL SERVERS</h3><ul class="server-list">';
-
-            SERVERS.forEach(server => {
-                const selected = state.selectedServer?.id === server.id ? 'selected' : '';
-                html += `<li class="server-item ${selected}" data-server-id="${server.id}">
+        SERVERS.forEach((server) => {
+          const selected =
+            state.selectedServer?.id === server.id ? "selected" : "";
+          html += `<li class="server-item ${selected}" data-server-id="${server.id}">
                     <span class="server-flag">${server.flag}</span>
                     <div class="server-info">
                         <div class="server-name">${server.name}</div>
@@ -565,27 +705,27 @@ PersistentKeepalive = 25
                     </div>
                     <span class="server-ping">${server.ping}ms</span>
                 </li>`;
-            });
+        });
 
-            html += '</ul>';
+        html += "</ul>";
 
-            document.getElementById('modalBody').innerHTML = html;
-            document.getElementById('modal').classList.remove('hidden');
+        document.getElementById("modalBody").innerHTML = html;
+        document.getElementById("modal").classList.remove("hidden");
 
-            document.querySelectorAll('#modalBody .server-item').forEach(item => {
-                item.addEventListener('click', () => {
-                    exhaust.click();
-                    const server = SERVERS.find(s => s.id === item.dataset.serverId);
-                    selectServer(server);
-                    closeModal();
-                });
-            });
-        }
-
-        function showHelpModal() {
+        document.querySelectorAll("#modalBody .server-item").forEach((item) => {
+          item.addEventListener("click", () => {
             exhaust.click();
+            const server = SERVERS.find((s) => s.id === item.dataset.serverId);
+            selectServer(server);
+            closeModal();
+          });
+        });
+      }
 
-            document.getElementById('modalBody').innerHTML = `
+      function showHelpModal() {
+        exhaust.click();
+
+        document.getElementById("modalBody").innerHTML = `
                 <h3 class="modal-title">❓ MANUAL</h3>
                 <div style="color: var(--text-secondary); line-height: 2;">
                     <p><strong style="color: var(--amg-silver);">HOW TO CONNECT?</strong></p>
@@ -599,17 +739,17 @@ PersistentKeepalive = 25
                     <p>@VenompowerVPN_bot</p>
                 </div>
             `;
-            document.getElementById('modal').classList.remove('hidden');
-        }
+        document.getElementById("modal").classList.remove("hidden");
+      }
 
-        function showProfileModal() {
-            exhaust.click();
+      function showProfileModal() {
+        exhaust.click();
 
-            document.getElementById('modalBody').innerHTML = `
+        document.getElementById("modalBody").innerHTML = `
                 <h3 class="modal-title">👤 PROFILE</h3>
                 <div class="profile-section">
                     <div class="profile-avatar">AMG</div>
-                    <div class="profile-name">${state.user?.username || 'GUEST'}</div>
+                    <div class="profile-name">${state.user?.username || "GUEST"}</div>
                     <div class="profile-username">@venom_vpn</div>
                     <div style="margin-top: 1rem;">
                         <span class="card-badge active">AMG EDITION</span>
@@ -626,63 +766,79 @@ PersistentKeepalive = 25
                     </div>
                 </div>
             `;
-            document.getElementById('modal').classList.remove('hidden');
-        }
+        document.getElementById("modal").classList.remove("hidden");
+      }
 
-        function closeModal() {
-            document.getElementById('modal').classList.add('hidden');
-        }
+      function closeModal() {
+        document.getElementById("modal").classList.add("hidden");
+      }
 
-        // ==========================================
-        // Event Listeners
-        // ==========================================
+      // ==========================================
+      // Event Listeners
+      // ==========================================
 
-        document.getElementById('telegramAuth').addEventListener('click', authenticate);
+      document
+        .getElementById("telegramAuth")
+        .addEventListener("click", authenticate);
 
-        document.getElementById('connectBtn').addEventListener('click', () => {
-            if (state.connected) disconnect();
-            else connect();
+      document.getElementById("connectBtn").addEventListener("click", () => {
+        if (state.connected) disconnect();
+        else connect();
+      });
+
+      document
+        .getElementById("doubleVpnCheckbox")
+        .addEventListener("change", (e) => {
+          exhaust.click();
+          state.doubleVpn = e.target.checked;
+          localStorage.setItem("double_vpn", state.doubleVpn);
+          showToast(state.doubleVpn ? "🔥 DOUBLE VPN ON" : "DOUBLE VPN OFF");
+          if (state.doubleVpn) {
+            setTimeout(() => exhaust.crackle(), 200);
+          }
         });
 
-        document.getElementById('doubleVpnCheckbox').addEventListener('change', (e) => {
-            exhaust.click();
-            state.doubleVpn = e.target.checked;
-            localStorage.setItem('double_vpn', state.doubleVpn);
-            showToast(state.doubleVpn ? '🔥 DOUBLE VPN ON' : 'DOUBLE VPN OFF');
-            if (state.doubleVpn) {
-                setTimeout(() => exhaust.crackle(), 200);
-            }
-        });
+      document
+        .getElementById("serversBtn")
+        .addEventListener("click", showServersModal);
+      document.querySelectorAll('[data-tab="servers"]').forEach((btn) => {
+        btn.addEventListener("click", showServersModal);
+      });
+      document
+        .getElementById("helpBtn")
+        .addEventListener("click", showHelpModal);
+      document
+        .getElementById("profileBtn")
+        .addEventListener("click", showProfileModal);
+      document
+        .getElementById("configBtn")
+        .addEventListener("click", downloadConfig);
 
-        document.getElementById('serversBtn').addEventListener('click', showServersModal);
-        document.querySelectorAll('[data-tab="servers"]').forEach(btn => {
-            btn.addEventListener('click', showServersModal);
-        });
-        document.getElementById('helpBtn').addEventListener('click', showHelpModal);
-        document.getElementById('profileBtn').addEventListener('click', showProfileModal);
-        document.getElementById('configBtn').addEventListener('click', downloadConfig);
+      document
+        .getElementById("modalCloseBtn")
+        .addEventListener("click", closeModal);
+      document.getElementById("modal").addEventListener("click", (e) => {
+        if (e.target.id === "modal") closeModal();
+      });
 
-        document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
-        document.getElementById('modal').addEventListener('click', (e) => {
-            if (e.target.id === 'modal') closeModal();
-        });
+      document.querySelectorAll(".nav-item").forEach((item) => {
+        item.addEventListener("click", () => {
+          exhaust.click();
+          document
+            .querySelectorAll(".nav-item")
+            .forEach((i) => i.classList.remove("active"));
+          item.classList.add("active");
 
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', () => {
-                exhaust.click();
-                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-                item.classList.add('active');
-
-                const tab = item.dataset.tab;
-                if (tab === 'servers') showServersModal();
-                if (tab === 'profile') showProfileModal();
-            });
+          const tab = item.dataset.tab;
+          if (tab === "servers") showServersModal();
+          if (tab === "profile") showProfileModal();
         });
+      });
 
-        // Initialize
-        window.addEventListener('load', () => {
-            runSplashAnimation();
-        });
+      // Initialize
+      window.addEventListener("load", () => {
+        runSplashAnimation();
+      });
     </script>
-</body>
+  </body>
 </html>
